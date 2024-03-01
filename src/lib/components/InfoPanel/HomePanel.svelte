@@ -1,21 +1,25 @@
 <script>
-    import { afterUpdate, onMount } from 'svelte';
+    import { afterUpdate, onMount, onDestroy } from 'svelte';
     import SearchBar from '$lib/components/SearchBar.svelte';
     import InfoPanel from '$lib/components/InfoPanel/InfoPanel.svelte';
-    import { remountSearchbar } from '$lib/scripts/stores.js';
+    import { remountSearchbar, selectedFeature } from '$lib/scripts/stores.js';
 
      /** @type {import('./$types').PageData} */
-     import { getContext, setContext } from 'svelte';
+     //import { getContext, setContext } from 'svelte';
 
     export let title = "Title";
     export let subtitle = "Longer description";
     let loadState = false;
 
+    const unsubscribe = selectedFeature.subscribe(value => {
+        console.log('feature: ', value);
+    });
+
     onMount(() => {
         loadState = true;
     });
 
-    const selectedFeature = getContext('selectedFeature');
+    //const selectedFeature = getContext('selectedFeature');
 
     afterUpdate(() => {
         if (document.getElementById('geocoder')){

@@ -7,7 +7,7 @@
 
 
     import { writable } from 'svelte/store';
-	import { getContext, setContext } from 'svelte';
+	import { setContext } from 'svelte';
 
     /** @type {import('./$types').PageData} */
     export let data
@@ -18,8 +18,8 @@
     const getMap = writable([]);
     setContext(key, getMap);
 
-    const remountSearchbar = writable([]);
-    setContext('remountSearchbar', remountSearchbar);
+    //const remountSearchbar = writable([]);
+   // setContext('remountSearchbar', remountSearchbar);
 
     function openNav() {
       document.getElementById("mySidebar").style.cssText = "width: 250px; border-right: 2px solid #343434";

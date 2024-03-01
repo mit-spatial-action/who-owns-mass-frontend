@@ -16,7 +16,7 @@
    // import Evictions from '$lib/config/SampleEvictions.geojson';
 
     import Device from 'svelte-device-info';
-    import { remountSearchbar } from '$lib/scripts/stores.js';
+    import { remountSearchbar, selectedFeature } from '$lib/scripts/stores.js';
 
     let mobile;
 
@@ -54,11 +54,16 @@
 
     //Get remount searchbar value from store
     let remountSearchbar_value; 
-    remountSearchbar.subscribe((value) =>{
+    const unsubscribe = remountSearchbar.subscribe((value) =>{
         remountSearchbar_value = value;
     });
 
-    const selectedFeature = getContext('selectedFeature');
+    const unsubscribe2 = selectedFeature.subscribe(value => {
+        console.log('feature: ', value);
+    });
+
+
+    //const selectedFeature = getContext('selectedFeature');
 
     function flyToLngLat(lngLat){
         map.flyTo({
@@ -117,19 +122,19 @@
                 lngLat = e.lngLat;
 
                 if (typeof map.getLayer('selectedGeom') !== "undefined" ){         
-                    map.removeLayer('selectedGeom')
+                    map.removeLayer('selectedGeom');
                     map.removeSource('selectedGeom');   
                 }
 
                 var features = map.queryRenderedFeatures(e.point, { layers: ['evictions'] });
                 if (!features.length) {
-                    selectedFeature.update(selectedFeature => []);
+                    selectedFeature.set([]);
                     return;
                 }
                 
                 var feature = features[0];
 
-                selectedFeature.update(selectedFeature => [feature]);
+                selectedFeature.set([feature]);
 
                 map.addSource('selectedGeom', {
                     "type":"geojson",
@@ -175,6 +180,8 @@
         if (map) {
              map.remove()
         };
+        unsubscribe(); // Unsubscribes from the remountSearchBar dummy
+        unsubscribe2();
     });
 
 </script>
