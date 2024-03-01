@@ -4,17 +4,20 @@
     /** @type {import('./$types').PageData} */
 
    
-    const otherNames = $selectedFeature[0].properties.other_names
+    const otherNames = JSON.parse($selectedFeature[0].properties.other_names);
+    console.log(typeof otherNames);
+    console.log(otherNames);
 </script>
 
 <div>
     <hr/>
-    <div class="title has-text-dark is-size-4 has-text-left block">
-    Also known as
-        </div>
-    <div>
+    <p class="has-text-dark is-size-4 has-text-left block mb-1">
+        <b>Also known as</b>
+    </p>
+    <div class="has-text-left block"> 
         {#each otherNames as item, index (index)}
-        <span class="has-text-link">{item}</span>
+            <span class="has-text-link"><u>{item}</u></span>
+            <br/>
         {/each}     
     </div>
 </div>

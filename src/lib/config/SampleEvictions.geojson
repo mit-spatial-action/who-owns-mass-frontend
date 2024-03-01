@@ -17,7 +17,7 @@
             "landlord_name": "Helge Capital, Inc.",
             "mapbox_id": "dXJuOm1ieGFkcjplZGE4NGIyZC1iZmY1LTQ1YmEtOWU4NS0wMjZhNDBiMzI4MzA",
             "eviction_rank": 3,
-            "evictions": 263,
+            "filing_count": 263,
             "num_units": 150,
             "accuracy": "interpolated",
             "other_names": [
