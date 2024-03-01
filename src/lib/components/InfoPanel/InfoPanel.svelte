@@ -3,7 +3,7 @@
      /** @type {import('./$types').PageData} */
      import { getContext } from 'svelte';
      import { mapbox, key } from '$lib/scripts/utils';
-     import { selectedFeature } from '$lib/scripts/stores.js';
+     import { selectedFeature, getMap } from '$lib/scripts/stores.js';
 
 
     let loadState = false;
@@ -17,12 +17,22 @@
         console.log('feature: ', value);
     });
 
+    
+    let map;
+    const unsubscribeMap = getMap.subscribe(retrieveMap => {
+        map = retrieveMap();   
+   });
+   
+
     function clearState() {
-        selectedFeature.set([]);    
+        selectedFeature.set([]);  
+        map.removeLayer('selectedGeom');
+        map.removeSource('selectedGeom');
     }
 
     onDestroy(() => {
         unsubscribe();
+        unsubscribeMap();
     });
 
 </script>

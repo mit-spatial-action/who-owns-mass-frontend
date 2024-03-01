@@ -38,11 +38,9 @@
     
     let container;
     let map;
-
     let lngLat;
     let gcResult;
     let selected;
-    let marker;
     
     let loadingState = true;
 
@@ -60,9 +58,6 @@
     const unsubscribe2 = selectedFeature.subscribe(value => {
         console.log('feature: ', value);
     });
-
-
-    //const selectedFeature = getContext('selectedFeature');
 
     function flyToLngLat(lngLat){
         map.flyTo({

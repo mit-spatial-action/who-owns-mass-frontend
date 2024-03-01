@@ -15,10 +15,6 @@
     map = retrieveMap();   // TODO: does each click count as a map call in our 50,000 quota?
    });
 
-    //export let gcResult;
-    //export let lngLat;
-    //export let selected;
-
     let coords;
 
     const SearchGeocoder = new MapboxGeocoder({
