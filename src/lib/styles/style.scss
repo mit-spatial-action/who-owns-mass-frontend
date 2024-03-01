@@ -182,3 +182,14 @@ $backgrounds: (solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d370
   height: 100vh;
   background-color: $sidebar;
 }
+
+//Dotted line above cards
+
+hr {
+  border: none;
+  border-top: 1px dotted #f00;
+  color: #fff;
+  background-color: #fff;
+  height: 1px;
+  width: 50%;
+}

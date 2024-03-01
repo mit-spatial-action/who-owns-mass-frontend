@@ -4,6 +4,7 @@
      import { getContext } from 'svelte';
      import { mapbox, key } from '$lib/scripts/utils';
      import { selectedFeature, getMap } from '$lib/scripts/stores.js';
+     import  OtherNamesCard  from '$lib/components/InfoPanel/Cards/OtherNamesCard.svelte';
 
 
     let loadState = false;
@@ -53,10 +54,21 @@
         Between September, 2019, and February, 2022, <b>{$selectedFeature[0].properties.landlord_name}</b> was the 
         cause of <span class="has-background-warning">approximately <b>{$selectedFeature[0].properties.evictions}</b> people losing their homes or experiencing housing instability.</span>	
     </div>
-    <div class="subtitle mt-1 has-text-dark is-size-6 has-text-centered block">
-        Eviction Rank: { $selectedFeature[0].properties.eviction_rank } <br/>
-        Evictions: {$selectedFeature[0].properties.evictions} <br/>
-        Address: { $selectedFeature[0].properties.place_name} <br/>
-    </div> 
+    <div class="columns">
+        <div class="column">
+            <div class="subtitle mt-1 has-text-dark is-size-6 has-text-centered block">
+            <OtherNamesCard />
+            Public funding: {$selectedFeature[0].properties.evictions} <br/>
+            Address: { $selectedFeature[0].properties.place_name} <br/>
+            </div>
+        </div> 
+        <div class="column">
+            <div class="subtitle mt-1 has-text-dark is-size-6 has-text-centered block">
+            Eviction Rank: { $selectedFeature[0].properties.eviction_rank } <br/>
+            Evictions: {$selectedFeature[0].properties.evictions} <br/>
+            Address: { $selectedFeature[0].properties.place_name} <br/>
+            </div>
+        </div> 
+    </div>
     </div>
 {/if}
