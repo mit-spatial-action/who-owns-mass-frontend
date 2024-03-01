@@ -3,14 +3,18 @@
     import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 
-    import { onMount, getContext } from 'svelte';
-    import { mapbox, key } from '$lib/scripts/utils';
+    import { onMount } from 'svelte';
+    import { mapbox } from '$lib/scripts/utils';
+    import { getMap } from '$lib/scripts/stores.js';
+
 
     import Device from 'svelte-device-info'
     $: mobile = Device.isPhone;
 
-    const { getMap } = getContext(key);
-    const map = getMap()
+    let map;
+    const unsubscribeMap = getMap.subscribe(retrieveMap => {
+        map = retrieveMap();   
+   });
 
     export let gcResult;
     export let lngLat;
@@ -54,6 +58,10 @@
         });
 
         document.getElementById('')
+    });
+
+    onDestroy(() => {
+        unsubscribeMap();
     });
     
 </script>

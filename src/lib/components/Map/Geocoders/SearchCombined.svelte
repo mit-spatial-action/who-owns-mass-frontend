@@ -3,14 +3,17 @@
     import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 
-    import { onMount, afterUpdate, getContext } from 'svelte';
+    import { onMount, afterUpdate, getContext, onDestroy } from 'svelte';
     import { mapbox, key } from '$lib/scripts/utils';
+    import { getMap } from '$lib/scripts/stores.js';
 
     import Device from 'svelte-device-info'
     $: mobile = Device.isPhone;
 
-    const { getMap } = getContext(key);
-    const map = getMap()
+   let map;
+   const unsubscribeMap = getMap.subscribe(retrieveMap => {
+    map = retrieveMap();   // TODO: does each click count as a map call in our 50,000 quota?
+   });
 
     //export let gcResult;
     //export let lngLat;
@@ -29,6 +32,10 @@
 
     onMount(()=>{
         document.getElementById('geocoder').appendChild(SearchGeocoder.onAdd(map));
+    });
+
+    onDestroy(() => {
+        unsubscribeMap();
     });
     
 </script>

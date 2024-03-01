@@ -1,10 +1,15 @@
 <script>
-    import { getContext } from 'svelte';
+    import { getContext, onDestroy } from 'svelte';
     import { mapbox, key } from '$lib/scripts/utils';
     import site_data from '$lib/config/instance.json';
+    import { getMap } from '$lib/scripts/stores.js';
 
-    const { getMap } = getContext(key)
-    const map = getMap()
+
+    let map;
+    const unsubscribeMap = getMap.subscribe(retrieveMap => {
+        map = retrieveMap();   
+   });
+
 
     export let lngLat;
     export let marker;
@@ -20,4 +25,8 @@
     }
 
     $: addMarker(lngLat);
+
+    onDestroy(() => {
+        unsubscribeMap();
+    });
 </script>

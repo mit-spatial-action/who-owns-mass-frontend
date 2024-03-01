@@ -8,15 +8,13 @@
     import site_data from '$lib/config/instance.json';
     import { getContext } from 'svelte';
 
-    // @import '$lib/styles/_variables.scss';
-
     import 'mapbox-gl/dist/mapbox-gl.css';
 
-    import { mapbox, key } from '$lib/scripts/utils';
+    import { mapbox } from '$lib/scripts/utils';
    // import Evictions from '$lib/config/SampleEvictions.geojson';
 
     import Device from 'svelte-device-info';
-    import { remountSearchbar, selectedFeature } from '$lib/scripts/stores.js';
+    import { remountSearchbar, selectedFeature, getMap } from '$lib/scripts/stores.js';
 
     let mobile;
 
@@ -48,9 +46,10 @@
     
     let loadingState = true;
 
-    setContext(key, {
-        getMap: () => map
-    });
+   const unsubscribeMap = getMap.subscribe(retrieveMap => {
+        // Callback can be used to get map, if needed. 
+   });
+
 
     //Get remount searchbar value from store
     let remountSearchbar_value; 
@@ -174,6 +173,8 @@
                 });
             }
         });
+
+        getMap.set(() => map);
     });
 
     onDestroy(() => {
@@ -182,6 +183,7 @@
         };
         unsubscribe(); // Unsubscribes from the remountSearchBar dummy
         unsubscribe2();
+        unsubscribeMap();
     });
 
 </script>
