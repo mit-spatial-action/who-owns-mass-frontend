@@ -25,7 +25,8 @@
                 "Helge Esmond LLC",
                 "Twelve ALH LLC",
                 "Mean Evictor LLC"
-            ]
+            ], 
+            "id": 3
             },
             "geometry": {
             "coordinates": [
@@ -59,7 +60,8 @@
             "other_names": [
                 "NFT Reality, LLC",
                 "Edron LLC"
-            ]
+            ], 
+            "id": 1
             },
             "geometry": {
             "coordinates": [
@@ -99,7 +101,8 @@
                 "Riverway LJ5 LLC Mass LLC",
                 "Mean Evictor MA LLC",
                 "Land Overlord LLC"
-            ]
+            ],
+            "id": 2
             },
             "geometry": {
             "coordinates": [

@@ -21,11 +21,3 @@
     <a href="#">About</a>
     <a href="#">Contact</a>
   </div>
-  <!--<aside class="menu">
-    <ul class="menu-list">
-      {#each menuItems as item}
-        <li><a href={item.link}>{item.label}</a></li>
-      {/each}
-    </ul>
-  </aside> --> 
-

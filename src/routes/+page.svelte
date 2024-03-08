@@ -3,11 +3,7 @@
     import site_data from '$lib/config/instance.json';
     import Map from '$lib/components/Map/Map.svelte';
     import '$lib/styles/style.css';
-    import { key } from '$lib/scripts/utils';
-
-
-    import { writable } from 'svelte/store';
-	import { setContext } from 'svelte';
+    import { onMount } from 'svelte';
 
     /** @type {import('./$types').PageData} */
     export let data
@@ -15,6 +11,8 @@
     function openNav() {
       document.getElementById("mySidebar").style.cssText = "width: 250px; border-right: 2px solid #343434";
     }
+    
+
 </script>
 
 <!-- <div class="container "> -->
