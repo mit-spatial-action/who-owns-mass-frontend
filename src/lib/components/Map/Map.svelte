@@ -129,6 +129,7 @@
                 var feature = features[0];
 
                 selectedFeature.set([feature]);
+                updateLocationURL(feature);
 
                 map.addSource('selectedGeom', {
                     "type":"geojson",
@@ -170,6 +171,10 @@
         });
 
         getMap.set(() => map);
+
+          /* Add listener for URL query props */
+       // window.addEventListener('popstate', handleUrlChange);
+       // return () => window.removeEventListener('popstate', handleUrlChange);
     });
 
     onDestroy(() => {
@@ -180,6 +185,20 @@
         unsubscribe2();
         unsubscribeMap();
     });
+
+     // Function to update the URL when a location is selected
+    function updateLocationURL(feature) {
+        console.log("Updated URL: ", feature.properties.eviction_rank);
+        const newUrl = `/?location=${encodeURIComponent(feature.properties.eviction_rank)}`;
+        window.history.pushState({ feature }, '', newUrl);
+     }
+
+    /*  Example function for handling changes in the URL on Map
+    function handleUrlChange() {
+        const urlParams = new URLSearchParams(window.location.search);
+        selectedLocation = urlParams.get('location') || '';
+  }
+  */
 
 </script>
 <div id ="map" class={(selected !== undefined && mobile) ? 'non-interactive' : null} bind:this={container}>
