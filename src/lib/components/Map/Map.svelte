@@ -112,6 +112,8 @@
             map.setMinZoom((initZoom.length === 2) ? initZoom[1] : initZoom);
         });
         map.on('style.load', () => {
+
+            //TODO: create shared functions to 1) clear selected geometries and 2) handle url change. Maybe call when change to selectedFeature?
             map.on('click', (e) => {
                 lngLat = e.lngLat;
 
@@ -172,9 +174,9 @@
 
         getMap.set(() => map);
 
-          /* Add listener for URL query props */
-       // window.addEventListener('popstate', handleUrlChange);
-       // return () => window.removeEventListener('popstate', handleUrlChange);
+        // Add listener for URL query props 
+        window.addEventListener('popstate', handleUrlChange);
+        return () => window.removeEventListener('popstate', handleUrlChange);
     });
 
     onDestroy(() => {
@@ -193,12 +195,26 @@
         window.history.pushState({ feature }, '', newUrl);
      }
 
-    /*  Example function for handling changes in the URL on Map
+    //  Example function for handling changes in the URL on Map 
     function handleUrlChange() {
         const urlParams = new URLSearchParams(window.location.search);
-        selectedLocation = urlParams.get('location') || '';
+        const selectedLocations = map.querySourceFeatures('sample-evictions', {
+            filter: ['==', ['get', 'eviction_rank'], urlParams]
+        });
+
+        if (!selectedLocations.length) {
+             selectedFeature.set([]);
+            
+             //Remove selected geometry layer - clean this process up/modularize?
+             if (typeof map.getLayer('selectedGeom') !== "undefined" ){         
+                    map.removeLayer('selectedGeom');
+                    map.removeSource('selectedGeom');   
+                }
+            return;
+        } else {
+            selectedFeature.set(selectedLocations[0]); //TODO: update to handle multiple selected features
+        }
   }
-  */
 
 </script>
 <div id ="map" class={(selected !== undefined && mobile) ? 'non-interactive' : null} bind:this={container}>
