@@ -1,5 +1,6 @@
 <script>
     import { onDestroy, onMount, setContext } from 'svelte';
+    import { page } from '$app/stores';
     import ForwardGeocoder from '$lib/components/Map/Geocoders/Forward.svelte';
     import SearchGeocoder from '$lib/components/Map/Geocoders/SearchCombined.svelte';
     import ReverseGeocoder from '$lib/components/Map/Geocoders/Reverse.svelte';
@@ -119,12 +120,13 @@
 
                 if (typeof map.getLayer('selectedGeom') !== "undefined" ){         
                     map.removeLayer('selectedGeom');
-                    map.removeSource('selectedGeom');   
+                    map.removeSource('selectedGeom');                     
                 }
 
                 var features = map.queryRenderedFeatures(e.point, { layers: ['evictions'] });
                 if (!features.length) {
                     selectedFeature.set([]);
+                    updateLocationURL({});
                     return;
                 }
                 
@@ -190,6 +192,12 @@
 
      // Function to update the URL when a location is selected
     function updateLocationURL(feature) {
+        if(Object.keys(feature).length == 0){
+            const newUrl = `/`;
+            window.history.pushState({ }, '', newUrl); 
+            return;
+       }
+
         console.log("Updated URL: ", feature.properties.eviction_rank);
         const newUrl = `/?location=${encodeURIComponent(feature.properties.eviction_rank)}`;
         window.history.pushState({ feature }, '', newUrl);
@@ -197,9 +205,12 @@
 
     //  Example function for handling changes in the URL on Map 
     function handleUrlChange() {
-        const urlParams = new URLSearchParams(window.location.search);
+        console.log("handleChange");
+        const urlParams = $page.url.searchParams.get('location');
+       //const urlParams = new URLSearchParams(window.location.search);
+        console.log("URL PARAMS: ", urlParams);
         const selectedLocations = map.querySourceFeatures('sample-evictions', {
-            filter: ['==', ['get', 'eviction_rank'], urlParams]
+            filter: ['==', ['get', 'eviction_rank'], ['literal', urlParams]]
         });
 
         if (!selectedLocations.length) {
