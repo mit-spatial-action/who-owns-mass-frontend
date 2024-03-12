@@ -5,7 +5,7 @@
      import { mapbox, key } from '$lib/scripts/utils';
      import { selectedFeature, getMap } from '$lib/scripts/stores.js';
      import  OtherNamesCard  from '$lib/components/InfoPanel/Cards/OtherNamesCard.svelte';
-
+     import {Link, Route} from 'svelte-routing';
 
     let loadState = false;
     onMount(() => {
@@ -29,6 +29,9 @@
         selectedFeature.set([]);  
         map.removeLayer('selectedGeom');
         map.removeSource('selectedGeom');
+       
+        const newUrl = `/`;
+        window.history.pushState({ selectedFeature }, '', newUrl);
     }
 
     onDestroy(() => {
