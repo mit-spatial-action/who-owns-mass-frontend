@@ -11,6 +11,8 @@
     export let title = "Title";
     export let subtitle = "Longer description";
     let loadState = false;
+    export let mapbox_token;
+
 
     const unsubscribe = selectedFeature.subscribe(value => {
         console.log('feature: ', value);
@@ -73,7 +75,7 @@
             {/key}
         </div>
         <div class="centered">
-                 <QueryFeaturesSearchBar />
+                 <QueryFeaturesSearchBar mapbox_token={mapbox_token}/>
         </div>
 
     </div>

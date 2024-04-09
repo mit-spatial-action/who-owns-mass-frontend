@@ -21,7 +21,7 @@
             <button class="openbtn" on:click={openNav}>☰</button>  
         </div>
         <div class="column has-background-light homepage shadow" id="left-panel">
-            <HomePanel title={site_data.title} subtitle={site_data.description} />
+            <HomePanel mapbox_token={data.mapbox_token} title={site_data.title} subtitle={site_data.description} />
         </div>
         <div class="column has-background-light homepage">
             <Map mapbox_token={data.mapbox_token} />
