@@ -101,6 +101,13 @@ $backgrounds: (solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d370
 #geocoder{  
   display: flex;
   justify-content: center;
+  padding: 2vh;
+}
+
+#querySearchBar{  // Temporary - remove when search bars are merged
+
+  display: flex;
+  justify-content: center;
 }
 
 .menu {
