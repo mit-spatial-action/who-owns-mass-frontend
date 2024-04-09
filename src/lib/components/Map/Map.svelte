@@ -178,7 +178,6 @@
 
         // Add listener for URL query props 
         window.addEventListener('popstate', handleUrlChange);
-        return () => window.removeEventListener('popstate', handleUrlChange);
     });
 
     onDestroy(() => {
@@ -205,13 +204,15 @@
 
     //  Example function for handling changes in the URL on Map 
     function handleUrlChange() {
-        console.log("handleChange");
         const urlParams = $page.url.searchParams.get('location');
-       //const urlParams = new URLSearchParams(window.location.search);
-        console.log("URL PARAMS: ", urlParams);
-        const selectedLocations = map.querySourceFeatures('sample-evictions', {
-            filter: ['==', ['get', 'eviction_rank'], ['literal', urlParams]]
-        });
+        console.log(urlParams);
+        var selectedLocations = [];
+        if(urlParams){
+            selectedLocations = map.queryRenderedFeatures({
+                layers: ['evictions'],
+                filter: ['==', 'eviction_rank', parseInt(urlParams)]
+            });
+        }
 
         if (!selectedLocations.length) {
              selectedFeature.set([]);
@@ -223,7 +224,35 @@
                 }
             return;
         } else {
-            selectedFeature.set(selectedLocations[0]); //TODO: update to handle multiple selected features
+            var feature = selectedLocations[0]
+            selectedFeature.set([feature]);
+            
+            if (typeof map.getLayer('selectedGeom') !== "undefined" ){         
+                    map.removeLayer('selectedGeom');
+                    map.removeSource('selectedGeom');   
+                }
+
+                map.addSource('selectedGeom', {
+                    "type":"geojson",
+                    "data": feature.toJSON()
+                });
+                map.addLayer({
+                    "id": "selectedGeom",
+                    "type": "circle",
+                    "source": "selectedGeom",
+                    "paint": {
+                        'circle-radius': [
+                            "interpolate",
+                            ["linear"],
+                            ["get", "evictions"],
+                            0, 2,
+                            400, 35],
+                        'circle-color': '#4223FF',
+                        'circle-opacity': 0.2
+                    }
+                });
+            
+            return;
         }
   }
 
