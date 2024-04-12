@@ -22,7 +22,9 @@
     export let mapbox_token;
     mapbox.accessToken = mapbox_token;
 
-    export let style =  "mapbox://styles/milanc/clomi1wzb006v01qnahsi5vlc";
+    //export let style =  "mapbox://styles/milanc/clomi1wzb006v01qnahsi5vlc";
+    export let style =  "mapbox://styles/mit-spatial-action/cluwwvx8l00gi01pe8mi4e64o";
+
     export let projection = 'globe';
     export let initLngLat = site_data.map.init.lngLat;
     initLngLat = new mapbox.LngLat(initLngLat[0], initLngLat[1])
@@ -87,7 +89,8 @@
         map.on ('load', () => {
             map.addSource('sample-evictions', {
                 type: 'vector',
-                url: "mapbox://milanc.clom235b6a6z52alkp94hemh3-6pw18"
+               // url: "mapbox://milanc.clom235b6a6z52alkp94hemh3-6pw18"
+               url: "mapbox://mit-spatial-action.cluwwxboq41sc1umn4mld8fea-2owb9"
             });
             map.addLayer(
                 {

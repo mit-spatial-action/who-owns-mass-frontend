@@ -36,7 +36,6 @@
         }
       }
 
-
     function selectSearchResult(result) {
         map.flyTo({
         center: result.geometry.coordinates,

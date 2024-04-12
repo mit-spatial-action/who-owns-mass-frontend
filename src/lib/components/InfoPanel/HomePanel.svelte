@@ -11,7 +11,7 @@
     export let title = "Title";
     export let subtitle = "Longer description";
     let loadState = false;
-    export let mapbox_token;
+        export let mapbox_token;
 
 
     const unsubscribe = selectedFeature.subscribe(value => {

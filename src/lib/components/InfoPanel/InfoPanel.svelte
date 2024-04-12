@@ -17,7 +17,6 @@
     const unsubscribe = selectedFeature.subscribe(value => {
         console.log('feature: ', value);
     });
-
     
     let map;
     const unsubscribeMap = getMap.subscribe(retrieveMap => {

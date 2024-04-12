@@ -6,7 +6,7 @@
     export let loadingState;
 
     async function addGeometry(ll) {
-        const endpoint = 'https://api.mapbox.com/v4/milanc.clom235b6a6z52alkp94hemh3-6pw18/tilequery/'
+        const endpoint = 'https://api.mapbox.com/v4/mit-spatial-action.cluwwxboq41sc1umn4mld8fea-2owb9/tilequery/'
         const f = 'json'
         const query = `${endpoint}${ll.lng},${ll.lat}.${f}?access_token=${mapbox.accessToken}`;
         loadingState = !loadingState;
