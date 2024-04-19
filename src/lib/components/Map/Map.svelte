@@ -1,9 +1,9 @@
 <script>
     import { onDestroy, onMount, setContext } from 'svelte';
     import { page } from '$app/stores';
-    import ForwardGeocoder from '$lib/components/Map/Geocoders/Forward.svelte';
+    //import ForwardGeocoder from '$lib/components/Map/Geocoders/.svelte';
     import SearchGeocoder from '$lib/components/Map/Geocoders/SearchCombined.svelte';
-    import ReverseGeocoder from '$lib/components/Map/Geocoders/Reverse.svelte';
+    //import ReverseGeocoder from '$lib/components/Map/Geocoders/Reverse.svelte';
     import SelectedGeometry from '$lib/components/Map/SelectedGeometry.svelte';
     import RippleLoader from '$lib/components/RippleLoader.svelte';
     import site_data from '$lib/config/instance.json';
@@ -261,7 +261,7 @@
 <div id ="map" class={(selected !== undefined && mobile) ? 'non-interactive' : null} bind:this={container}>
     {#if map}
         <RippleLoader bind:loadingState />
-        <ReverseGeocoder bind:lngLat bind:gcResult />
+        <!-- <ReverseGeocoder bind:lngLat bind:gcResult />-->
         {#key remountSearchbar_value}
             <SearchGeocoder bind:lngLat bind:gcResult bind:selected />
         {/key}

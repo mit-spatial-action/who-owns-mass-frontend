@@ -3,7 +3,7 @@
     import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
 
 
-    import { onMount, afterUpdate, getContext, onDestroy } from 'svelte';
+    import { onMount, onDestroy } from 'svelte';
     import { mapbox, key } from '$lib/scripts/utils';
     import { getMap } from '$lib/scripts/stores.js';
 
