@@ -1,11 +1,12 @@
 <!-- QueryFeaturesSearchBar.svelte -->
 <script>
-    import { onMount } from 'svelte';
-    import mapboxgl from 'mapbox-gl';
-    import { getMap, remountSearchbar, selectedFeature } from '$lib/scripts/stores.js';
+    import { onDestroy } from 'svelte';
+    import { getMap, selectedFeature } from '$lib/scripts/stores.js';
     import sampleEvictions from '$lib/config/sample-evictions.json';
   
-    export let mapbox_token;
+   // export let mapbox_token;
+
+    const unsubscribeSelectedFeature = selectedFeature.subscribe(value => {});
 
     let searchInput = '';
     let searchResults = [];
@@ -31,7 +32,8 @@
           landlord_name: feature.properties.landlord_name,
           other_names: feature.properties.other_names, 
           id: feature.properties.id,
-          place_name: feature.properties.place_name
+          place_name: feature.properties.place_name,
+          geometry: feature.geometry.coordinates
       }));
       let filtered; 
       filtered = locations.filter(location => location.landlord_name.toLowerCase().includes(query.toLowerCase()));
@@ -52,14 +54,23 @@
       }
 
     function selectSearchResult(result) {
+        // ASYNC QUERY: 
+        //     TODO: Selecting a search result updates the routing, which triggers a new selected feature query. This triggers changes to map nad info panel. 
+        // For now, leaving as a flyTo at the result geometry. 
+
         map.flyTo({
-        center: result.geometry.coordinates,
+        center: result.geometry,
         zoom: 14
         });
 
         // Clear search input after selecting a result
         searchInput = '';
     }
+
+    onDestroy(() => {
+        unsubscribeSelectedFeature();
+        unsubscribeMap();
+    });
 
 </script>
 
@@ -69,7 +80,7 @@
   {#if searchResults.length > 0}
     <ul>
       {#each searchResults as result}
-        <li on:click={() => selectSearchResult(result)}>{result.place_name}</li>
+        <li on:click={() => selectSearchResult(result)}>{result.landlord_name}</li>
       {/each}
     </ul>
   {/if}
