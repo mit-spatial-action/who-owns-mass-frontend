@@ -1,7 +1,10 @@
 import { writable } from 'svelte/store';
+import mapboxgl from 'mapbox-gl';
 
-export const remountSearchbar = writable(0);
+const remountSearchbar = writable(0);
 
-export const selectedFeature = writable([]);
+const selectedFeature = writable({});
 
-export const getMap = writable(() => {});
+const mapState = writable();
+
+export { remountSearchbar, selectedFeature, mapboxgl, mapState }

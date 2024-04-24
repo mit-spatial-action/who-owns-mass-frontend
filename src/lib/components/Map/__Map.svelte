@@ -1,0 +1,276 @@
+<script>
+    import { onDestroy, onMount, setContext } from 'svelte';
+    import { page } from '$app/stores';
+    //import ForwardGeocoder from '$lib/components/Map/Geocoders/.svelte';
+    import SearchGeocoder from '$lib/components/Map/Geocoders/SearchCombined.svelte';
+    //import ReverseGeocoder from '$lib/components/Map/Geocoders/Reverse.svelte';
+    import SelectedGeometry from '$lib/components/Map/SelectedGeometry.svelte';
+    import RippleLoader from '$lib/components/RippleLoader.svelte';
+    import site_data from '$lib/config/instance.json';
+    import { getContext } from 'svelte';
+
+    import 'mapbox-gl/dist/mapbox-gl.css';
+
+    import { mapbox } from '$lib/scripts/utils';
+   // import Evictions from '$lib/config/SampleEvictions.geojson';
+
+    import Device from 'svelte-device-info';
+    import { remountSearchbar, selectedFeature, getMap } from '$lib/scripts/stores.js';
+
+    let mobile;
+
+    export let mapbox_token;
+    mapbox.accessToken = mapbox_token;
+
+    export let style =  "mapbox://styles/mit-spatial-action/cluwwvx8l00gi01pe8mi4e64o";
+
+    export let projection = 'globe';
+    export let initLngLat = site_data.map.init.lngLat;
+    initLngLat = new mapbox.LngLat(initLngLat[0], initLngLat[1])
+    export let initZoom = site_data.map.init.zoom;
+    export let initZoomDur  = 500; //change back to 3000 after dev
+    
+    export let maxBounds = [
+        [-179,19], 
+        [-67,72]
+    ]
+
+    export let resultZoom = 10;
+    export let resultFlySpeed = 2000;
+    
+    let container;
+    let map;
+    let lngLat;
+    let gcResult;
+    let selected;
+    
+    let loadingState = true;
+
+   const unsubscribeMap = getMap.subscribe(retrieveMap => {
+        // Callback can be used to get map, if needed. 
+   });
+
+
+    //Get remount searchbar value from store
+    let remountSearchbar_value; 
+    const unsubscribe = remountSearchbar.subscribe((value) =>{
+        remountSearchbar_value = value;
+    });
+
+    const unsubscribe2 = selectedFeature.subscribe(value => {
+        console.log('feature: ', value);
+    });
+
+    function flyToLngLat(lngLat){
+        map.flyTo({
+            center: lngLat,
+            zoom: (map.getZoom() > resultZoom) ? map.getZoom() : resultZoom,
+            duration: resultFlySpeed,
+            essential: true
+        });
+    }
+
+    $: (lngLat) ? flyToLngLat(lngLat) : null;
+
+    onMount(() => {
+        mobile = Device.isPhone;
+        let mapOptions = {
+            container: container,
+            style: style,
+            center: initLngLat,
+            zoom: (initZoom.length === 2) ? initZoom[0] : initZoom,
+            bearing: 0,
+            projection: projection,
+            maxBounds: maxBounds
+        }
+        map = new mapbox.Map(mapOptions);
+        
+        map.on ('load', () => {
+            map.addSource('sample-evictions', {
+                type: 'vector',
+               url: "mapbox://mit-spatial-action.cluwwxboq41sc1umn4mld8fea-2owb9"
+            });
+            map.addLayer(
+                {
+                    id:"evictions", 
+                    source: "sample-evictions",
+                    'source-layer': "Sample-Evictions",
+                    type: "circle",
+                    paint: {
+                        'circle-radius': [
+                            "interpolate",
+                            ["linear"],
+                            ["get", "evictions"],
+                            0, 0,
+                            400, 30],
+                        'circle-color': '#FF5F05',
+                        'circle-opacity': 0.7
+                        }
+                    }
+            )
+        })
+        map.once('zoomend', () => {
+            loadingState = !loadingState
+            map.setMinZoom((initZoom.length === 2) ? initZoom[1] : initZoom);
+        });
+        map.on('style.load', () => {
+
+            //TODO: create shared functions to 1) clear selected geometries and 2) handle url change. Maybe call when change to selectedFeature?
+            map.on('click', (e) => {
+                lngLat = e.lngLat;
+
+                if (typeof map.getLayer('selectedGeom') !== "undefined" ){         
+                    map.removeLayer('selectedGeom');
+                    map.removeSource('selectedGeom');                     
+                }
+
+                var features = map.queryRenderedFeatures(e.point, { layers: ['evictions'] });
+                if (!features.length) {
+                    selectedFeature.set([]);
+                    updateLocationURL({});
+                    return;
+                }
+                
+                var feature = features[0];
+
+                selectedFeature.set([feature]);
+                updateLocationURL(feature);
+
+                map.addSource('selectedGeom', {
+                    "type":"geojson",
+                    "data": feature.toJSON()
+                });
+                map.addLayer({
+                    "id": "selectedGeom",
+                    "type": "circle",
+                    "source": "selectedGeom",
+                    "paint": {
+                        'circle-radius': [
+                            "interpolate",
+                            ["linear"],
+                            ["get", "evictions"],
+                            0, 2,
+                            400, 35],
+                        'circle-color': '#4223FF',
+                        'circle-opacity': 0.2
+                    }
+                });
+
+            })
+            map.setFog({
+                range: [9,20],
+                color: '#f0a800',
+                'high-color': '#d63088',
+                'horizon-blend': 0.02, // default: .1
+                'space-color': '#000000', 
+                'star-intensity': 0.1
+            })
+            if (initZoom.length === 2) {
+                map.flyTo({
+                    center: initLngLat,
+                    zoom: initZoom[1],
+                    duration: initZoomDur,
+                    essential: true
+                });
+            }
+        });
+
+        getMap.set(() => map);
+
+        // Add listener for URL query props 
+        window.addEventListener('popstate', handleUrlChange);
+    });
+
+    onDestroy(() => {
+        if (map) {
+             map.remove()
+        };
+        unsubscribe(); // Unsubscribes from the remountSearchBar dummy
+        unsubscribe2();
+        unsubscribeMap();
+    });
+
+     // Function to update the URL when a location is selected
+    function updateLocationURL(feature) {
+        if(Object.keys(feature).length == 0){
+            const newUrl = `/`;
+            window.history.pushState({ }, '', newUrl); 
+            return;
+       }
+
+        console.log("Updated URL: ", feature.properties.eviction_rank);
+        const newUrl = `/?location=${encodeURIComponent(feature.properties.eviction_rank)}`;
+        window.history.pushState({ feature }, '', newUrl);
+     }
+
+    //  Example function for handling changes in the URL on Map 
+    function handleUrlChange() {
+        const urlParams = $page.url.searchParams.get('location');
+        console.log(urlParams);
+        var selectedLocations = [];
+        if(urlParams){
+            selectedLocations = map.queryRenderedFeatures({
+                layers: ['evictions'],
+                filter: ['==', 'eviction_rank', parseInt(urlParams)]
+            });
+        }
+
+        if (!selectedLocations.length) {
+             selectedFeature.set([]);
+            
+             //Remove selected geometry layer - clean this process up/modularize?
+             if (typeof map.getLayer('selectedGeom') !== "undefined" ){         
+                    map.removeLayer('selectedGeom');
+                    map.removeSource('selectedGeom');   
+                }
+            return;
+        } else {
+            var feature = selectedLocations[0]
+            selectedFeature.set([feature]);
+            
+            if (typeof map.getLayer('selectedGeom') !== "undefined" ){         
+                    map.removeLayer('selectedGeom');
+                    map.removeSource('selectedGeom');   
+                }
+
+                map.addSource('selectedGeom', {
+                    "type":"geojson",
+                    "data": feature.toJSON()
+                });
+                map.addLayer({
+                    "id": "selectedGeom",
+                    "type": "circle",
+                    "source": "selectedGeom",
+                    "paint": {
+                        'circle-radius': [
+                            "interpolate",
+                            ["linear"],
+                            ["get", "evictions"],
+                            0, 2,
+                            400, 35],
+                        'circle-color': '#4223FF',
+                        'circle-opacity': 0.2
+                    }
+                });
+            
+            return;
+        }
+  }
+
+</script>
+<div id ="map" class={(selected !== undefined && mobile) ? 'non-interactive' : null} bind:this={container}>
+    {#if map}
+        <RippleLoader bind:loadingState />
+        <!-- <ReverseGeocoder bind:lngLat bind:gcResult />-->
+        {#key remountSearchbar_value}
+            <SearchGeocoder bind:lngLat bind:gcResult bind:selected />
+        {/key}
+        <!-- <SelectedGeometry bind:selected bind:lngLat bind:loadingState/> -->
+    {/if}
+</div>
+
+<style>
+    .non-interactive {
+        pointer-events: none;
+    }
+</style>

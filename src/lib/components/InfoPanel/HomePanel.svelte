@@ -1,17 +1,12 @@
 <script>
     import { afterUpdate, onMount, onDestroy } from 'svelte';
     import SearchBar from '$lib/components/SearchBar.svelte';
-    import InfoPanel from '$lib/components/InfoPanel/InfoPanel.svelte';
-    //import QueryFeaturesSearchBar from '$lib/components/QueryFeaturesSearchBar.svelte';
     import { remountSearchbar, selectedFeature } from '$lib/scripts/stores.js';
 
-     /** @type {import('./$types').PageData} */
-     //import { getContext, setContext } from 'svelte';
 
     export let title = "Title";
     export let subtitle = "Longer description";
     let loadState = false;
-        export let mapbox_token;
 
     const unsubscribe = selectedFeature.subscribe(value => {
         console.log('feature: ', value);
@@ -60,7 +55,6 @@
 
 </script>
 {#if loadState }
-    {#if $selectedFeature.length == 0 }
     <div class="home-panel">
         <div class="title has-text-dark is-size-1 has-text-centered">
             {title}
@@ -74,10 +68,6 @@
             {/key}
         </div>
     </div>
-    {/if}
-    {#if $selectedFeature.length >= 1}
-       <InfoPanel/>
-    {/if}
 {/if}
 
 

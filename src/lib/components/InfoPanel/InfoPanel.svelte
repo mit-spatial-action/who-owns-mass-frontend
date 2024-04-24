@@ -1,27 +1,18 @@
 <script>
-    import { afterUpdate, onMount, onDestroy } from 'svelte';
-     /** @type {import('./$types').PageData} */
-     import { getContext } from 'svelte';
-     import { mapbox, key } from '$lib/scripts/utils';
-     import { selectedFeature, getMap } from '$lib/scripts/stores.js';
+    import { onMount, onDestroy } from 'svelte';
+     import { selectedFeature } from '$lib/scripts/stores.js';
      import  OtherNamesCard  from '$lib/components/InfoPanel/Cards/OtherNamesCard.svelte';
-     //import {Link, Route} from 'svelte-routing';
 
     let loadState = false;
     onMount(() => {
         loadState = true;    
         console.log($selectedFeature);   
     });
-
-    //const selectedFeature = getContext('selectedFeature');
+    
     const unsubscribe = selectedFeature.subscribe(value => {
         console.log('feature: ', value);
     });
     
-    let map;
-    const unsubscribeMap = getMap.subscribe(retrieveMap => {
-        map = retrieveMap();   
-   });
    
 
     function clearState() {
