@@ -5,6 +5,10 @@
      import { mapbox, key } from '$lib/scripts/utils';
      import { selectedFeature, getMap } from '$lib/scripts/stores.js';
      import  OtherNamesCard  from '$lib/components/InfoPanel/Cards/OtherNamesCard.svelte';
+     import  PublicFundingCard  from '$lib/components/InfoPanel/Cards/PublicFundingCard.svelte';
+     import  DownloadDatasetsCard  from '$lib/components/InfoPanel/Cards/DownloadDatasetsCard.svelte';
+
+
      //import {Link, Route} from 'svelte-routing';
 
     let loadState = false;
@@ -60,9 +64,9 @@
         <div class="column">
             <div class="subtitle mt-1 has-text-dark is-size-6 has-text-centered block">
             <OtherNamesCard />
-            Public funding: {$selectedFeature[0].properties.evictions} <br/>
-            Address: { $selectedFeature[0].properties.place_name} <br/>
+            <PublicFundingCard /> 
             </div>
+            <DownloadDatasetsCard />
         </div> 
         <div class="column">
             <div class="subtitle mt-1 has-text-dark is-size-6 has-text-centered block">

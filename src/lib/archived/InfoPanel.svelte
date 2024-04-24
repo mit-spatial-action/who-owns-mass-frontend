@@ -9,28 +9,6 @@
     export let selected;
     export let marker;
 
-    //From Low income Component
-    $: items = [
-            {
-                desc: "Top Statistics",
-             },
-            {
-                desc: "Random Evictor",
-            },
-            {
-                desc: "Eviction Primer",
-            },
-            {
-                desc: "What happeneds in court?",
-            },
-            {
-                desc: "Reports",
-            },
-            {
-                desc: "Gallery",
-        ]
-
-
     function closeInfo() {
         marker.remove();
         add = undefined;
@@ -119,10 +97,7 @@ $: add = (gcResult) ? parseContext(gcResult) : undefined;
         <p>MASS EVICTIONS</p>
         <br/>
         <h6>A record of Massachusetts court eviction filings from 02/2019 to 09/2022</h6>
-        <br/>
-
-        <Tabs {items}/>
-        
+        <br/>        
         
         </div>
         
