@@ -13,17 +13,13 @@
 </script>
 
 <div>
-    <hr/>
-    <p class="has-text-dark is-size-4 has-text-left block mb-1">
-        <b>Also known as</b>
+    <p class="has-text-dark is-size-6 has-text-left block mb-1">
+        <b>Corporate Addresses: </b>
     </p>
     <div class="has-text-left block"> 
-        {#each JSON.parse($selectedFeature[0].properties.other_names) as item, index (index)}
-            <span class="has-text-link"><u>{item}</u></span>
+        {#each JSON.parse($selectedFeature[0].properties.corporate_addresses) as address, index (index)}
+            <span class="has-text-link">{address}</span>
             <br/>
         {/each}     
     </div>
-   <div class="has-text-left block">
-    <span class="has-text-link mb-1" ><u>View corporate addresses</u></span>
-   </div>
 </div>
