@@ -1,12 +1,15 @@
 <script>
     import { selectedFeature } from '$lib/scripts/stores.js';
-    import { onMount } from 'svelte';
+    import { onDestroy } from 'svelte';
     /** @type {import('./$types').PageData} */
 
-   
-    const otherNames = JSON.parse($selectedFeature[0].properties.other_names);
-    console.log(typeof otherNames);
-    console.log(otherNames);
+    const unsubscribe = selectedFeature.subscribe(value => {
+    });
+
+    onDestroy(() => {
+        unsubscribe();
+    });
+
 </script>
 
 <div>
@@ -15,7 +18,7 @@
         <b>Also known as</b>
     </p>
     <div class="has-text-left block"> 
-        {#each otherNames as item, index (index)}
+        {#each JSON.parse($selectedFeature[0].properties.other_names) as item, index (index)}
             <span class="has-text-link"><u>{item}</u></span>
             <br/>
         {/each}     

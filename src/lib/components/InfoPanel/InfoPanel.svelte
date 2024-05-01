@@ -65,8 +65,8 @@
             <div class="subtitle mt-1 has-text-dark is-size-6 has-text-centered block">
             <OtherNamesCard />
             <PublicFundingCard /> 
-            </div>
             <DownloadDatasetsCard />
+            </div>
         </div> 
         <div class="column">
             <div class="subtitle mt-1 has-text-dark is-size-6 has-text-centered block">
