@@ -9,6 +9,7 @@ $column-gap: 0rem; //changed from
 
 @import "node_modules/bulma/sass/utilities/_all.sass";
 @import "node_modules/bulma/sass/base/_all.sass";
+@import "node_modules/bulma/sass/elements/panel.sass";
 @import "node_modules/bulma/sass/elements/container.sass";
 @import "node_modules/bulma/sass/elements/button.sass";
 @import "node_modules/bulma/sass/elements/icon.sass";
@@ -91,8 +92,6 @@ $backgrounds: (solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d370
   border-right: 2px solid $border;
   justify-content: center;
 }
-
-
 
 .home-panel{
   align-self: center !important;
@@ -199,4 +198,18 @@ hr {
   background-color: #fff;
   height: 1px;
   width: 50%;
+}
+
+//Supplement Address Panel overlay
+
+.overlay {
+  display: block;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.9);
+  padding: 20px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
 }

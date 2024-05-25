@@ -1,8 +1,6 @@
 <script>
     import { afterUpdate, onMount, onDestroy } from 'svelte';
      /** @type {import('./$types').PageData} */
-     import { getContext } from 'svelte';
-     import { mapbox, key } from '$lib/scripts/utils';
      import { selectedFeature, getMap } from '$lib/scripts/stores.js';
      import  OtherNamesCard  from '$lib/components/InfoPanel/Cards/OtherNamesCard.svelte';
      import  DownloadDatasetsCard  from '$lib/components/InfoPanel/Cards/DownloadDatasetsCard.svelte';

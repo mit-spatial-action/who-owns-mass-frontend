@@ -7,6 +7,7 @@
     import SelectedGeometry from '$lib/components/Map/SelectedGeometry.svelte';
     import RippleLoader from '$lib/components/RippleLoader.svelte';
     import site_data from '$lib/config/instance.json';
+    import AddressPanel from '$lib/components/Map/AddressPanel.svelte';
     import { getContext } from 'svelte';
 
     import 'mapbox-gl/dist/mapbox-gl.css';
@@ -268,6 +269,9 @@
         <SelectedGeometry bind:selected bind:lngLat bind:loadingState/>
     {/if}
 </div>
+{#if !selectedFeature.length}
+            <AddressPanel />
+{/if}
 
 <style>
     .non-interactive {
