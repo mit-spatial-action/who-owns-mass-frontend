@@ -5,7 +5,6 @@
      import { mapbox, key } from '$lib/scripts/utils';
      import { selectedFeature, getMap } from '$lib/scripts/stores.js';
      import  OtherNamesCard  from '$lib/components/InfoPanel/Cards/OtherNamesCard.svelte';
-     import  PublicFundingCard  from '$lib/components/InfoPanel/Cards/PublicFundingCard.svelte';
      import  DownloadDatasetsCard  from '$lib/components/InfoPanel/Cards/DownloadDatasetsCard.svelte';
      import  EvictorRankCard from '$lib/components/InfoPanel/Cards/EvictorRankCard.svelte';
      import  AddressCard from '$lib/components/InfoPanel/Cards/AddressCard.svelte';
@@ -65,7 +64,6 @@
         <div class="column mr-1">
             <div class="subtitle mt-1 has-text-dark is-size-6 has-text-centered block">
             <OtherNamesCard />
-            <PublicFundingCard /> 
             <DownloadDatasetsCard />
             </div>
         </div> 
