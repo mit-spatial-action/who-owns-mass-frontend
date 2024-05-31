@@ -8,6 +8,7 @@
     import RippleLoader from '$lib/components/RippleLoader.svelte';
     import site_data from '$lib/config/instance.json';
     import AddressPanel from '$lib/components/Map/AddressPanel.svelte';
+    import sampleEvictions from '$lib/config/sample-evictions.json';
     import { getContext } from 'svelte';
 
     import 'mapbox-gl/dist/mapbox-gl.css';
@@ -88,14 +89,14 @@
         
         map.on ('load', () => {
             map.addSource('sample-evictions', {
-                type: 'vector',
-               url: "mapbox://mit-spatial-action.cluwwxboq41sc1umn4mld8fea-2owb9"
+                type: 'geojson',
+                data: sampleEvictions
             });
             map.addLayer(
                 {
                     id:"evictions", 
                     source: "sample-evictions",
-                    'source-layer': "Sample-Evictions",
+                    //'source-layer': "Sample-Evictions",
                     type: "circle",
                     paint: {
                         'circle-radius': [
