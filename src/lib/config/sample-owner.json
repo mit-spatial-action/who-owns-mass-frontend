@@ -1,0 +1,113 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "code_violations": 0,
+        "eviction-filing-type": {
+          "no-cause": 200,
+          "cause": 30,
+          "non-payment": 36
+        },
+        "corporate_addresses": [
+          "1 Beacon Street Boston MA",
+          "1495 Hancock Street, Quincy MA"
+        ],
+        "landlord_name": "Helge Capital, Inc.",
+        "total_evictions": 263,
+        "num_units": 150,
+        "num_properties": 3, 
+        "num_LLCs": 5,
+        "other_names": [
+          "GBM Portfolio Owner LLC",
+          "Helge Esmond LLC",
+          "Twelve ALH LLC",
+          "Mean Evictor LLC"
+        ],
+        "lawyers_hired": [
+          "John Smith Law Offices", 
+          "DiBella and Associates"
+        ],
+        "owner_id": 1
+      },
+      "geometry": {
+        "coordinates": [
+          -71.087218,
+          42.329201
+        ],
+        "type": "Point"
+      },
+      "id": "35df2ec5d1addf2064f4955baf22080f"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_violations": 28,
+        "eviction-filing-type": {
+          "no-cause": 83,
+          "cause": 12,
+          "non-payment": 6
+        },
+        "corporate_addresses": [
+          "72 North Water Street, New Bedford, MA",
+          "5 Archers Way, Acushnet, MA"
+        ],
+        "landlord_name": "Oliviera Investment Inc",
+        "total_evictions": 111,
+        "num_units": 35,
+        "num_properties": 2, 
+        "num_LLCs": 3, 
+        "other_names": [
+          "NFT Reality, LLC",
+          "Edron LLC"
+        ],
+        "lawyers_hired":[
+          "Jane Johnson Associates"
+        ], 
+        "owner_id": 2
+      },
+      "geometry": {
+        "coordinates": [
+          -71.10365,
+          42.38015
+        ],
+        "type": "Point"
+      },
+      "id": "a14c9d9d96298c76f5602d831afa2690"
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "code_violations": 0,
+        "eviction-filing-type": {
+          "no-cause": 2, 
+          "cause": 0, 
+          "non-payment": 0
+        },
+        "corporate_addresses": [
+          "60 Leo Birmingham Parkway, Brighton MA",
+          "172 Sawyer Ave, Swansea MA",
+          "14 Dorchester Avenue, Boston, MA",
+          "40 Ibbetson Street Somerville MA",
+          "1 Main Street Cambridge MA"
+        ],
+        "landlord_name": "Samia Companies LLC",
+        "total_evictions": 2,
+        "num_units": 10,
+        "num_properties": 1,
+        "num_LLCs": 2,  
+        "other_names": [
+          "Saint Joseph LJ5 LLC"
+        ],
+        "lawyers_hired": [], 
+        "owner_id": 3
+      },
+      "geometry": {
+        "coordinates": [
+          -71.052934,
+          42.351267
+        ],
+        "type": "Point"
+      }    }
+  ]}

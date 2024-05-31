@@ -1,0 +1,106 @@
+{
+  "type": "FeatureCollection",
+  "features": [
+    {
+      "type": "Feature",
+      "properties": {
+        "owner_id": 1,
+        "address": "31 Dudley Street, Boston, Massachusetts 02119, United States",
+        "num_units": 15,
+        "evictions": true, 
+        "id": 1
+      },
+      "geometry": {
+        "coordinates": [
+          -71.087218,
+          42.329201
+        ],
+        "type": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "owner_id": 2,
+        "address": "14 Dorchester Avenue, Boston, Massachusetts 02127, United States",
+        "evictions": true,
+        "num_units": 2,    
+        "id": 2
+      },
+      "geometry": {
+        "coordinates": [
+          -71.052934,
+          42.351267
+        ],
+        "type": "Point"
+      }
+    }, 
+    {
+      "type": "Feature",
+      "properties": {
+        "owner_id": 3, 
+        "address": "21r Dane Avenue, Somerville, Massachusetts 02143, United States",
+        "num_units": 45,
+        "evictions": false,
+        "id": 3
+      },
+      "geometry": {
+        "coordinates": [
+          -71.10365,
+          42.38015
+        ],
+        "type": "Point"
+      }
+    },
+    {
+      "type": "Feature",
+      "properties": {
+        "owner_id": 2,
+        "address": "2 Fiske Terrace, Brookline, Massachusetts, 02446, United States",
+        "evictions": false,
+        "num_units": 2,    
+        "id": 4
+      },
+      "geometry": {
+        "coordinates": [
+          -71.130247,
+          42.348509
+        ],
+        "type": "Point"
+      }
+    }, 
+    {
+      "type": "Feature",
+      "properties": {
+        "owner_id": 1,
+        "address": "85 Everett St #4, Boston, Massachusetts, 02128, United States",
+        "evictions": true,
+        "num_units": 5,    
+        "id": 5
+      },
+      "geometry": {
+        "coordinates": [
+           -71.034741, 
+           42.367545
+        ],
+        "type": "Point"
+      }
+    }, 
+    {
+      "type": "Feature",
+      "properties": {
+        "owner_id": 1,
+        "address": "146 Cedar Street Apt 1, Boston, Massachusetts, 02119, United States",
+        "evictions": true,
+        "num_units": 4,    
+        "id": 6
+      },
+      "geometry": {
+        "coordinates": [
+          -71.095102, 
+          42.327502
+        ],
+        "type": "Point"
+      }
+    }
+  ]}
