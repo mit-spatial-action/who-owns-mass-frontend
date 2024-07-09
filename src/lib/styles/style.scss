@@ -40,9 +40,14 @@ html {
   filter: drop-shadow(.18rem .18rem 0rem $danger-dark);
 }
 
-$backgrounds: (solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d37013b142d331d72/1532030351639-5C2Q8FQP0YTY8E5XUUO1/Ephiphany+School+1.jpg');
+$backgrounds: (
+  solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d37013b142d331d72/1532030351639-5C2Q8FQP0YTY8E5XUUO1/Ephiphany+School+1.jpg'
+);
+
 @each $key, $image in $backgrounds {
-  .hero-#{$key}, .page-bg {
+
+  .hero-#{$key},
+  .page-bg {
     @extend .hero;
     background-size: cover;
     background-position: center;
@@ -52,10 +57,10 @@ $backgrounds: (solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d370
 #map {
   height: inherit;
   width: 100%; //Consider changing this (relative to column width). 
- // top: 0;
+  // top: 0;
 }
 
-.homepage { 
+.homepage {
   height: 100vh;
 }
 
@@ -65,8 +70,8 @@ $backgrounds: (solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d370
     //padding: 0.75rem;
   }
 
-  .mapboxgl-ctrl-top-left > .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
-    z-index:100 !important;
+  .mapboxgl-ctrl-top-left>.mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+    z-index: 100 !important;
     margin: 0;
   }
 
@@ -85,7 +90,9 @@ $backgrounds: (solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d370
   font-size: 58px;
 }
 
-#left-panel{
+#left-panel {
+  max-height: 100vh !important;
+  overflow-y: scroll;
   display: flex;
   border-left: 2px solid $border;
   border-right: 2px solid $border;
@@ -94,17 +101,18 @@ $backgrounds: (solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d370
 
 
 
-.home-panel{
+.home-panel {
   align-self: center !important;
 }
 
-#geocoder{  
+#geocoder {
   display: flex;
   justify-content: center;
   padding: 2vh;
 }
 
-#querySearchBar{  // Temporary - remove when search bars are merged
+#querySearchBar {
+  // Temporary - remove when search bars are merged
 
   display: flex;
   justify-content: center;
