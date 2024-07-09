@@ -143,23 +143,7 @@
 
                 var feature = features[0];
 
-                // await getCompany(feature.id);
-                await fetch("api/companies/" + feature.id + "/", {
-                    method: "GET",
-                    headers: {
-                        "Content-Type": "application/json",
-                    },
-                })
-                    .then((response) => response.json())
-                    .then((data) => {
-                        company.set(data);
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        return [];
-                    });
-
-                // requesting info from backend here
+                await $getCompany(feature.id);
 
                 selectedFeature.set([feature]);
                 updateLocationURL(feature);

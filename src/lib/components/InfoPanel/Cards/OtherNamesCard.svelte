@@ -23,7 +23,7 @@
     <div class="has-text-left block">
         {#each $company["metacorp"]["related"]["institutions"] as item, index (index)}
             {#if item.id != $company.id}
-                <a on:click={$getCompany(id)} class="has-text-link">
+                <a on:click={$getCompany(item.id)} class="has-text-link">
                     <u>{item.name}</u>
                 </a>
                 <br />

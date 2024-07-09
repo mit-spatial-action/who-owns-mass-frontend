@@ -48,12 +48,15 @@
 {#if loadState}
     <div class="is-flex-align-start mx-5">
         <p class="block mt-2 is-size-5" on:click={clearState}>
-            <span class="has-text-link">&#8592 </span><u>Back</u> to search
+            <span class="has-text-link"> &#8592 </span>
+            <u>Back</u> to search
         </p>
         <span
             class="has-text-dark p-1 px-2 is-size-6 has-text-left block has-text-weight-semibold is-uppercase has-background-danger"
         >
-            Corporate Landlord 💰
+            {#if $company.landlord_type && $company.landlord_type.name == "corporate_landlord"}
+                Corporate Landlord 💰
+            {/if}
         </span>
         <div
             class="is-uppercase title has-text-dark is-size-1 mt-1 has-text-left block"
