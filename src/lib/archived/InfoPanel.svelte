@@ -73,43 +73,48 @@ $: add = (gcResult) ? parseContext(gcResult) : undefined;
                         <p>{add.address}</p>
                     {/if}
                     {#if add.muni}
-                        <p>{add.muni}, {#if add.state}{add.state}{/if} {#if add.zip}{add.zip}{/if}</p>
+                        <p>
+                            {add.muni}, {#if add.state}{add.state}{/if}
+                            {#if add.zip}{add.zip}{/if}
+                        </p>
                     {/if}
                 </div>
+            </div>
+            {#if selected}
+                <div>
+                    <LowIncome data={selected} />
+                    <EnergyCommunities data={selected} />
+                </div>
+            {/if}
         </div>
-        {#if selected}
-        <div>
-            <LowIncome
-                data={selected}
-            />
-            <EnergyCommunities
-                data={selected}
-            />
-        </div>
-        {/if}
     </div>
-</div>
 {:else}
-<div class="info-box columns p-3">
-    <div transition:slide = {{ duration: 500, axis: 'y'}} class="column is-two-fifths">
-        <div id="address" class="box block has-background-grey-darker shadow sticky-top title has-text-white">
-
-        <p>MASS EVICTIONS</p>
-        <br/>
-        <h6>A record of Massachusetts court eviction filings from 02/2019 to 09/2022</h6>
-        <br/>        
-        
+    <div class="info-box columns p-3">
+        <div
+            transition:slide={{ duration: 500, axis: "y" }}
+            class="column is-two-fifths"
+        >
+            <div
+                id="address"
+                class="box block has-background-grey-darker shadow sticky-top title has-text-white"
+            >
+                <p>WHO OWNS WHAT MASSACHUSETTS</p>
+                <br />
+                <h6>
+                    A record of Massachusetts court eviction filings from
+                    02/2019 to 09/2022
+                </h6>
+                <br />
+            </div>
         </div>
-        
     </div>
-    
-</div>
 {/if}
+
 <style>
     #address {
         z-index: 40;
     }
-    
+
     div {
         z-index: 20;
     }
