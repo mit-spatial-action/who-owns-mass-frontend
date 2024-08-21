@@ -7,7 +7,7 @@ import { onDestroy } from 'svelte';
 
     onDestroy(() => {
         unsubscribe();
-    });
+    }); 
 </script>
 
 <div>
