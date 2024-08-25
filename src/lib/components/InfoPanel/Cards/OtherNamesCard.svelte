@@ -22,8 +22,21 @@
     </p>
     <div class="has-text-left block" id="other-names-box">
         <ol type="1">
-            {#each $company.metacorp.related.institutions as item, index (index)}
-                {#if item.id != $company.id}
+            {#if $company.metacorp}
+                {#each $company.metacorp.related.institutions as item, index (index)}
+                    {#if item.id != $company.id}
+                        <li>
+                            <a
+                                on:click={$getCompany(item.id)}
+                                class="has-text-link"
+                            >
+                                <u>{item.name}</u>
+                            </a>
+                        </li>
+                    {/if}
+                {/each}
+            {:else} 
+                {#each $company.related.companies as item, index (index)}
                     <li>
                         <a
                             on:click={$getCompany(item.id)}
@@ -32,8 +45,8 @@
                             <u>{item.name}</u>
                         </a>
                     </li>
-                {/if}
-            {/each}
+                {/each}
+            {/if}
         </ol>
     </div>
     <div class="has-text-left block">

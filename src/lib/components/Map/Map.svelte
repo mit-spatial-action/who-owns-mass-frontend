@@ -20,6 +20,7 @@
         selectedFeature,
         getMap,
         getCompany,
+        getMetaCorp,
         company,
     } from "$lib/scripts/stores.js";
 
@@ -29,8 +30,7 @@
 
     mapbox.accessToken = mapbox_token;
 
-    export let style =
-        "mapbox://styles/mit-spatial-action/cluwwvx8l00gi01pe8mi4e64o";
+    export let style = "mapbox://styles/mit-spatial-action/cluwwvx8l00gi01pe8mi4e64o";
 
     export let projection = "globe";
     export let initLngLat = site_data.map.init.lngLat;
@@ -83,7 +83,7 @@
         mobile = Device.isPhone;
         let mapOptions = {
             container: container,
-            style: style,
+            style: "mapbox://styles/mapbox/light-v11",
             center: initLngLat,
             zoom: initZoom.length === 2 ? initZoom[0] : initZoom,
             bearing: 0,
@@ -93,20 +93,20 @@
         map = new mapbox.Map(mapOptions);
 
         map.on("load", () => {
-            map.addSource("sample-evictions", {
+            map.addSource("companies", {
                 type: "vector",
-                url: "mapbox://mit-spatial-action.cluwwxboq41sc1umn4mld8fea-2owb9",
+                url: "mapbox://mit-spatial-action.companies",
             });
             map.addLayer({
-                id: "evictions",
-                source: "sample-evictions",
-                "source-layer": "Sample-Evictions",
+                id: "id",
+                source: "companies",
+                "source-layer": "geographies",
                 type: "circle",
                 paint: {
                     "circle-radius": [
                         "interpolate",
                         ["linear"],
-                        ["get", "evictions"],
+                        ["get", "units"],
                         0,
                         0,
                         400,
@@ -133,7 +133,7 @@
                 }
 
                 var features = map.queryRenderedFeatures(e.point, {
-                    layers: ["evictions"],
+                    layers: ["id"],
                 });
                 if (!features.length) {
                     selectedFeature.set([]);
@@ -142,8 +142,13 @@
                 }
 
                 var feature = features[0];
-
-                await $getCompany(feature.id);
+                console.log("requesting company details", feature.properties.company_id, feature.properties.metacorp_id );
+                if (feature.properties.company_id) {
+                    await $getCompany(feature.properties.company_id);
+                }
+                else {
+                    await $getMetaCorp(feature.properties.metacorp_id);
+                }
 
                 selectedFeature.set([feature]);
                 updateLocationURL(feature);
@@ -206,14 +211,14 @@
 
     // Function to update the URL when a location is selected
     function updateLocationURL(feature) {
+        console.log("updateLocationURL", feature.properties.loc_id)
         if (Object.keys(feature).length == 0) {
             const newUrl = `/`;
             window.history.pushState({}, "", newUrl);
             return;
         }
-
-        console.log("Updated URL: ", feature.properties.eviction_rank);
-        const newUrl = `/?location=${encodeURIComponent(feature.properties.eviction_rank)}`;
+        console.log("Updated URL: ", feature.properties.loc_id);
+        const newUrl = `/?location=${encodeURIComponent(feature.properties.metacorp_id)}`;
         window.history.pushState({ feature }, "", newUrl);
     }
 
@@ -224,10 +229,11 @@
         var selectedLocations = [];
         if (urlParams) {
             selectedLocations = map.queryRenderedFeatures({
-                layers: ["evictions"],
-                filter: ["==", "eviction_rank", parseInt(urlParams)],
+                layers: ["companies"],
+                filter: ["==", "id", parseInt(urlParams)],
             });
         }
+        console.log("map.getLayer('selectedGeom')", map.getLayer("selectedGeom"))
 
         if (!selectedLocations.length) {
             selectedFeature.set([]);
