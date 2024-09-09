@@ -22,6 +22,7 @@
         getCompany,
         getMetaCorp,
         company,
+        metacorp
     } from "$lib/scripts/stores.js";
 
     let mobile;
@@ -93,13 +94,13 @@
         map = new mapbox.Map(mapOptions);
 
         map.on("load", () => {
-            map.addSource("companies", {
+            map.addSource("companies_updated", {
                 type: "vector",
-                url: "mapbox://mit-spatial-action.companies",
+                url: "mapbox://mit-spatial-action.companies_updated",
             });
             map.addLayer({
                 id: "id",
-                source: "companies",
+                source: "companies_updated",
                 "source-layer": "geographies",
                 type: "circle",
                 paint: {
@@ -151,7 +152,7 @@
                 }
 
                 selectedFeature.set([feature]);
-                updateLocationURL(feature);
+                updateLocationURL(feature.properties.company_id);
 
                 map.addSource("selectedGeom", {
                     type: "geojson",
@@ -211,14 +212,13 @@
 
     // Function to update the URL when a location is selected
     function updateLocationURL(feature) {
-        console.log("updateLocationURL", feature.properties.loc_id)
-        if (Object.keys(feature).length == 0) {
-            const newUrl = `/`;
-            window.history.pushState({}, "", newUrl);
-            return;
-        }
-        console.log("Updated URL: ", feature.properties.loc_id);
-        const newUrl = `/?location=${encodeURIComponent(feature.properties.metacorp_id)}`;
+        console.log("updateLocationURL", feature);
+        // if (Object.keys(feature).length == 0) {
+        //     const newUrl = `/`;
+        //     window.history.pushState({}, "", newUrl);
+        //     return;
+        // }
+        const newUrl = `/?location=${encodeURIComponent(feature)}`;
         window.history.pushState({ feature }, "", newUrl);
     }
 

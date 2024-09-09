@@ -1,20 +1,20 @@
 <script>
-    import { afterUpdate, onMount, onDestroy } from 'svelte';
-    import SearchBar from '$lib/components/SearchBar.svelte';
-    import InfoPanel from '$lib/components/InfoPanel/InfoPanel.svelte';
+    import { afterUpdate, onMount, onDestroy } from "svelte";
+    import SearchBar from "$lib/components/SearchBar.svelte";
+    import InfoPanel from "$lib/components/InfoPanel/InfoPanel.svelte";
     //import QueryFeaturesSearchBar from '$lib/components/QueryFeaturesSearchBar.svelte';
-    import { remountSearchbar, selectedFeature } from '$lib/scripts/stores.js';
+    import { remountSearchbar, selectedFeature } from "$lib/scripts/stores.js";
 
-     /** @type {import('./$types').PageData} */
-     //import { getContext, setContext } from 'svelte';
+    /** @type {import('./$types').PageData} */
+    //import { getContext, setContext } from 'svelte';
 
     export let title = "Title";
     export let subtitle = "Longer description";
+    export let mapbox_token;
     let loadState = false;
-        export let mapbox_token;
 
-    const unsubscribe = selectedFeature.subscribe(value => {
-        console.log('feature: ', value);
+    const unsubscribe = selectedFeature.subscribe((value) => {
+        console.log("feature: ", value);
     });
 
     onMount(() => {
@@ -22,14 +22,14 @@
     });
 
     afterUpdate(() => {
-        if (document.getElementById('geocoder')){
-            let length = document.getElementById('geocoder').children.length;
+        if (document.getElementById("geocoder")) {
+            let length = document.getElementById("geocoder").children.length;
 
-            if (length == 0){
-                remountSearchbar.update((n) => n+1);
+            if (length == 0) {
+                remountSearchbar.update((n) => n + 1);
             }
-       }
-    })
+        }
+    });
 
     function handleSearch(event) {
         const searchTerm = event.detail;
@@ -37,50 +37,51 @@
     }
 
     //Home page tab button names
-       $: items = [
-            {
-                desc: "Top Statistics",
-             },
-            {
-                desc: "Random Evictor",
-            },
-            {
-                desc: "Eviction Primer",
-            },
-            {
-                desc: "What happeneds in court?",
-            },
-            {
-                desc: "Reports",
-            },
-            {
-                desc: "Gallery",
-            },
-        ]
+    $: items = [
+        {
+            desc: "Top Statistics",
+        },
+        {
+            desc: "Random Evictor",
+        },
+        {
+            desc: "Eviction Primer",
+        },
+        {
+            desc: "What happeneds in court?",
+        },
+        {
+            desc: "Reports",
+        },
+        {
+            desc: "Gallery",
+        },
+    ];
 
 </script>
-{#if loadState }
-    {#if $selectedFeature.length == 0 }
-    <div class="home-panel">
-        <div class="title has-text-dark is-size-1 has-text-centered">
-            {title}
-        </div>
-        <div class="subtitle mt-1 has-text-dark is-size-6 has-text-centered">
+
+{#if loadState}
+    {#if $selectedFeature.length == 0}
+        <div class="home-panel">
+            <div class="title has-text-dark is-size-1 has-text-centered">
+                {title}
+            </div>
+            <div
+                class="subtitle mt-1 has-text-dark is-size-6 has-text-centered"
+            >
                 {subtitle}
+            </div>
+            <div class="centered">
+                {#key $selectedFeature}
+                    <SearchBar
+                        key={$selectedFeature}
+                        on:search={handleSearch}
+                    />
+                {/key}
+            </div>
         </div>
-        <div class="centered">
-            {#key $selectedFeature}
-                 <SearchBar key={$selectedFeature} on:search={handleSearch} />
-            {/key}
-        </div>
-    </div>
     {/if}
     {#if $selectedFeature.length >= 1}
-       <InfoPanel/>
+        <InfoPanel />
     {/if}
 {/if}
-
-
-
-
-

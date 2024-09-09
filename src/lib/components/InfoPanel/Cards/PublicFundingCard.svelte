@@ -19,6 +19,6 @@
         <b>Public Funding</b>
     </p>
     <div class="has-text-left block"> 
-         This landlord takes Section 8 and received ${JSON.parse($selectedFeature[0].properties.public_funding)} in PPP loans. 
+
     </div>
 </div>

@@ -13,6 +13,12 @@
     onDestroy(() => {
         unsubscribe();
     });
+    function toTitleCase(str) {
+        return str.replace(
+            /\w\S*/g,
+            text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
+        );
+    }
 </script>
 
 <div>
@@ -23,35 +29,22 @@
     <div class="has-text-left block" id="other-names-box">
         <ol type="1">
             {#if $company.metacorp}
-                {#each $company.metacorp.related.institutions as item, index (index)}
-                    {#if item.id != $company.id}
+                {#if $company.metacorp.related}
+                    {#each $company.metacorp.related.companies as item, index (index)}
+                        {@const name = toTitleCase(item.name)}
                         <li>
-                            <a
-                                on:click={$getCompany(item.id)}
-                                class="has-text-link"
-                            >
-                                <u>{item.name}</u>
+                            <a on:click={$getCompany(item.id)} class="has-text-link">
+                                <u>{name}</u>
                             </a>
                         </li>
-                    {/if}
-                {/each}
-            {:else} 
-                {#each $company.related.companies as item, index (index)}
-                    <li>
-                        <a
-                            on:click={$getCompany(item.id)}
-                            class="has-text-link"
-                        >
-                            <u>{item.name}</u>
-                        </a>
-                    </li>
-                {/each}
+                    {/each}
+                {/if}
             {/if}
         </ol>
     </div>
-    <div class="has-text-left block">
+    <!-- <div class="has-text-left block">
         <span class="has-text-link mb-1"><u>View corporate addresses</u></span>
-    </div>
+    </div> -->
 </div>
 
 <style>
