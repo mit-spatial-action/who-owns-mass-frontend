@@ -1,11 +1,12 @@
 <script>
+
     import {
         selectedFeature,
         company,
-        getCompany,
+        company_id
     } from "$lib/scripts/stores.js";
-    import { onDestroy } from "svelte";
-
+    import { onDestroy, createEventDispatcher } from "svelte";
+    import { eventStore } from '$lib/scripts/eventStore.js';
     /** @type {import('./$types').PageData} */
 
     const unsubscribe = selectedFeature.subscribe((value) => {});
@@ -19,33 +20,34 @@
             text => text.charAt(0).toUpperCase() + text.substring(1).toLowerCase()
         );
     }
+
+    function callOnCompany(id) {
+        company_id.set(id)
+    }
+
 </script>
 
-<div>
+    {#if $company.metacorp && $company.metacorp.related && $company.metacorp.related.companies.length > 1}
     <hr />
     <p class="has-text-dark is-size-4 has-text-left block mb-1">
         <b>Also known as</b>
     </p>
     <div class="has-text-left block" id="other-names-box">
         <ol type="1">
-            {#if $company.metacorp}
-                {#if $company.metacorp.related}
-                    {#each $company.metacorp.related.companies as item, index (index)}
-                        {@const name = toTitleCase(item.name)}
-                        <li>
-                            <a on:click={$getCompany(item.id)} class="has-text-link">
-                                <u>{name}</u>
-                            </a>
-                        </li>
-                    {/each}
-                {/if}
-            {/if}
+            {#each $company.metacorp.related.companies as item, index (index)}
+                {@const name = toTitleCase(item.name)}
+                <li>
+                    <a on:click={callOnCompany(item.id)} class="has-text-link">
+                        <u>{name}</u>
+                    </a>
+                </li>
+            {/each}
         </ol>
     </div>
-    <!-- <div class="has-text-left block">
+    {/if}
+        <!-- <div class="has-text-left block">
         <span class="has-text-link mb-1"><u>View corporate addresses</u></span>
     </div> -->
-</div>
 
 <style>
     #other-names-box {

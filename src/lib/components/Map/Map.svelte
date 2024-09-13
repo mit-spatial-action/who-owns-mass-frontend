@@ -21,6 +21,7 @@
         getMap,
         getCompany,
         getMetaCorp,
+        company_id,
         company,
         metacorp
     } from "$lib/scripts/stores.js";
@@ -67,6 +68,30 @@
 
     const unsubscribe2 = selectedFeature.subscribe((value) => {
         console.log("feature: ", value);
+    });
+
+    const unsubscribe_get_new_company = company_id.subscribe(value => {
+        
+        if (value && typeof(value) != "object") {
+            let features = map.querySourceFeatures('companies', {
+                sourceLayer: 'geographies',
+                filter: ['==', 'company_id', value]
+            });
+            if (features.length > 0) {
+                const feature = features[0];
+                const coordinates = feature.geometry.coordinates;
+
+                map.flyTo({ 
+                    center: coordinates,
+                    zoom: 12, // Adjust zoom level as needed
+                    speed: 1.2, // Speed of the flyTo animation
+                    curve: 1, // Curve of the animation path
+                    easing(t) {
+                        return t;
+                    }
+                });
+            }
+        }
     });
 
     function flyToLngLat(lngLat) {
@@ -143,7 +168,6 @@
                 }
 
                 var feature = features[0];
-                console.log("requesting company details", feature.properties.company_id, feature.properties.metacorp_id );
                 if (feature.properties.company_id) {
                     await $getCompany(feature.properties.company_id);
                 }
@@ -208,6 +232,7 @@
         unsubscribe(); // Unsubscribes from the remountSearchBar dummy
         unsubscribe2();
         unsubscribeMap();
+        unsubscribe_get_new_company();
     });
 
     // Function to update the URL when a location is selected
