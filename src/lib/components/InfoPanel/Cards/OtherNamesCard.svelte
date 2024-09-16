@@ -6,7 +6,6 @@
         company_id
     } from "$lib/scripts/stores.js";
     import { onDestroy, createEventDispatcher } from "svelte";
-    import { eventStore } from '$lib/scripts/eventStore.js';
     /** @type {import('./$types').PageData} */
 
     const unsubscribe = selectedFeature.subscribe((value) => {});
