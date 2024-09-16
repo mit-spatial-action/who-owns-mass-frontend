@@ -6,6 +6,7 @@ export const selectedFeature = writable([]);
 
 export const getMap = writable(() => { });
 
+export const company_id = writable({});
 export const company = writable({});
 export const metacorp = writable({});
 
@@ -13,6 +14,7 @@ let getLocation = function() {
     let url = window.location.href;
     return url.slice(url.indexOf('?') + 1).split("location=")[1].split("&")[0];
 }
+
 export const getCompany = readable(async (id) => {
     // if (id) is not url id, blast event
     let location = getLocation();
