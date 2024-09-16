@@ -71,29 +71,36 @@
     });
 
     const unsubscribe_get_new_company = company_id.subscribe(value => {
-        
+        console.log("getting new company id?", value, typeof(value));
         if (value && typeof(value) != "object") {
-            let features = map.querySourceFeatures('companies', {
-                sourceLayer: 'geographies',
-                filter: ['==', 'company_id', value]
-            });
-            if (features.length > 0) {
-                const feature = features[0];
-                const coordinates = feature.geometry.coordinates;
+            let company_id_to_query = parseInt(value);
+            setTimeout(goToFeature(map, company_id_to_query), 2000);
+        }
+    });
 
+    function goToFeature(map, company_id_to_query) {
+        // getting feature from tileset and flying to it
+        // if it's got a different address
+        let features = map.querySourceFeatures('companies_updated', {
+                sourceLayer: 'geographies',
+                filter: ['==', 'company_id', company_id_to_query]
+            });
+            console.log("getting features?", features);
+            if (features.length > 0) {
+                let feature = features[0];
+                let coordinates = feature.geometry.coordinates;
+                console.log("flyTO", coordinates)
                 map.flyTo({ 
                     center: coordinates,
-                    zoom: 12, // Adjust zoom level as needed
-                    speed: 1.2, // Speed of the flyTo animation
-                    curve: 1, // Curve of the animation path
+                    zoom: 15,
+                    speed: 1.2,
+                    curve: 1, 
                     easing(t) {
                         return t;
                     }
                 });
             }
-        }
-    });
-
+    }
     function flyToLngLat(lngLat) {
         map.flyTo({
             center: lngLat,
@@ -142,6 +149,7 @@
                     "circle-opacity": 0.7,
                 },
             });
+            handleUrlChange();
         });
         map.once("zoomend", () => {
             loadingState = !loadingState;
@@ -250,16 +258,17 @@
     //  Example function for handling changes in the URL on Map
     function handleUrlChange() {
         const urlParams = $page.url.searchParams.get("location");
-        console.log("handleUrlChange, urlParams:", urlParams);
         var selectedLocations = [];
+        console.log("getting to handleUrlChange?", urlParams);
+        console.log("does map exist?", map);
         if (urlParams) {
             selectedLocations = map.queryRenderedFeatures({
-                layers: ["companies"],
-                filter: ["==", "id", parseInt(urlParams)],
+                // layers: ["companies_updated"],
+                filter: ["==", "company_id", parseInt(urlParams)],
             });
         }
-        console.log("map.getLayer('selectedGeom')", map.getLayer("selectedGeom"))
-
+        // console.log("map.getLayer('selectedGeom')", map.getLayer("selectedGeom"))
+        console.log("in handleUrlChange", selectedLocations);
         if (!selectedLocations.length) {
             selectedFeature.set([]);
 
