@@ -21,6 +21,8 @@ export const getCompany = readable(async (id) => {
     if (location != id) {
         window
     }
+
+    console.log("GETTING COMPANY");
     await fetch("api/companies/" + id + "/", {
         method: "GET",
         headers: {

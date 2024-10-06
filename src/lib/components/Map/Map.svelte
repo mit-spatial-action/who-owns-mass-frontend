@@ -177,6 +177,9 @@
 
                 var feature = features[0];
                 if (feature.properties.company_id) {
+                    console.log("COMPANY ID"); 
+                    console.log(feature.properties.company_id);
+                    
                     await $getCompany(feature.properties.company_id);
                 }
                 else {
