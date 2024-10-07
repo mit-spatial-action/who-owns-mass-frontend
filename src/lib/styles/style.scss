@@ -102,13 +102,16 @@ $backgrounds: (
   color: #444;
 }
 
+/*
 #left-panel, #right-panel {
-  /* Use box-sizing so that element's outerwidth will match width property */
+   // Use box-sizing so that element's outerwidth will match width property 
   box-sizing: border-box !important;
   
-  /* Allow box to grow and shrink, and ensure they are all equally sized */
+  // Allow box to grow and shrink, and ensure they are all equally sized 
   flex: 1 1 auto !important;
 }
+
+*/
 
 #left-panel {
   max-height: 100vh !important;

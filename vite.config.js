@@ -1,5 +1,6 @@
 import { sveltekit } from '@sveltejs/kit/vite';
 import { defineConfig, loadEnv } from 'vite';
+
 export default ({ mode }) => {
 	process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 	return defineConfig({
@@ -13,7 +14,7 @@ export default ({ mode }) => {
 		},
 		server: {
 			proxy: {
-				'/api': {
+				'/api': { //Note: need to use "http://127.0.0.1:8000" in env - localhost is not working. 
 					target: process.env.VITE_SERVER_URL,
 					changeOrigin: true,
 					rewrite: (path) => path.replace(/^\/api/, ''),

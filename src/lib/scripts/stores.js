@@ -22,7 +22,8 @@ export const getCompany = readable(async (id) => {
         window
     }
 
-    console.log("GETTING COMPANY");
+    console.log("api/companies" + id + "/");
+
     await fetch("api/companies/" + id + "/", {
         method: "GET",
         headers: {
@@ -49,6 +50,7 @@ export const getMetaCorp = readable(async (id) => {
     })
         .then((response) => response.json())
         .then((data) => {
+            console.log("getting megacorp data", data);
             metacorp.set(data);
         })
         .catch((error) => {
