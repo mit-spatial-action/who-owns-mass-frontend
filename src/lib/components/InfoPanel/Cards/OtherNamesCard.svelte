@@ -29,7 +29,7 @@
     {#if $company.metacorp && $company.metacorp.related && $company.metacorp.related.companies.length > 1}
     <hr />
     <p class="has-text-dark is-size-4 has-text-left block mb-1">
-        <b>Also known as</b>
+        <b>Associated Companies</b>
     </p>
     <div class="has-text-left block" id="other-names-box">
         <ol type="1">

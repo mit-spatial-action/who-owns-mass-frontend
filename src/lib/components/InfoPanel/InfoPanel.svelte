@@ -5,9 +5,8 @@
     import { mapbox, key } from "$lib/scripts/utils";
     import { selectedFeature, getMap } from "$lib/scripts/stores.js";
     import OtherNamesCard from "$lib/components/InfoPanel/Cards/OtherNamesCard.svelte";
-    import PublicFundingCard from "$lib/components/InfoPanel/Cards/PublicFundingCard.svelte";
     import DownloadDatasetsCard from "$lib/components/InfoPanel/Cards/DownloadDatasetsCard.svelte";
-    import EvictorRankCard from "$lib/components/InfoPanel/Cards/EvictorRankCard.svelte";
+    import MetacorpCard from "$lib/components/InfoPanel/Cards/MetacorpCard.svelte";
     import AddressCard from "$lib/components/InfoPanel/Cards/AddressCard.svelte";
     import LandlordCard from "$lib/components/InfoPanel/Cards/LandlordCard.svelte";
     import { company } from "$lib/scripts/stores.js";
@@ -22,7 +21,6 @@
 
     //const selectedFeature = getContext('selectedFeature');
     const unsubscribe = selectedFeature.subscribe((value) => {
-        console.log("feature: ", value);
     });
 
     let map;
@@ -81,16 +79,18 @@
                     class="subtitle mt-1 has-text-dark is-size-6 has-text-centered block"
                 >
                     <OtherNamesCard />
-                    <PublicFundingCard />
+                    <AddressCard />
                     <DownloadDatasetsCard />
+                    
                 </div>
             </div>
             <div class="column">
-                <EvictorRankCard />
+                {#if $company.metacorp && $company.metacorp.related && $company.metacorp.related.companies_count && $company.metacorp.related.companies_count > 1}
+                <MetacorpCard />
+                {/if}
                 <LandlordCard />
             </div>
         </div>
-        <AddressCard />
-        <p>[placeholder - people infographic]</p>
+        
     </div>
 {/if}

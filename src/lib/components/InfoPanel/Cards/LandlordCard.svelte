@@ -20,14 +20,7 @@
         <b>About this Landlord</b>
     </p>
     <div class="has-text-left block">
-        <p>
-            {$selectedFeature[0].properties.landlord_name} has evicted {$selectedFeature[0]
-                .properties.evictions} tenants
-            <span class="has-text-success"
-                ><u>across their 15 properties</u></span
-            > in Massachusetts. Here's why:
-        </p>
-        <br />
-        <p class="has-text-centered">[Placeholder pie chart]</p>
+        <p>Owner Name: {$company.owner[0].name}</p>
+        <p>This company (is/is not) a trust and (does/does not) have trustees.</p>
     </div>
 </div>

@@ -22,8 +22,6 @@ export const getCompany = readable(async (id) => {
         window
     }
 
-    console.log("api/companies" + id + "/");
-
     await fetch("api/companies/" + id + "/", {
         method: "GET",
         headers: {
@@ -32,7 +30,6 @@ export const getCompany = readable(async (id) => {
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log("getting data", data);
             company.set(data);
         })
         .catch((error) => {

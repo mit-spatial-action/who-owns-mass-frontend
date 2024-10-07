@@ -16,7 +16,7 @@
 <div>
     <hr/>
     <p class="has-text-dark is-size-4 has-text-left block mb-1">
-        <b>Public Funding</b>
+        <b>About the Owner</b>
     </p>
     <div class="has-text-left block"> 
 

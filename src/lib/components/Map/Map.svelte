@@ -8,6 +8,9 @@
     import RippleLoader from "$lib/components/RippleLoader.svelte";
     import site_data from "$lib/config/instance.json";
     import { writable } from "svelte/store";
+    import { Deck } from '@deck.gl/core';
+    //import { MapboxLayer } from '@deck.gl/mapbox';
+    import { HexagonLayer } from '@deck.gl/aggregation-layers';
 
     import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -110,6 +113,13 @@
         });
     }
 
+    //Calls Mapbox API, returns all points lat/lng in MA to aggregate in Hexagon layer
+    async function getHexagonData() {
+        const response = await fetch('https://api.mapbox.com/datasets/v1/mit-spatial-action/clzywldvx0tpz1no2xqfj194b/features?access_token=' + mapbox_token);
+        const data = await response.json();
+        return data;
+    }
+
     $: lngLat ? flyToLngLat(lngLat) : null;
 
     onMount(() => {
@@ -125,11 +135,28 @@
         };
         map = new mapbox.Map(mapOptions);
 
-        map.on("load", () => {
+        map.on("load", async () => {
+            //Create Hexagon landing layer - get data from Mapbox API
+            //const mass_data = await getHexagonData(); //May want to change process to limit Mapbox API calls
+
+
+            //Challenge installing @deck.gl/mapbox dependency (for MapboxLayer function). There is no /mapbox dependency.
+            /*const deckLayer = new MapboxLayer({
+                id: 'hexagon-landing',
+                type: HexagonLayer, 
+                data: mass_data,
+                getPosition: d => d.position,
+                getFillColor: d => d.color,
+                getRadius: d => d.size
+            });
+
+            map.addLayer(deckLayer);*/
+
             map.addSource("companies_updated", {
                 type: "vector",
                 url: "mapbox://mit-spatial-action.companies_updated",
             });
+
             map.addLayer({
                 id: "id",
                 source: "companies_updated",
@@ -188,6 +215,7 @@
 
                 selectedFeature.set([feature]);
                 updateLocationURL(feature.properties.company_id);
+                console.log($company);
 
                 map.addSource("selectedGeom", {
                     type: "geojson",
@@ -208,7 +236,7 @@
                             35,
                         ],
                         "circle-color": "#4223FF",
-                        "circle-opacity": 0.2,
+                        "circle-opacity": 0.6,
                     },
                 });
             });

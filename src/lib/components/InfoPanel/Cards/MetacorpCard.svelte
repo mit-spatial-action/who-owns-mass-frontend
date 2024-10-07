@@ -1,5 +1,7 @@
 <script>
     import { selectedFeature } from '$lib/scripts/stores.js';
+    import { company } from "$lib/scripts/stores.js";
+
     /** @type {import('./$types').PageData} */
 
     const evictor_rank = "Major Evictor";
@@ -18,16 +20,13 @@
 <div>
     <hr/>
     <p class="has-text-dark is-size-4 has-text-left block mb-1">
-        <b>Evictor Rank</b>
+        <b>About this Network</b>
     </p>
     <div class="has-text-centered p-1 pb-2">
-    <button class="button is-danger is-size-6 has-text-weight-semibold is-outlined">
-        ☠️ Extreme Evictor ☠️
-    </button> 
+
     </div>
     <div class="has-text-left block">
-        <p>
-            This landlord is in <b><span class="has-background-warning">the top 10% of evictors</span></b> in the state of Massachusetts
-        </p>
+        <p>{$company.name} is a part of a larger network of properties owned by {$company.metacorp.name}. </p>
+           <p> This network owns roughly ____ units across Massachusetts. Their total land holdings are worth approximately $____. </p>
     </div>
 </div>
