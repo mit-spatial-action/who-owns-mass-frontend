@@ -9,7 +9,7 @@
     import RippleLoader from "$lib/components/RippleLoader.svelte";
    
     /* Helper functions */  
-   import { drawNetwork }  from "$lib/components/Map/helper-functions/DrawNetwork.js";
+   import { drawNetwork, drawNetworkPoints }  from "$lib/components/Map/helper-functions/DrawNetwork.js";
 
     /* DeckGL landing page packages */
     //import { MapboxLayer } from '@deck.gl/mapbox';
@@ -199,6 +199,12 @@
                 if (typeof map.getLayer("selectedGeom") !== "undefined") {
                     map.removeLayer("selectedGeom");
                     map.removeSource("selectedGeom");
+
+                    map.removeLayer("affiliates");
+                    map.removeSource("affiliates");
+
+                    map.removeLayer("network");
+                    map.removeSource("routes");
                 }
 
                 var features = map.queryRenderedFeatures(e.point, {
@@ -216,7 +222,8 @@
                     console.log(feature.properties.company_id);
                     
                     console.log("SELECTED LATLNG");
-                    var network = drawNetwork(feature.geometry.coordinates)
+                    var network = drawNetwork(feature.geometry.coordinates);
+                    var networkPoints = drawNetworkPoints();
                     await $getCompany(feature.properties.company_id);
                 }
                 else {
@@ -226,6 +233,41 @@
                 selectedFeature.set([feature]);
                 updateLocationURL(feature.properties.company_id);
                 console.log($company);
+
+            // Add network, if 1+ affiliated companies
+                if(network.features.length > 0){
+
+                    map.addSource('routes', {
+                        'type': 'geojson',
+                        'data': network
+                    });
+
+                    map.addSource('affiliates', {
+                        'type': 'geojson',
+                        'data': networkPoints
+                    });
+
+                    map.addLayer({
+                        id: "network",
+                        source: 'routes',
+                        type: 'line',
+                        paint: {
+                            'line-width': 1.5,
+                            'line-color': '#806cf9',
+                            'line-opacity': 0.8
+                        }
+                    });
+
+                    map.addLayer({
+                        id: "affiliates",
+                        source: 'affiliates',
+                        type: 'circle',
+                        paint: {
+                            "circle-color": "#806cf9",
+                            "circle-opacity": 1,
+                        }
+                    });
+                }
 
                 map.addSource("selectedGeom", {
                     type: "geojson",
@@ -246,28 +288,10 @@
                             35,
                         ],
                         "circle-color": "#4223FF",
-                        "circle-opacity": 0.6,
+                        "circle-opacity": 0.8,
                     },
                 });
 
-            // Add network, if 1+ affiliated companies
-                if(network.length > 0){
-
-                    map.addSource('route', {
-                        'type': 'geojson',
-                        'data': network
-                    });
-
-                    map.addLayer({
-                        id: "network",
-                        source: 'route',
-                        type: 'line',
-                        paint: {
-                            'line-width': 2,
-                            'line-color': '#007cbf'
-                        }
-                    });
-                }
 
             });
             map.setFog({
@@ -352,6 +376,7 @@
                 type: "geojson",
                 data: feature.toJSON(),
             });
+
             map.addLayer({
                 id: "selectedGeom",
                 type: "circle",

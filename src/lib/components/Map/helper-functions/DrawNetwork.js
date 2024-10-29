@@ -13,21 +13,48 @@ const exampleDestinations= [[-72.0287275314331 , 42.30118247546122],
 
 //TODO: add "destination" param
 export function drawNetwork (origin) {
-    const route = {
+    const routes = {
         'type': 'FeatureCollection',
-        'features': [
-            {
-                'type': 'Feature',
-                'geometry': {
-                    'type': 'LineString',
-                    'coordinates': [origin, exampleDestinations[0]]
-                }
-            }
-        ]
+        'features': []
     };
 
-    console.log(route);
+    for (let i = 0; i < exampleDestinations.length; i++) {
+        let route = 
+            {
+                'type': 'Feature',
+                'properties': {},
+                'geometry': {
+                    'type': 'LineString',
+                    'coordinates': [origin, exampleDestinations[i]]
+                }
+            }  
+            
+    routes.features.push(route);
+    };
+    return(routes);
 
-    return(route);
+}
 
+export function drawNetworkPoints() {
+
+    const points = {
+        'type': 'FeatureCollection',
+        'features': []
+    };
+
+    for (let i = 0; i < exampleDestinations.length; i++) {
+        let affiliate = 
+            {
+                'type': 'Feature',
+                'properties': {},
+                'geometry': {
+                    'type': 'Point',
+                    'coordinates': exampleDestinations[i]
+                }
+            }  
+            
+    points.features.push(affiliate);
+    };
+    console.log(points);
+    return(points)
 }

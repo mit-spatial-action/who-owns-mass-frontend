@@ -33,6 +33,12 @@
         map.removeLayer("selectedGeom");
         map.removeSource("selectedGeom");
 
+        map.removeLayer("affiliates");
+        map.removeSource("affiliates");
+
+        map.removeLayer("network");
+        map.removeSource("routes");
+
         const newUrl = `/`;
         window.history.pushState({}, "", newUrl);
     }
