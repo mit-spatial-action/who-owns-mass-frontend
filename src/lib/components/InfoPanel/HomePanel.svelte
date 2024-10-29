@@ -14,7 +14,6 @@
     let loadState = false;
 
     const unsubscribe = selectedFeature.subscribe((value) => {
-        console.log("feature: ", value);
     });
 
     onMount(() => {

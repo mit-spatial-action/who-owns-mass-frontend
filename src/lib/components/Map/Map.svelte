@@ -78,11 +78,9 @@
     });
 
     const unsubscribe2 = selectedFeature.subscribe((value) => {
-        console.log("feature: ", value);
     });
 
     const unsubscribe_get_new_company = company_id.subscribe(value => {
-        console.log("getting new company id?", value, typeof(value));
         if (value && typeof(value) != "object") {
             let company_id_to_query = parseInt(value);
             setTimeout(goToFeature(map, company_id_to_query), 2000);
@@ -96,11 +94,9 @@
                 sourceLayer: 'geographies',
                 filter: ['==', 'company_id', company_id_to_query]
             });
-            console.log("getting features?", features);
             if (features.length > 0) {
                 let feature = features[0];
                 let coordinates = feature.geometry.coordinates;
-                console.log("flyTO", coordinates)
                 map.flyTo({ 
                     center: coordinates,
                     zoom: 15,
@@ -221,7 +217,6 @@
                     console.log("COMPANY ID"); 
                     console.log(feature.properties.company_id);
                     
-                    console.log("SELECTED LATLNG");
                     var network = drawNetwork(feature.geometry.coordinates);
                     var networkPoints = drawNetworkPoints();
                     await $getCompany(feature.properties.company_id);
@@ -232,7 +227,6 @@
 
                 selectedFeature.set([feature]);
                 updateLocationURL(feature.properties.company_id);
-                console.log($company);
 
             // Add network, if 1+ affiliated companies
                 if(network.features.length > 0){
@@ -330,7 +324,6 @@
 
     // Function to update the URL when a location is selected
     function updateLocationURL(feature) {
-        console.log("updateLocationURL", feature);
         // if (Object.keys(feature).length == 0) {
         //     const newUrl = `/`;
         //     window.history.pushState({}, "", newUrl);
@@ -344,8 +337,6 @@
     function handleUrlChange() {
         const urlParams = $page.url.searchParams.get("location");
         var selectedLocations = [];
-        console.log("getting to handleUrlChange?", urlParams);
-        console.log("does map exist?", map);
         if (urlParams) {
             selectedLocations = map.queryRenderedFeatures({
                 // layers: ["companies_updated"],

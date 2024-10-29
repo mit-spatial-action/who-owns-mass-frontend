@@ -16,7 +16,6 @@
     let loadState = false;
     onMount(() => {
         loadState = true;
-        console.log($selectedFeature);
     });
 
     //const selectedFeature = getContext('selectedFeature');
