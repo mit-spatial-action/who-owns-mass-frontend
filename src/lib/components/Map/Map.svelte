@@ -1,16 +1,24 @@
 <script>
     import { onDestroy, onMount, setContext } from "svelte";
     import { page } from "$app/stores";
+    //import Turf from '@turf/turf';
     //import ForwardGeocoder from '$lib/components/Map/Geocoders/.svelte';
     import SearchGeocoder from "$lib/components/Map/Geocoders/SearchCombined.svelte";
     //import ReverseGeocoder from '$lib/components/Map/Geocoders/Reverse.svelte';
     import SelectedGeometry from "$lib/components/Map/SelectedGeometry.svelte";
     import RippleLoader from "$lib/components/RippleLoader.svelte";
+   
+    /* Helper functions */  
+   import { drawNetwork }  from "$lib/components/Map/helper-functions/DrawNetwork.js";
+
+    /* DeckGL landing page packages */
+    //import { MapboxLayer } from '@deck.gl/mapbox';
+    import { HexagonLayer } from '@deck.gl/aggregation-layers';
+
     import site_data from "$lib/config/instance.json";
     import { writable } from "svelte/store";
     import { Deck } from '@deck.gl/core';
-    //import { MapboxLayer } from '@deck.gl/mapbox';
-    import { HexagonLayer } from '@deck.gl/aggregation-layers';
+ 
 
     import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -207,6 +215,8 @@
                     console.log("COMPANY ID"); 
                     console.log(feature.properties.company_id);
                     
+                    console.log("SELECTED LATLNG");
+                    var network = drawNetwork(feature.geometry.coordinates)
                     await $getCompany(feature.properties.company_id);
                 }
                 else {
@@ -239,6 +249,26 @@
                         "circle-opacity": 0.6,
                     },
                 });
+
+            // Add network, if 1+ affiliated companies
+                if(network.length > 0){
+
+                    map.addSource('route', {
+                        'type': 'geojson',
+                        'data': network
+                    });
+
+                    map.addLayer({
+                        id: "network",
+                        source: 'route',
+                        type: 'line',
+                        paint: {
+                            'line-width': 2,
+                            'line-color': '#007cbf'
+                        }
+                    });
+                }
+
             });
             map.setFog({
                 range: [9, 20],
