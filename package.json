@@ -26,7 +26,6 @@
 		"@rollup/plugin-json": "^6.1.0",
 		"@turf/turf": "^7.1.0",
 		"bulma": "^0.9.4",
-		"deck.gl": "^9.0.32",
 		"mapbox-gl": "^2.15.0",
 		"mdsvex": "^0.11.0",
 		"svelte-device-info": "^1.0.0",
