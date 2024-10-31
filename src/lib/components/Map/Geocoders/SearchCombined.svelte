@@ -47,7 +47,6 @@
             }
         }
         var matchingFeatures = matchingOwners.concat(matchingAddresses);
-        console.log(matchingFeatures);
         return matchingFeatures;
     }
 

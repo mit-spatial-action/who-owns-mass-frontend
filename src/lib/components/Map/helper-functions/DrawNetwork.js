@@ -55,6 +55,5 @@ export function drawNetworkPoints() {
             
     points.features.push(affiliate);
     };
-    console.log(points);
     return(points)
 }

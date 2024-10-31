@@ -30,6 +30,8 @@ export const getCompany = readable(async (id) => {
     })
         .then((response) => response.json())
         .then((data) => {
+            console.log("COMPANY");
+            console.log(data);
             company.set(data);
         })
         .catch((error) => {
@@ -47,6 +49,8 @@ export const getMetaCorp = readable(async (id) => {
     })
         .then((response) => response.json())
         .then((data) => {
+            console.log("METACORP");
+            console.log(data);
             metacorp.set(data);
         })
         .catch((error) => {
