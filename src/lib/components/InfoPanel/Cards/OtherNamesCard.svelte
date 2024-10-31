@@ -2,7 +2,7 @@
 
     import {
         selectedFeature,
-        company,
+        metacorp,
         company_id
     } from "$lib/scripts/stores.js";
     import { onDestroy, createEventDispatcher } from "svelte";
@@ -26,14 +26,14 @@
 
 </script>
 
-    {#if $company.metacorp && $company.metacorp.related && $company.metacorp.related.companies.length > 1}
+    {#if $metacorp.related.companies.length > 1}
     <hr />
     <p class="has-text-dark is-size-4 has-text-left block mb-1">
         <b>Associated Companies</b>
     </p>
     <div class="has-text-left block" id="other-names-box">
         <ol type="1">
-            {#each $company.metacorp.related.companies as item, index (index)}
+            {#each $metacorp.related.companies as item, index (index)}
                 {@const name = toTitleCase(item.name)}
                 <li>
                     <a on:click={callOnCompany(item.id)} class="has-text-link">

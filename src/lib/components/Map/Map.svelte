@@ -178,6 +178,7 @@
                 var features = map.queryRenderedFeatures(e.point, {
                     layers: ["id"],
                 });
+                console.log("getting features on 181", features);
                 if (!features.length) {
                     selectedFeature.set([]);
                     updateLocationURL({});
@@ -185,20 +186,20 @@
                 }
 
                 var feature = features[0];
-                if (feature.properties.company_id) {
-                    console.log("COMPANY ID"); 
-                    console.log(feature.properties.company_id);
+                var network = drawNetwork(feature.geometry.coordinates);
+                var networkPoints = drawNetworkPoints();
+                await $getMetaCorp(feature.properties.network_group);
+                // if (feature.properties.company_id) {
+                //     console.log("COMPANY ID"); 
+                //     console.log(feature.properties.company_id);
                     
-                    var network = drawNetwork(feature.geometry.coordinates);
-                    var networkPoints = drawNetworkPoints();
-                    await $getCompany(feature.properties.company_id);
-                }
-                else {
-                    await $getMetaCorp(feature.properties.metacorp_id);
-                }
+                //     await $getCompany(feature.properties.company_id);
+                // }
+                // else {
+                // }
 
                 selectedFeature.set([feature]);
-                updateLocationURL(feature.properties.company_id);
+                updateLocationURL(feature.properties.network_group);
 
             // Add network, if 1+ affiliated companies
                 if(network.features.length > 0){

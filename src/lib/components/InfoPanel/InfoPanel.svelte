@@ -9,7 +9,7 @@
     import MetacorpCard from "$lib/components/InfoPanel/Cards/MetacorpCard.svelte";
     import AddressCard from "$lib/components/InfoPanel/Cards/AddressCard.svelte";
     import LandlordCard from "$lib/components/InfoPanel/Cards/LandlordCard.svelte";
-    import { company } from "$lib/scripts/stores.js";
+    import { company, metacorp } from "$lib/scripts/stores.js";
 
     //import {Link, Route} from 'svelte-routing';
 
@@ -54,21 +54,22 @@
             <span class="has-text-link"> &#8592 </span>
             <u>Back</u> to search
         </p>
-        <span
+        {#if $metacorp.owners.length > 1 } 
+
+            <span
             class="has-text-dark p-1 px-2 is-size-6 has-text-left block has-text-weight-semibold is-uppercase has-background-danger">   
             <!-- {#if $company.landlord_type && $company.landlord_type.name == "corporate_landlord"}
                 Corporate Landlord 💰
             {/if} -->
-            {#if $company.owner && $company.owner[0].inst} 
                 Corporate Landlord
-            {/if}
-        </span>
+            </span>
+        {/if}
         <div class="is-uppercase title has-text-dark is-size-1 mt-1 has-text-left block">
-            {$company.name}
+            {$metacorp.name}
         </div>
         <div class="subtitle mt-1 mb-1 has-text-dark is-size-5 has-text-left block">
-            {#if $company.metacorp && $company.metacorp.related && $company.metacorp.related.companies_count && $company.metacorp.related.companies_count > 1}
-                This company is part of a network of {$company.metacorp.related.companies_count} companies.
+            {#if $metacorp && $metacorp.related && $metacorp.related.companies_count && $metacorp.related.companies_count > 1}
+                This company is part of a network of {$metacorp.related.companies_count} companies.
             {:else}
                 There is only one company in this network.
             {/if}
@@ -90,7 +91,7 @@
                 </div>
             </div>
             <div class="column">
-                {#if $company.metacorp && $company.metacorp.related && $company.metacorp.related.companies_count && $company.metacorp.related.companies_count > 1}
+                {#if $metacorp && $metacorp.related && $metacorp.related.companies_count && $metacorp.related.companies_count > 1}
                 <MetacorpCard />
                 {/if}
                 <LandlordCard />

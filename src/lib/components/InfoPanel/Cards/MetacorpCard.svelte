@@ -1,6 +1,6 @@
 <script>
     import { selectedFeature } from '$lib/scripts/stores.js';
-    import { company } from "$lib/scripts/stores.js";
+    import { metacorp } from "$lib/scripts/stores.js";
 
     /** @type {import('./$types').PageData} */
 
@@ -14,7 +14,11 @@
     }
 
 
-
+function numberWithCommas(x) {
+    var parts = x.toString().split(".");
+    parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+    return parts.join(".");
+}
 </script>
 
 <div>
@@ -26,7 +30,7 @@
 
     </div>
     <div class="has-text-left block">
-        <p>{$company.name} is a part of a larger network of properties owned by {$company.metacorp.name}. </p>
-           <p> This network owns roughly ____ units across Massachusetts. Their total land holdings are worth approximately $____. </p>
+        <p>{$metacorp.name} is a part of a network of properties owned by {$metacorp.owners}. </p>
+           <p> This network owns roughly {$metacorp.unit_count} units across Massachusetts. Their total land holdings are worth approximately ${numberWithCommas(Math.round($metacorp.val_per_prop))} per property. </p>
     </div>
 </div>

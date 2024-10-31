@@ -49,8 +49,7 @@ export const getMetaCorp = readable(async (id) => {
     })
         .then((response) => response.json())
         .then((data) => {
-            console.log("METACORP");
-            console.log(data);
+            console.log("store js, getMetaCorp", data);
             metacorp.set(data);
         })
         .catch((error) => {

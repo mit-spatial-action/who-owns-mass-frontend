@@ -17,10 +17,10 @@
 <div>
     <hr />
     <p class="has-text-dark is-size-4 has-text-left block mb-1">
-        <b>About this Landlord</b>
+        <!-- <b>About this Landlord</b> -->
     </p>
     <div class="has-text-left block">
-        <p>Owner Name: {$company.owner[0].name}</p>
-        <p>This company (is/is not) a trust and (does/does not) have trustees.</p>
+        <!-- <p>Owner Name: {$company.owner[0].name}</p> -->
+        <!-- <p>This company (is/is not) a trust and (does/does not) have trustees.</p> -->
     </div>
 </div>
