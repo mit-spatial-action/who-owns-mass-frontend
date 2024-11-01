@@ -69,7 +69,7 @@
             title={site_data.title}
             subtitle={site_data.description}/>
     </div>
-    <div class="handler"></div>
+    <!-- <div class="handler"></div> -->
     <div class="column has-background-light homepage" id="right-panel">
         <Map mapbox_token={data.mapbox_token} server_url={data.server_url} />
     </div>
