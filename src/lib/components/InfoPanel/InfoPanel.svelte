@@ -28,7 +28,7 @@
 </script>
 
 
-<div class="is-flex-align-start p-5 has-text-left is-fullwidth">
+<div class="has-text-left column p-5">
     <NavButton />
     <!-- {#if $metacorp.prop_count > 1 } 
 
@@ -101,7 +101,7 @@
             <div class="columns">
                 <div class="column mr-1">
                     <div class="has-text-weight-bold">Total Assessed Value</div>
-                    {#if $metacorp.val}{$metacorp.val}{:else}Unknown.{/if}
+                    {#if $metacorp.val}${$metacorp.val.toLocaleString()}{:else}Unknown.{/if}
                 </div>
             </div>
         </div>

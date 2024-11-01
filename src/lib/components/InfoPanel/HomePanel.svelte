@@ -57,7 +57,7 @@
 
 {#if loadState}
     {#if $infoMode === "home"}
-        <div class="home-panel">
+        <div class="home-panel p-5">
             <div class="title has-text-dark is-size-1 has-text-centered">
                 {title}
             </div>
