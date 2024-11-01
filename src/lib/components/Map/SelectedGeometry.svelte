@@ -3,7 +3,6 @@
 
     export let selected;
     export let lngLat;
-    export let loadingState;
 
     async function addGeometry(ll) {
         const endpoint = 'https://api.mapbox.com/v4/mit-spatial-action.cluwwxboq41sc1umn4mld8fea-2owb9/tilequery/'

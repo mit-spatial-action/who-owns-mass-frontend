@@ -4,14 +4,14 @@
     import { slide, fade } from 'svelte/transition';
     import Map from '$lib/components/Map/Map.svelte';
     import SearchBar from '$lib/components/SearchBar.svelte';
+    import { loadState } from "$lib/scripts/stores.js";
      /** @type {import('./$types').PageData} */
     
     export let token
 
     export let title = "Title";
     export let subtitle = "Longer description";
-    let loadState = false;
-    onMount(() => loadState = true);
+    onMount(() => loadState.set(true));
 
     function handleSearch(event) {
         const searchTerm = event.detail;

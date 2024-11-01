@@ -3,7 +3,7 @@
     import { onDestroy } from "svelte";
     import LandlordEvictionsGraph from "$lib/components/InfoPanel/Cards/LandlordEvictionsGraph.svelte";
     import CorporateAddressCard from "$lib/components/InfoPanel/Cards/CorporateAddressCard.svelte";
-    import { company } from "$lib/scripts/stores.js";
+    // import { company } from "$lib/scripts/stores.js";
     window.company = company;
     /** @type {import('./$types').PageData} */
 

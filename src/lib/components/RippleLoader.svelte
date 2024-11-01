@@ -1,5 +1,5 @@
 <script>
-    export let loadingState;
+    import { loadState } from "$lib/scripts/stores.js";
     import { fade, fly } from 'svelte/transition';
 
     export let duration = 1.2;
@@ -14,7 +14,7 @@
 
 </script>
 
-{#if loadingState}
+{#if $loadState}
 <div transition:fade={{duration: 800}} class="wrapper">
     <div transition:fly={{ 
         y: flyInProps.distance, 

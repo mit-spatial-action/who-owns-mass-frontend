@@ -1,15 +1,13 @@
 <script>
     import { onDestroy, onMount, setContext } from "svelte";
     import { page } from "$app/stores";
-    //import Turf from '@turf/turf';
-    //import ForwardGeocoder from '$lib/components/Map/Geocoders/.svelte';
-    import SearchGeocoder from "$lib/components/Map/Geocoders/SearchCombined.svelte";
-    //import ReverseGeocoder from '$lib/components/Map/Geocoders/Reverse.svelte';
+    import ForwardGeocoder from "$lib/components/Map/Geocoders/ForwardGeocoder.svelte";
     import SelectedGeometry from "$lib/components/Map/SelectedGeometry.svelte";
     import RippleLoader from "$lib/components/RippleLoader.svelte";
    
+    import bbox from "@turf/bbox";
     /* Helper functions */  
-   import { drawNetwork, drawNetworkPoints }  from "$lib/components/Map/helper-functions/DrawNetwork.js";
+    import { drawNetwork, drawNetworkPoints }  from "$lib/components/Map/helper-functions/DrawNetwork.js";
 
     import site_data from "$lib/config/instance.json";
  
@@ -17,22 +15,24 @@
     import "mapbox-gl/dist/mapbox-gl.css";
 
     import { mapbox } from "$lib/scripts/utils";
-    // import Evictions from '$lib/config/SampleEvictions.geojson';
 
     import Device from "svelte-device-info";
     import {
         remountSearchbar,
         selectedFeature,
+        site,
         getMap,
-        getCompany,
-        getMetaCorp,
         getSite,
         company_id,
-        company,
-        metacorp
+        infoMode,
+        metacorp,
+        loadState
     } from "$lib/scripts/stores.js";
 
     let mobile;
+    onMount(() => {
+        loadState.set(true);
+    });
 
     export let mapbox_token;
 
@@ -51,7 +51,7 @@
         [-67, 72],
     ];
 
-    export let resultZoom = 10;
+    export let resultZoom = 18;
     export let resultFlySpeed = 2000;
 
     let container;
@@ -59,8 +59,6 @@
     let lngLat;
     let gcResult;
     let selected;
-
-    let loadingState = true;
 
     const unsubscribeMap = getMap.subscribe((retrieveMap) => {
         // Callback can be used to get map, if needed.
@@ -72,8 +70,8 @@
         remountSearchbar_value = value;
     });
 
-    const unsubscribe2 = selectedFeature.subscribe((value) => {
-    });
+    // const unsubscribe2 = selectedFeature.subscribe((value) => {
+    // });
 
     const unsubscribe_get_new_company = company_id.subscribe(value => {
         if (value && typeof(value) != "object") {
@@ -103,16 +101,86 @@
                 });
             }
     }
-    function flyToLngLat(lngLat) {
+    function flyToLngLat(lngLat, zoom = resultZoom) {
         map.flyTo({
             center: lngLat,
-            zoom: map.getZoom() > resultZoom ? map.getZoom() : resultZoom,
-            duration: resultFlySpeed,
+            zoom: map.getZoom() > zoom ? map.getZoom() : zoom,
+            duration: 0,
             essential: true,
         });
     }
 
+    async function flyToQuery() {
+        let resultSiteId;
+        loadState.set(true);
+        map.once('idle', async (e) => {
+            let features = map.queryRenderedFeatures({
+                layers: ["id"],
+            });
+            console.log(features);
+            if (features.length > 0) {
+                let selected = features.filter(feature => feature.properties.addr.toUpperCase() === gcResult.address.toUpperCase())
+                if (selected.length > 0) {
+                    resultSiteId = await $getSite(selected[0].properties.site_id);
+                } else {
+                    resultSiteId = null;
+                }
+                resultSiteId = null;
+            }
+            loadState.set(false);
+            gcResult = null;
+            return resultSiteId
+        })
+        flyToLngLat(gcResult.lngLat)
+    }
+
+    function renderMetaCorp(mc_sites={}) {
+        if(Object.keys(mc_sites).length > 1){
+            infoMode.set("metaCorp")
+            if (typeof map.getLayer("selectedMetaCorpLayer") !== "undefined") {
+                map.removeLayer("selectedMetaCorpLayer");
+                map.removeSource("selectedMetaCorp");
+            }
+            map.addSource('selectedMetaCorp', {
+                'type': 'geojson',
+                'data': mc_sites
+            });
+            map.addLayer({
+                id: "selectedMetaCorpLayer",
+                source: 'selectedMetaCorp',
+                type: 'circle'
+            });
+
+            let jsonBbox = bbox(mc_sites);
+            map.fitBounds(jsonBbox, {
+                padding: 20
+            });
+        }
+    }
+
+    function renderSite(site={}) {
+        if(Object.keys(site).length > 0){
+            infoMode.set("site")
+            if (typeof map.getLayer("selectedSiteLayer") !== "undefined") {
+                map.removeLayer("selectedSiteLayer");
+                map.removeSource("selectedSite");
+            }
+            map.addSource('selectedSite', {
+                'type': 'geojson',
+                'data': site
+            });
+            map.addLayer({
+                id: "selectedSiteLayer",
+                source: 'selectedSite',
+                type: 'circle'
+            });
+        }
+    }
+
     $: lngLat ? flyToLngLat(lngLat) : null;
+    $: gcResult ? flyToQuery(gcResult): null;
+    $: renderMetaCorp($metacorp.sites); 
+    $: renderSite($site);
 
     onMount(() => {
         mobile = Device.isPhone;
@@ -124,6 +192,7 @@
             bearing: 0,
             projection: projection,
             maxBounds: maxBounds,
+            maxZoom: resultZoom
         };
         map = new mapbox.Map(mapOptions);
 
@@ -137,135 +206,118 @@
             map.addLayer({
                 id: "id",
                 source: "parcelPoints",
+                maxZoom: resultZoom,
                 "source-layer": "geographies",
                 type: "circle",
                 paint: {
-                    "circle-radius": [
-                        "interpolate",
-                        ["linear"],
-                        ["get", "units"],
-                        0,
-                        0,
-                        400,
-                        30,
-                    ],
+                    "circle-radius": 5,
                     "circle-color": "#FF5F05",
-                    "circle-opacity": 0.7,
+                    "circle-opacity": [
+                        'interpolate',
+                        ['exponential', 0.5],
+                        ['zoom'],
+                        resultZoom - 5,
+                        0,
+                        // When zoom is 18 or higher, buildings will be 100% opaque.
+                        resultZoom,
+                        1
+                    ],
                 },
             });
             handleUrlChange();
         });
 
         map.once("zoomend", () => {
-            loadingState = !loadingState;
+            loadState.set(!loadState);
             map.setMinZoom(initZoom.length === 2 ? initZoom[1] : initZoom);
         });
 
         map.on("style.load", () => {
             //TODO: create shared functions to 1) clear selected geometries and 2) handle url change. Maybe call when change to selectedFeature?
-            map.on("click", async (e) => {
-                lngLat = e.lngLat;
+            map.on("click", "id", async (e) => {
+                // lngLat = e.lngLat;
                 // can add getting address here (if we don't want to store it in mapbox or in the DB:
                 // https://stackoverflow.com/questions/70223500/mapbox-gl-js-find-closest-address-to-clicked-point)
-                if (typeof map.getLayer("selectedGeom") !== "undefined") {
-                    map.removeLayer("selectedGeom");
-                    map.removeSource("selectedGeom");
 
-                    map.removeLayer("affiliates");
-                    map.removeSource("affiliates");
+                var feature = e.features[0];
+                // var network = drawNetwork(feature.geometry.coordinates);
+                // var networkPoints = drawNetworkPoints();
 
-                    map.removeLayer("network");
-                    map.removeSource("routes");
-                }
-
-                var features = map.queryRenderedFeatures(e.point, {
-                    layers: ["id"],
-                });
-                
-                console.log("getting features on 181", features);
-                if (!features.length) {
-                    selectedFeature.set([]);
-                    updateLocationURL({});
-                    return;
-                }
-
-                var feature = features[0];
-                var network = drawNetwork(feature.geometry.coordinates);
-                var networkPoints = drawNetworkPoints();
-                // await $getMetaCorp(feature.properties.network_group);
                 await $getSite(feature.properties.site_id);
-                // if (feature.properties.company_id) {
-                //     console.log("COMPANY ID"); 
-                //     console.log(feature.properties.company_id);
-                    
-                //     await $getCompany(feature.properties.company_id);
-                // }
-                // else {
-                // }
 
                 selectedFeature.set([feature]);
                 updateLocationURL(feature.properties.site_id);
 
             // Add network, if 1+ affiliated companies
-                if(network.features.length > 0){
+                // if(network.features.length > 0){
 
-                    map.addSource('routes', {
-                        'type': 'geojson',
-                        'data': network
-                    });
+                //     map.addSource('routes', {
+                //         'type': 'geojson',
+                //         'data': network
+                //     });
 
-                    map.addSource('affiliates', {
-                        'type': 'geojson',
-                        'data': networkPoints
-                    });
+                //     map.addSource('affiliates', {
+                //         'type': 'geojson',
+                //         'data': networkPoints
+                //     });
 
-                    map.addLayer({
-                        id: "network",
-                        source: 'routes',
-                        type: 'line',
-                        paint: {
-                            'line-width': 1.5,
-                            'line-color': '#806cf9',
-                            'line-opacity': 0.8
-                        }
-                    });
+                //     map.addLayer({
+                //         id: "network",
+                //         source: 'routes',
+                //         type: 'line',
+                //         paint: {
+                //             'line-width': 1.5,
+                //             'line-color': '#806cf9',
+                //             'line-opacity': 0.8
+                //         }
+                //     });
 
-                    map.addLayer({
-                        id: "affiliates",
-                        source: 'affiliates',
-                        type: 'circle',
-                        paint: {
-                            "circle-color": "#806cf9",
-                            "circle-opacity": 1,
-                        }
-                    });
-                }
+                //     map.addLayer({
+                //         id: "affiliates",
+                //         source: 'affiliates',
+                //         type: 'circle',
+                //         paint: {
+                //             "circle-color": "#806cf9",
+                //             "circle-opacity": 1,
+                //         }
+                //     });
+                // }
 
-                map.addSource("selectedGeom", {
-                    type: "geojson",
-                    data: feature.toJSON(),
-                });
-                map.addLayer({
-                    id: "selectedGeom",
-                    type: "circle",
-                    source: "selectedGeom",
-                    paint: {
-                        "circle-radius": [
-                            "interpolate",
-                            ["linear"],
-                            ["get", "evictions"],
-                            0,
-                            2,
-                            400,
-                            35,
-                        ],
-                        "circle-color": "#4223FF",
-                        "circle-opacity": 0.8,
-                    },
-                });
+                // map.addSource("selectedGeom", {
+                //     type: "geojson",
+                //     data: feature.toJSON(),
+                // });
+                // map.addLayer({
+                //     id: "selectedGeom",
+                //     type: "circle",
+                //     source: "selectedGeom",
+                //     paint: {
+                //         "circle-radius": [
+                //             "interpolate",
+                //             ["linear"],
+                //             ["get", "evictions"],
+                //             0,
+                //             2,
+                //             400,
+                //             35,
+                //         ],
+                //         "circle-color": "#4223FF",
+                //         "circle-opacity": 0.8,
+                //     },
+                // });
 
 
             });
+
+            map.on('mouseenter', 'id', () => {
+                map.getCanvas().style.cursor = 'pointer';
+            });
+
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', 'id', () => {
+                map.getCanvas().style.cursor = '';
+            });
+
             map.setFog({
                 range: [9, 20],
                 color: "#f0a800",
@@ -295,7 +347,7 @@
             map.remove();
         }
         unsubscribe(); // Unsubscribes from the remountSearchBar dummy
-        unsubscribe2();
+        // unsubscribe2();
         unsubscribeMap();
         unsubscribe_get_new_company();
     });
@@ -376,12 +428,12 @@
     bind:this={container}
 >
     {#if map}
-        <RippleLoader bind:loadingState />
+        <RippleLoader />
         <!-- <ReverseGeocoder bind:lngLat bind:gcResult />-->
         {#key remountSearchbar_value}
-            <SearchGeocoder bind:lngLat bind:gcResult bind:selected />
+            <ForwardGeocoder bind:gcResult />
         {/key}
-        <SelectedGeometry bind:selected bind:lngLat bind:loadingState />
+        <!-- <SelectedGeometry bind:selected bind:lngLat /> -->
     {/if}
 </div>
 

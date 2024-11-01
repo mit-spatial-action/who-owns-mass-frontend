@@ -2,7 +2,7 @@
     import { afterUpdate, onMount, onDestroy } from "svelte";
     import SearchBar from "$lib/components/SearchBar.svelte";
     import InfoPanel from "$lib/components/InfoPanel/InfoPanel.svelte";
-    import { remountSearchbar, selectedFeature } from "$lib/scripts/stores.js";
+    import { remountSearchbar, site, metacorp, infoMode, loadState } from "$lib/scripts/stores.js";
 
     /** @type {import('./$types').PageData} */
     //import { getContext, setContext } from 'svelte';
@@ -10,14 +10,11 @@
     export let title = "Title";
     export let subtitle = "Longer description";
     export let mapbox_token;
-    let loadState = false;
-
-    const unsubscribe = selectedFeature.subscribe((value) => {
-    });
 
     onMount(() => {
-        loadState = true;
+        loadState.set(true);
     });
+    console.log(infoMode)
 
     afterUpdate(() => {
         if (document.getElementById("geocoder")) {
@@ -59,7 +56,7 @@
 </script>
 
 {#if loadState}
-    {#if $selectedFeature.length == 0}
+    {#if $infoMode === "home"}
         <div class="home-panel">
             <div class="title has-text-dark is-size-1 has-text-centered">
                 {title}
@@ -70,16 +67,15 @@
                 {subtitle}
             </div>
             <div class="centered">
-                {#key $selectedFeature}
+                {#key $site}
                     <SearchBar
-                        key={$selectedFeature}
+                        key={$site}
                         on:search={handleSearch}
                     />
                 {/key}
             </div>
         </div>
-    {/if}
-    {#if $selectedFeature.length >= 1}
+    {:else}
         <InfoPanel />
     {/if}
 {/if}

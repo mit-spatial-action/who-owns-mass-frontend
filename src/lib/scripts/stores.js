@@ -10,19 +10,21 @@ export const company_id = writable({});
 export const company = writable({});
 export const metacorp = writable({});
 export const site = writable({});
+export const loadState = writable(true)
+export const infoMode = writable("home")
 
-let getLocation = function() {
-    let url = window.location.href;
-    return url.slice(url.indexOf('?') + 1).split("location=")[1].split("&")[0];
-}
+// let getLocation = function() {
+//     let url = window.location.href;
+//     return url.slice(url.indexOf('?') + 1).split("location=")[1].split("&")[0];
+// }
 
 export const getSite = readable(async (site_id) => {
     // if (id) is not url id, blast event
-    let location = getLocation();
-    if (location != site_id) {
-        window
-    }
-
+    // let location = getLocation();
+    // if (location != site_id) {
+    //     window
+    // }
+    loadState.set(true);
     await fetch("api/site/" + site_id + "/", {
         method: "GET",
         headers: {
@@ -34,6 +36,7 @@ export const getSite = readable(async (site_id) => {
             console.log("SITE");
             console.log(data);
             site.set(data);
+            loadState.set(false);
         })
         .catch((error) => {
             console.log(error);
@@ -41,33 +44,9 @@ export const getSite = readable(async (site_id) => {
         })
 });
 
-export const getCompany = readable(async (id) => {
-    // if (id) is not url id, blast event
-    let location = getLocation();
-    if (location != id) {
-        window
-    }
-
-    await fetch("api/companies/" + id + "/", {
-        method: "GET",
-        headers: {
-            "Content-Type": "application/json",
-        },
-    })
-        .then((response) => response.json())
-        .then((data) => {
-            console.log("COMPANY");
-            console.log(data);
-            company.set(data);
-        })
-        .catch((error) => {
-            console.log(error);
-            return [];
-        })
-});
-
-export const getMetaCorp = readable(async (id) => {
-    await fetch("api/meta/" + id + "/", {
+export const getMetaCorp = readable(async (meta_id) => {
+    loadState.set(true);
+    await fetch("api/meta/" + meta_id + "/", {
         method: "GET",
         headers: {
             "Content-Type": "application/json",
@@ -77,6 +56,7 @@ export const getMetaCorp = readable(async (id) => {
         .then((data) => {
             console.log("store js, getMetaCorp", data);
             metacorp.set(data);
+            loadState.set(false);
         })
         .catch((error) => {
             console.log(error);
