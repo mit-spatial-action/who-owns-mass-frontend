@@ -84,7 +84,7 @@
     function goToFeature(map, company_id_to_query) {
         // getting feature from tileset and flying to it
         // if it's got a different address
-        let features = map.querySourceFeatures('companies_updated', {
+        let features = map.querySourceFeatures('companies_103120241149', {
                 sourceLayer: 'geographies',
                 filter: ['==', 'company_id', company_id_to_query]
             });
@@ -128,14 +128,14 @@
 
         map.on("load", async () => {
 
-            map.addSource("companies_updated", {
+            map.addSource("companies_103120241149", {
                 type: "vector",
-                url: "mapbox://mit-spatial-action.companies_updated",
+                url: "mapbox://mit-spatial-action.companies_103120241149",
             });
 
             map.addLayer({
                 id: "id",
-                source: "companies_updated",
+                source: "companies_103120241149",
                 "source-layer": "geographies",
                 type: "circle",
                 paint: {
@@ -312,7 +312,7 @@
         var selectedLocations = [];
         if (urlParams) {
             selectedLocations = map.queryRenderedFeatures({
-                // layers: ["companies_updated"],
+                // layers: ["companies_103120241149"],
                 filter: ["==", "company_id", parseInt(urlParams)],
             });
         }
