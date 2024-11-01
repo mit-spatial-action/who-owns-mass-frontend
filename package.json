@@ -3,7 +3,7 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"css-build": "node-sass --omit-source-map-url src/lib/styles/style.scss src/lib/styles/style.css",
+		"css-build": "sass --no-source-map --load-path=node_modules/ src/lib/styles/style.scss src/lib/styles/style.css",
 		"css-watch": "npm run css-build -- --watch",
 		"dev": "vite dev & npm run css-watch",
 		"build": "npm run css-build & vite build",
@@ -12,8 +12,7 @@
 	"devDependencies": {
 		"@sveltejs/adapter-auto": "^2.0.0",
 		"@sveltejs/kit": "^1.20.4",
-		"node-sass": "^9.0.0",
-		"sass": "^1.66.1",
+		"sass": "^1.80.5",
 		"svelte": "^4.0.5",
 		"vite": "^4.4.2"
 	},

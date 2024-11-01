@@ -7,26 +7,26 @@
 $family-sans-serif: 'Inter', sans-serif;
 $column-gap: 0rem; //changed from 
 
-@import "node_modules/bulma/sass/utilities/_all.sass";
-@import "node_modules/bulma/sass/base/_all.sass";
-@import "node_modules/bulma/sass/elements/container.sass";
-@import "node_modules/bulma/sass/elements/button.sass";
-@import "node_modules/bulma/sass/elements/icon.sass";
-@import "node_modules/bulma/sass/elements/title.sass";
-@import "node_modules/bulma/sass/elements/tag.sass";
-@import "node_modules/bulma/sass/elements/box.sass";
-@import "node_modules/bulma/sass/elements/other.sass";
-@import "node_modules/bulma/sass/form/_all.sass";
-@import "node_modules/bulma/sass/grid/columns.sass";
-@import "node_modules/bulma/sass/helpers/typography.sass";
-@import "node_modules/bulma/sass/helpers/spacing.sass";
-@import "node_modules/bulma/sass/helpers/flexbox.sass";
-@import "node_modules/bulma/sass/helpers/color.sass";
-@import "node_modules/bulma/sass/components/navbar.sass";
-@import "node_modules/bulma/sass/components/tabs.sass";
-@import "node_modules/bulma/sass/components/card.sass";
-@import "node_modules/bulma/sass/layout/section.sass";
-@import "node_modules/bulma/sass/layout/hero.sass";
+@import "bulma/sass/utilities/_all.sass";
+@import "bulma/sass/base/_all.sass";
+@import "bulma/sass/elements/container.sass";
+@import "bulma/sass/elements/button.sass";
+@import "bulma/sass/elements/icon.sass";
+@import "bulma/sass/elements/title.sass";
+@import "bulma/sass/elements/tag.sass";
+@import "bulma/sass/elements/box.sass";
+@import "bulma/sass/elements/other.sass";
+@import "bulma/sass/form/_all.sass";
+@import "bulma/sass/grid/columns.sass";
+@import "bulma/sass/helpers/typography.sass";
+@import "bulma/sass/helpers/spacing.sass";
+@import "bulma/sass/helpers/flexbox.sass";
+@import "bulma/sass/helpers/color.sass";
+@import "bulma/sass/components/navbar.sass";
+@import "bulma/sass/components/tabs.sass";
+@import "bulma/sass/components/card.sass";
+@import "bulma/sass/layout/section.sass";
+@import "bulma/sass/layout/hero.sass";
 
 @font-face {
   font-family: 'Inter';
