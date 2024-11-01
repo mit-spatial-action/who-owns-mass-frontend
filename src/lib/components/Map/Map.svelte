@@ -26,6 +26,7 @@
         getMap,
         getCompany,
         getMetaCorp,
+        getSite,
         company_id,
         company,
         metacorp
@@ -84,7 +85,7 @@
     function goToFeature(map, company_id_to_query) {
         // getting feature from tileset and flying to it
         // if it's got a different address
-        let features = map.querySourceFeatures('companies_updated', {
+        let features = map.querySourceFeatures('parcelPoints', {
                 sourceLayer: 'geographies',
                 filter: ['==', 'company_id', company_id_to_query]
             });
@@ -128,14 +129,14 @@
 
         map.on("load", async () => {
 
-            map.addSource("companies_updated", {
+            map.addSource("parcelPoints", {
                 type: "vector",
                 url: "mapbox://mit-spatial-action.companies_updated",
             });
 
             map.addLayer({
                 id: "id",
-                source: "companies_updated",
+                source: "parcelPoints",
                 "source-layer": "geographies",
                 type: "circle",
                 paint: {
@@ -154,10 +155,12 @@
             });
             handleUrlChange();
         });
+
         map.once("zoomend", () => {
             loadingState = !loadingState;
             map.setMinZoom(initZoom.length === 2 ? initZoom[1] : initZoom);
         });
+
         map.on("style.load", () => {
             //TODO: create shared functions to 1) clear selected geometries and 2) handle url change. Maybe call when change to selectedFeature?
             map.on("click", async (e) => {
@@ -178,6 +181,7 @@
                 var features = map.queryRenderedFeatures(e.point, {
                     layers: ["id"],
                 });
+                
                 console.log("getting features on 181", features);
                 if (!features.length) {
                     selectedFeature.set([]);
@@ -188,7 +192,8 @@
                 var feature = features[0];
                 var network = drawNetwork(feature.geometry.coordinates);
                 var networkPoints = drawNetworkPoints();
-                await $getMetaCorp(feature.properties.network_group);
+                // await $getMetaCorp(feature.properties.network_group);
+                await $getSite(feature.properties.site_id);
                 // if (feature.properties.company_id) {
                 //     console.log("COMPANY ID"); 
                 //     console.log(feature.properties.company_id);
@@ -199,7 +204,7 @@
                 // }
 
                 selectedFeature.set([feature]);
-                updateLocationURL(feature.properties.network_group);
+                updateLocationURL(feature.properties.site_id);
 
             // Add network, if 1+ affiliated companies
                 if(network.features.length > 0){

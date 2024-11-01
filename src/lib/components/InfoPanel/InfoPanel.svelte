@@ -1,15 +1,15 @@
 <script>
     import { afterUpdate, onMount, onDestroy } from "svelte";
     /** @type {import('./$types').PageData} */
-    import { getContext } from "svelte";
-    import { mapbox, key } from "$lib/scripts/utils";
+    // import { getContext } from "svelte";
+    // import { mapbox, key } from "$lib/scripts/utils";
     import { selectedFeature, getMap } from "$lib/scripts/stores.js";
     import OtherNamesCard from "$lib/components/InfoPanel/Cards/OtherNamesCard.svelte";
     import DownloadDatasetsCard from "$lib/components/InfoPanel/Cards/DownloadDatasetsCard.svelte";
     import MetacorpCard from "$lib/components/InfoPanel/Cards/MetacorpCard.svelte";
     import AddressCard from "$lib/components/InfoPanel/Cards/AddressCard.svelte";
     import LandlordCard from "$lib/components/InfoPanel/Cards/LandlordCard.svelte";
-    import { company, metacorp } from "$lib/scripts/stores.js";
+    import { company, metacorp, site } from "$lib/scripts/stores.js";
 
     //import {Link, Route} from 'svelte-routing';
 
@@ -54,48 +54,72 @@
             <span class="has-text-link"> &#8592 </span>
             <u>Back</u> to search
         </p>
-        {#if $metacorp.owners.length > 1 } 
+        <!-- {#if $metacorp.prop_count > 1 } 
 
             <span
-            class="has-text-dark p-1 px-2 is-size-6 has-text-left block has-text-weight-semibold is-uppercase has-background-danger">   
-            <!-- {#if $company.landlord_type && $company.landlord_type.name == "corporate_landlord"}
-                Corporate Landlord 💰
-            {/if} -->
+            class="has-text-dark p-1 px-2 is-size-6 has-text-left block has-text-weight-semibold is-uppercase has-background-danger">
                 Corporate Landlord
             </span>
-        {/if}
+        {/if} -->
         <div class="is-uppercase title has-text-dark is-size-1 mt-1 has-text-left block">
-            {$metacorp.name}
+            {$site.properties.address.addr}
         </div>
-        <div class="subtitle mt-1 mb-1 has-text-dark is-size-5 has-text-left block">
-            {#if $metacorp && $metacorp.related && $metacorp.related.companies_count && $metacorp.related.companies_count > 1}
-                This company is part of a network of {$metacorp.related.companies_count} companies.
+        <div class="subtitle has-text-dark is-size-5 mt-1 has-text-left block">
+            {$site.properties.address.muni}, {$site.properties.address.state}
+        </div>
+        <div class="subtitle has-text-dark is-size-5 mt-1 has-text-left block box">
+            <div class="has-text-weight-bold">Owner(s)</div>
+            {#each $site.properties.owners as owner}
+                {owner.properties.name}
+            {/each}
+        </div>
+        <div class="box">
+            <div class="columns">
+                <div class="column mr-1">
+                    <div class="has-text-weight-bold">Year of Record</div>
+                    {$site.properties.fy}
+                </div>
+                <div class="column mr-1">
+                    <div class="has-text-weight-bold">Estimated Units</div>
+                    {$site.properties.units}
+                </div>
+            </div>
+            <div class="columns">
+                <div class="column mr-1">
+                    <div class="has-text-weight-bold">Last Sale Date</div>
+                    {$site.properties.ls_date}
+                </div>
+                <div class="column mr-1">
+                    <div class="has-text-weight-bold">Last Sale Price</div>
+                    ${$site.properties.ls_price}
+                </div>
+            </div>
+        </div>
+
+        <!-- <div class="subtitle mt-1 mb-1 has-text-dark is-size-5 has-text-left block">
+            {#if $metacorp.aliases.length > 1}
+                This company is part of a network of {$metacorp.aliases.length} companies.
             {:else}
                 There is only one company in this network.
             {/if}
-            <!-- Between September, 2019, and February, 2022, <b>{$company.name}</b>
-            was the cause of
-            <span class="has-background-warning"
-                >approximately <b>{$selectedFeature[0].properties.evictions}</b>
-                people losing their homes or experiencing housing instability.</span> -->
-        </div>
+        </div> -->
         <div class="columns">
             <div class="column mr-1">
                 <div
                     class="subtitle mt-1 has-text-dark is-size-6 has-text-centered block"
                 >
-                    <OtherNamesCard />
-                    <AddressCard />
-                    <DownloadDatasetsCard />
+                    <!-- <OtherNamesCard /> -->
+                    <!-- <AddressCard /> -->
+                    <!-- <DownloadDatasetsCard /> -->
                     
                 </div>
             </div>
-            <div class="column">
+            <!-- <div class="column">
                 {#if $metacorp && $metacorp.related && $metacorp.related.companies_count && $metacorp.related.companies_count > 1}
                 <MetacorpCard />
                 {/if}
                 <LandlordCard />
-            </div>
+            </div> -->
         </div>
         
     </div>
