@@ -26,19 +26,18 @@
 
 </script>
 
-    {#if $metacorp.related.companies.length > 1}
+    {#if $metacorp.aliases.length > 1}
     <hr />
     <p class="has-text-dark is-size-4 has-text-left block mb-1">
         <b>Associated Companies</b>
     </p>
     <div class="has-text-left block" id="other-names-box">
         <ol type="1">
-            {#each $metacorp.related.companies as item, index (index)}
-                {@const name = toTitleCase(item.name)}
+            {#each $metacorp.aliases as alias}
                 <li>
-                    <a on:click={callOnCompany(item.id)} class="has-text-link">
-                        <u>{name}</u>
-                    </a>
+                    <!-- <a on:click={callOnCompany(item.id)} class="has-text-link"> -->
+                        {alias}
+                    <!-- </a> -->
                 </li>
             {/each}
         </ol>

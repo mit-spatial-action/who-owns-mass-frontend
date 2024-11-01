@@ -2,7 +2,6 @@
     import { afterUpdate, onMount, onDestroy } from "svelte";
     import SearchBar from "$lib/components/SearchBar.svelte";
     import InfoPanel from "$lib/components/InfoPanel/InfoPanel.svelte";
-    //import QueryFeaturesSearchBar from '$lib/components/QueryFeaturesSearchBar.svelte';
     import { remountSearchbar, selectedFeature } from "$lib/scripts/stores.js";
 
     /** @type {import('./$types').PageData} */
