@@ -62,7 +62,7 @@
                 {title}
             </div>
             <div
-                class="subtitle mt-1 has-text-dark is-size-6 has-text-centered"
+                class="subtitle mt-1 has-text-dark is-size-6 has-text-centered m-6 px-6"
             >
                 {subtitle}
             </div>

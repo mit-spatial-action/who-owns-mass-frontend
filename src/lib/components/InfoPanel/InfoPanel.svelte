@@ -110,7 +110,7 @@
             {#each $metacorp.sites.features as site}
                 <div class="box">
                     <div><a class="has-text-weight-bold" on:click={$getSite(site.id)}>{site.properties.address.addr}</a></div>
-                    <div>{site.properties.address.muni}, {site.properties.address.state} {site.properties.address.postal}</div>
+                    <div>{#if site.properties.address.muni}{site.properties.address.muni}, {/if}{#if site.properties.address.state}{site.properties.address.state} {/if}{#if site.properties.address.postal}{site.properties.address.postal}{/if}</div>
                 </div>
             {/each}
         </div>

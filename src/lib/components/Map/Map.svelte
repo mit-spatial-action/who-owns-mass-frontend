@@ -148,12 +148,17 @@
             map.addLayer({
                 id: "selectedMetaCorpLayer",
                 source: 'selectedMetaCorp',
-                type: 'circle'
+                type: 'circle',
+                paint: {
+                    "circle-radius": 10,
+                    "circle-color": "#FF5F05",
+                    "circle-opacity": 1
+                }
             });
 
             let jsonBbox = bbox(mc_sites);
             map.fitBounds(jsonBbox, {
-                padding: 20
+                padding: 50
             });
         }
     }
@@ -172,7 +177,12 @@
             map.addLayer({
                 id: "selectedSiteLayer",
                 source: 'selectedSite',
-                type: 'circle'
+                type: 'circle',
+                paint: {
+                    "circle-radius": 10,
+                    "circle-color": "#FF5F05",
+                    "circle-opacity": 1
+                }
             });
         }
     }
