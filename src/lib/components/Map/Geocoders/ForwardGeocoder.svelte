@@ -20,7 +20,7 @@
             accessToken: mapbox.accessToken,
             // localGeocoder: forwardGeocoder,
             zoom: 14,
-            placeholder: 'Search for an address in Massachusetts',
+            placeholder: 'Search for an address!',
             mapboxgl: mapbox,
             marker: false,
             countries: 'us',
