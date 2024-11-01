@@ -10,7 +10,6 @@
         map = retrieveMap();   
    });
 
-
     export let lngLat;
     export let marker;
 

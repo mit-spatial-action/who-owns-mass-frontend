@@ -7,29 +7,36 @@
 $family-sans-serif: 'Inter', sans-serif;
 $column-gap: 0rem; //changed from 
 
-@import "node_modules/bulma/sass/utilities/_all.sass";
-@import "node_modules/bulma/sass/base/_all.sass";
-@import "node_modules/bulma/sass/elements/container.sass";
-@import "node_modules/bulma/sass/elements/button.sass";
-@import "node_modules/bulma/sass/elements/icon.sass";
-@import "node_modules/bulma/sass/elements/title.sass";
-@import "node_modules/bulma/sass/elements/tag.sass";
-@import "node_modules/bulma/sass/elements/box.sass";
-@import "node_modules/bulma/sass/elements/other.sass";
-@import "node_modules/bulma/sass/form/_all.sass";
-@import "node_modules/bulma/sass/grid/columns.sass";
-@import "node_modules/bulma/sass/helpers/typography.sass";
-@import "node_modules/bulma/sass/helpers/spacing.sass";
-@import "node_modules/bulma/sass/helpers/flexbox.sass";
-@import "node_modules/bulma/sass/helpers/color.sass";
-@import "node_modules/bulma/sass/components/navbar.sass";
-@import "node_modules/bulma/sass/components/tabs.sass";
-@import "node_modules/bulma/sass/components/card.sass";
-@import "node_modules/bulma/sass/layout/section.sass";
-@import "node_modules/bulma/sass/layout/hero.sass";
+@import "bulma/sass/utilities/_all.sass";
+@import "bulma/sass/base/_all.sass";
+@import "bulma/sass/elements/container.sass";
+@import "bulma/sass/elements/button.sass";
+@import "bulma/sass/elements/icon.sass";
+@import "bulma/sass/elements/title.sass";
+@import "bulma/sass/elements/tag.sass";
+@import "bulma/sass/elements/box.sass";
+@import "bulma/sass/elements/other.sass";
+@import "bulma/sass/form/_all.sass";
+@import "bulma/sass/grid/columns.sass";
+@import "bulma/sass/helpers/typography.sass";
+@import "bulma/sass/helpers/spacing.sass";
+@import "bulma/sass/helpers/flexbox.sass";
+@import "bulma/sass/helpers/color.sass";
+@import "bulma/sass/components/navbar.sass";
+@import "bulma/sass/components/tabs.sass";
+@import "bulma/sass/components/card.sass";
+@import "bulma/sass/layout/section.sass";
+@import "bulma/sass/layout/hero.sass";
+
+@font-face {
+  font-family: 'Inter';
+  src: url('/assets/fonts/Inter-VariableFont.ttf') format("truetype-variations");
+  font-weight: 1 999;
+}
 
 html {
-  font-family: sans-serif;
+  font-family: 'Inter' sans-serif;
+  
 }
 
 * {
@@ -40,9 +47,14 @@ html {
   filter: drop-shadow(.18rem .18rem 0rem $danger-dark);
 }
 
-$backgrounds: (solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d37013b142d331d72/1532030351639-5C2Q8FQP0YTY8E5XUUO1/Ephiphany+School+1.jpg');
+$backgrounds: (
+  solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d37013b142d331d72/1532030351639-5C2Q8FQP0YTY8E5XUUO1/Ephiphany+School+1.jpg'
+);
+
 @each $key, $image in $backgrounds {
-  .hero-#{$key}, .page-bg {
+
+  .hero-#{$key},
+  .page-bg {
     @extend .hero;
     background-size: cover;
     background-position: center;
@@ -52,10 +64,10 @@ $backgrounds: (solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d370
 #map {
   height: inherit;
   width: 100%; //Consider changing this (relative to column width). 
- // top: 0;
+  // top: 0;
 }
 
-.homepage { 
+.homepage {
   height: 100vh;
 }
 
@@ -65,8 +77,8 @@ $backgrounds: (solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d370
     //padding: 0.75rem;
   }
 
-  .mapboxgl-ctrl-top-left > .mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
-    z-index:100 !important;
+  .mapboxgl-ctrl-top-left>.mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
+    z-index: 100 !important;
     margin: 0;
   }
 
@@ -85,26 +97,59 @@ $backgrounds: (solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d370
   font-size: 58px;
 }
 
-#left-panel{
+.wrapper {
+  display: flex;
+  color: #444;
+}
+
+/*
+#left-panel, #right-panel {
+   // Use box-sizing so that element's outerwidth will match width property 
+  box-sizing: border-box !important;
+  
+  // Allow box to grow and shrink, and ensure they are all equally sized 
+  flex: 1 1 auto !important;
+}
+
+*/
+
+#left-panel {
+  max-height: 100vh !important;
+  overflow-y: scroll;
   display: flex;
   border-left: 2px solid $border;
   border-right: 2px solid $border;
   justify-content: center;
 }
 
+.handler {
+  z-index: 999;
+  width: 4px;
+  padding: 0;
+  // cursor: ew-resize;
+  flex: 0 0 auto;
+}
 
+.handler::before {
+  content: '';
+  display: block;
+  width: 4px;
+  height: 100%;
+  margin: 0 auto;
+}
 
-.home-panel{
+.home-panel {
   align-self: center !important;
 }
 
-#geocoder{  
+#geocoder {
   display: flex;
   justify-content: center;
   padding: 2vh;
 }
 
-#querySearchBar{  // Temporary - remove when search bars are merged
+#querySearchBar {
+  // Temporary - remove when search bars are merged
 
   display: flex;
   justify-content: center;
@@ -199,4 +244,8 @@ hr {
   background-color: #fff;
   height: 1px;
   width: 50%;
+}
+
+.has-background-danger {
+  background-color: #FF8D37 !important;
 }

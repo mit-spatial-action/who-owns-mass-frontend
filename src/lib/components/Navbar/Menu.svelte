@@ -1,9 +1,6 @@
 <script>
     let menuItems = [
       { label: 'Home', link: '#' },
-      { label: 'About', link: '#' },
-      { label: 'Services', link: '#' },
-      { label: 'Contact', link: '#' }
     ];
 
     function closeNav() {
@@ -13,11 +10,7 @@
 
   <div id="mySidebar" class="sidebar">
     <p href="javascript:void(0)" class="closebtn" on:click={closeNav}>x</p>
-    <a href="#">Map</a>
-    <a href="#">Eviction Statistics</a>
-    <a href="#">See a Random Evictor</a>
-    <a href="#">Gallery</a>
-    <a href="#">Links & Info</a>
-    <a href="#">About</a>
-    <a href="#">Contact</a>
+    {#each menuItems as item }}
+    <a href={item.link}}>{item.label}</a>
+    {/each}
   </div>

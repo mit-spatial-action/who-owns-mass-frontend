@@ -1,48 +1,67 @@
 {
-    "title": "MASS EVICTIONS",
-    "description": "Massachusetts court eviction filings from Feb. 2019 to Sept. 2022",
+    "title": "Who Owns Massachusetts",
+    "description": "This tool visualizes property relationships between institutional landholders in Massachusetts. Start by searching an address!",
     "logo": "https://dusp.mit.edu/themes/basis/images/logo.svg",
     "favicon": "https://dusp.mit.edu/themes/basis/images/logo.svg",
-    "authors": [{
-        "name": "Eric Robsky Huntley, PhD",
-        "location": "Cambridge, MA",
-        "role": "Design, Development, and Research",
-        "url": "https://dusp.mit.edu/people/eric-robsky-huntley"
-    }, {
-        "name": "First Name Last Name ",
-        "affiliation": "MIT DUSP",
-        "role": "Research",
-        "url": "https://dusp.mit.edu/people/eric-robsky-huntley"
-    }
+    "authors": [
+        {
+            "name": "Eric Robsky Huntley, PhD",
+            "location": "Cambridge, MA",
+            "role": "Design, Development, and Research",
+            "url": "https://dusp.mit.edu/people/eric-robsky-huntley"
+        },
+        {
+            "name": "First Name Last Name ",
+            "affiliation": "MIT DUSP",
+            "role": "Research",
+            "url": "https://dusp.mit.edu/people/eric-robsky-huntley"
+        }
     ],
-    "orgs": [{
-        "name": "MIT Department of Urban Studies and Planning",
-        "url": "https://resonant.Energy",
-        "description": "Temporary placeholder description"
-    }],
+    "orgs": [
+        {
+            "name": "MIT Department of Urban Studies and Planning",
+            "url": "dusp.mit.edu",
+            "description": "Temporary placeholder description"
+        }
+    ],
     "pages": {
         "Home": "/",
         "Documentation": "documentation",
         "Eviction Statistics": "eviction-statistics",
         "See a Random Evictor": "random-evictor",
         "Gallery": "gallery",
-        "Links and Info": "info", 
+        "Links and Info": "info",
         "About": "about",
         "Contact": "contact"
     },
-    "keywords": ["evictions", "mapping"],
+    "keywords": [
+        "evictions",
+        "mapping"
+    ],
     "map": {
         "style": "mapbox://styles/ericrobskyhuntley/cljrocy4m017701pa1j212ahy",
         "maxBounds": [
-            [-179,19], 
-            [-67,72]
+            [
+                -179,
+                19
+            ],
+            [
+                -67,
+                72
+            ]
         ],
         "resultZoom": 10,
         "singleMarker": true,
         "projection": "globe",
         "init": {
-            "lngLat": [-71.89, 42.34],
-            "zoom": [5, 8],
+            "lngLat": [
+                -71.89,
+                42.34
+            ],
+            "zoom": [
+                5,
+                8
+            ],
             "zoomDur": 5000
         }
     }

@@ -1,27 +1,25 @@
 <script>
-    //import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+   //import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
    //import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
-   import { onDestroy, onMount} from 'svelte';
+   import { onDestroy, onMount } from "svelte";
 
-    let searchText = '';
+   let searchText = "";
 
-    import { createEventDispatcher } from 'svelte';
-    
-    const dispatch = createEventDispatcher();
+   import { createEventDispatcher } from "svelte";
 
-    function handleSearch() {
-        dispatch('search', searchTerm);
-     }
+   const dispatch = createEventDispatcher();
 
-     onDestroy(() => {
-        console.log("destroyed");
-     });
+   function handleSearch() {
+      dispatch("search", searchTerm);
+   }
 
-     onMount(()=>{
-        console.log("mounted");
-     });
+   onDestroy(() => {
+      console.log("destroyed");
+   });
 
+   onMount(() => {
+      console.log("mounted");
+   });
+</script>
 
-  </script>
-
-  <div id="geocoder"></div>
+<div id="geocoder"></div>

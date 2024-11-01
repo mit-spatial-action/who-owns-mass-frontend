@@ -1,6 +1,7 @@
 <script>
     import { selectedFeature } from '$lib/scripts/stores.js';
     import { onDestroy } from 'svelte';
+    import { metacorp } from "$lib/scripts/stores.js";
 
     /** @type {import('./$types').PageData} */
 
@@ -16,10 +17,10 @@
 <div>
     <hr/>
     <p class="has-text-dark is-size-4 has-text-left block mb-1">
-        <b>About this Address</b>
+        <b>About this Property</b>
     </p>
     <div class="has-text-left block"> 
-        <p>{$selectedFeature[0].properties.place_name} <p/>
-       <p> Approximately <b>10 tenants</b> have been evicted from this address alone.</p>    
+        <p>{$metacorp.name} is located at ____, ____ MA, ___<p/>
+        <p>Its last assessed property value was $____ in _______</p>
     </div>
 </div>
