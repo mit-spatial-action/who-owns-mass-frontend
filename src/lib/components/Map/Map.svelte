@@ -19,7 +19,6 @@
     import Device from "svelte-device-info";
     import {
         remountSearchbar,
-        selectedFeature,
         site,
         getMap,
         getSite,
@@ -52,7 +51,6 @@
     ];
 
     export let resultZoom = 18;
-    export let resultFlySpeed = 2000;
 
     let container;
     let map;
@@ -60,47 +58,12 @@
     let gcResult;
     let selected;
 
-    const unsubscribeMap = getMap.subscribe((retrieveMap) => {
-        // Callback can be used to get map, if needed.
-    });
-
     //Get remount searchbar value from store
     let remountSearchbar_value;
     const unsubscribe = remountSearchbar.subscribe((value) => {
         remountSearchbar_value = value;
     });
 
-    // const unsubscribe2 = selectedFeature.subscribe((value) => {
-    // });
-
-    const unsubscribe_get_new_company = company_id.subscribe(value => {
-        if (value && typeof(value) != "object") {
-            let company_id_to_query = parseInt(value);
-            setTimeout(goToFeature(map, company_id_to_query), 2000);
-        }
-    });
-
-    function goToFeature(map, company_id_to_query) {
-        // getting feature from tileset and flying to it
-        // if it's got a different address
-        let features = map.querySourceFeatures('parcelPoints', {
-                sourceLayer: 'geographies',
-                filter: ['==', 'company_id', company_id_to_query]
-            });
-            if (features.length > 0) {
-                let feature = features[0];
-                let coordinates = feature.geometry.coordinates;
-                map.flyTo({ 
-                    center: coordinates,
-                    zoom: 15,
-                    speed: 1.2,
-                    curve: 1, 
-                    easing(t) {
-                        return t;
-                    }
-                });
-            }
-    }
     function flyToLngLat(lngLat, zoom = resultZoom) {
         map.flyTo({
             center: lngLat,
@@ -151,7 +114,7 @@
                 type: 'circle',
                 paint: {
                     "circle-radius": 10,
-                    "circle-color": "#FF5F05",
+                    "circle-color": "blue",
                     "circle-opacity": 1
                 }
             });
@@ -180,7 +143,7 @@
                 type: 'circle',
                 paint: {
                     "circle-radius": 10,
-                    "circle-color": "#FF5F05",
+                    "circle-color": "blue",
                     "circle-opacity": 1
                 }
             });
@@ -234,7 +197,6 @@
                     ],
                 },
             });
-            handleUrlChange();
         });
 
         map.once("zoomend", () => {
@@ -243,11 +205,7 @@
         });
 
         map.on("style.load", () => {
-            //TODO: create shared functions to 1) clear selected geometries and 2) handle url change. Maybe call when change to selectedFeature?
             map.on("click", "id", async (e) => {
-                // lngLat = e.lngLat;
-                // can add getting address here (if we don't want to store it in mapbox or in the DB:
-                // https://stackoverflow.com/questions/70223500/mapbox-gl-js-find-closest-address-to-clicked-point)
 
                 var feature = e.features[0];
                 // var network = drawNetwork(feature.geometry.coordinates);
@@ -255,7 +213,6 @@
 
                 await $getSite(feature.properties.site_id);
 
-                selectedFeature.set([feature]);
                 updateLocationURL(feature.properties.site_id);
 
             // Add network, if 1+ affiliated companies
@@ -347,9 +304,6 @@
         });
 
         getMap.set(() => map);
-
-        // Add listener for URL query props
-        window.addEventListener("popstate", handleUrlChange);
     });
 
     onDestroy(() => {
@@ -357,79 +311,8 @@
             map.remove();
         }
         unsubscribe(); // Unsubscribes from the remountSearchBar dummy
-        // unsubscribe2();
-        unsubscribeMap();
-        unsubscribe_get_new_company();
     });
 
-    // Function to update the URL when a location is selected
-    function updateLocationURL(feature) {
-        // if (Object.keys(feature).length == 0) {
-        //     const newUrl = `/`;
-        //     window.history.pushState({}, "", newUrl);
-        //     return;
-        // }
-        const newUrl = `/?location=${encodeURIComponent(feature)}`;
-        window.history.pushState({ feature }, "", newUrl);
-    }
-
-    //  Example function for handling changes in the URL on Map
-    function handleUrlChange() {
-        const urlParams = $page.url.searchParams.get("location");
-        var selectedLocations = [];
-        if (urlParams) {
-            selectedLocations = map.queryRenderedFeatures({
-                // layers: ["companies_103120241149"],
-                filter: ["==", "company_id", parseInt(urlParams)],
-            });
-        }
-        // console.log("map.getLayer('selectedGeom')", map.getLayer("selectedGeom"))
-        console.log("in handleUrlChange", selectedLocations);
-        if (!selectedLocations.length) {
-            selectedFeature.set([]);
-
-            //Remove selected geometry layer - clean this process up/modularize?
-            if (typeof map.getLayer("selectedGeom") !== "undefined") {
-                map.removeLayer("selectedGeom");
-                map.removeSource("selectedGeom");
-            }
-            return;
-        } else {
-            var feature = selectedLocations[0];
-            selectedFeature.set([feature]);
-
-            if (typeof map.getLayer("selectedGeom") !== "undefined") {
-                map.removeLayer("selectedGeom");
-                map.removeSource("selectedGeom");
-            }
-
-            map.addSource("selectedGeom", {
-                type: "geojson",
-                data: feature.toJSON(),
-            });
-
-            map.addLayer({
-                id: "selectedGeom",
-                type: "circle",
-                source: "selectedGeom",
-                paint: {
-                    "circle-radius": [
-                        "interpolate",
-                        ["linear"],
-                        ["get", "evictions"],
-                        0,
-                        2,
-                        400,
-                        35,
-                    ],
-                    "circle-color": "#4223FF",
-                    "circle-opacity": 0.2,
-                },
-            });
-
-            return;
-        }
-    }
 </script>
 
 <div
@@ -439,11 +322,9 @@
 >
     {#if map}
         <RippleLoader />
-        <!-- <ReverseGeocoder bind:lngLat bind:gcResult />-->
         {#key remountSearchbar_value}
             <ForwardGeocoder bind:gcResult />
         {/key}
-        <!-- <SelectedGeometry bind:selected bind:lngLat /> -->
     {/if}
 </div>
 
