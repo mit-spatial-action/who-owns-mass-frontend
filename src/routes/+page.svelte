@@ -8,51 +8,9 @@
     /** @type {import('./$types').PageData} */
     export let data;
 
-    function openNav() {
-        document.getElementById("mySidebar").style.cssText =
-            "width: 250px; border-right: 2px solid #343434";
+    let openNav = () => {
+        document.getElementById("mySidebar").style.cssText = "width: 250px; border-right: 2px solid #343434";
     }
-    onMount(() => {
-        // below is code to make panels resizeable 
-        // let handler = document.querySelector('.handler');
-        // let wrapper = handler.closest('.wrapper');
-        // let leftPanel = wrapper.querySelector('#left-panel');
-        
-        // let isHandlerDragging = false;
-
-        // document.addEventListener('mousedown', function(e) {
-        // // If mousedown event is fired from .handler, toggle flag to true
-        //     if (e.target === handler) {
-        //         isHandlerDragging = true;
-        //     }
-        // });
-
-        // document.addEventListener('mousemove', function(e) {
-        //     // Don't do anything if dragging flag is false
-        //     if (!isHandlerDragging) {
-        //         return false;
-        //     }
-        //     // Get offset
-        //     let containerOffsetLeft = wrapper.offsetLeft;
-
-        //     // Get x-coordinate of pointer relative to container
-        //     let pointerRelativeXpos = e.clientX - containerOffsetLeft;
-            
-        //     // Arbitrary minimum width set on box A, otherwise its inner content will collapse to width of 0
-        //     let leftPanelminWidth = 20;
-        //     console.log("leftPanelminWidth", leftPanelminWidth, "pointerRelativeXpos", pointerRelativeXpos)
-
-        //     // Resize box A
-        //     // * Set flex-grow to 0 to prevent it from growing
-        //     leftPanel.style.width = (Math.max(leftPanelminWidth, pointerRelativeXpos)) + 'px';
-        //     leftPanel.style.flexGrow = 0;
-        // });
-
-        // document.addEventListener('mouseup', function(e) {
-        // // Turn off dragging flag when user mouse is up
-        // isHandlerDragging = false;
-    // });
-});
 </script>
 
 <!-- <div class="container columns is-flex no-scroll is-vcentered "> -->
