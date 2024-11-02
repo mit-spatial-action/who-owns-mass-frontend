@@ -41,20 +41,6 @@ html {
   filter: drop-shadow(.18rem .18rem 0rem $danger-dark);
 }
 
-$backgrounds: (
-  solar: 'https://images.squarespace-cdn.com/content/v1/56fbfd2d37013b142d331d72/1532030351639-5C2Q8FQP0YTY8E5XUUO1/Ephiphany+School+1.jpg'
-);
-
-@each $key, $image in $backgrounds {
-
-  .hero-#{$key},
-  .page-bg {
-    @extend .hero;
-    background-size: cover;
-    background-position: center;
-  }
-}
-
 #map {
   height: inherit;
   width: 100%; //Consider changing this (relative to column width). 
