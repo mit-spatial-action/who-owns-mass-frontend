@@ -3,7 +3,6 @@
     import site_data from "$lib/config/instance.json";
     import Map from "$lib/components/Map/Map.svelte";
     import "$lib/styles/style.css";
-    import { onMount } from "svelte";
 
     /** @type {import('./$types').PageData} */
     export let data;
@@ -12,8 +11,6 @@
         document.getElementById("mySidebar").style.cssText = "width: 250px; border-right: 2px solid #343434";
     }
 </script>
-
-<!-- <div class="container columns is-flex no-scroll is-vcentered "> -->
 
 <div class="wrapper">
     <div
@@ -27,7 +24,6 @@
             title={site_data.title}
             subtitle={site_data.description}/>
     </div>
-    <!-- <div class="handler"></div> -->
     <div class="column has-background-light homepage" id="right-panel">
         <Map mapbox_token={data.mapbox_token} server_url={data.server_url} />
     </div>
