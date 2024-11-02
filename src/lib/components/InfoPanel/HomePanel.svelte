@@ -1,15 +1,12 @@
 <script>
-    import { afterUpdate, onMount, onDestroy } from "svelte";
-    import SearchBar from "$lib/components/SearchBar.svelte";
+    import { afterUpdate, onMount } from "svelte";
     import InfoPanel from "$lib/components/InfoPanel/InfoPanel.svelte";
-    import { remountSearchbar, site, metacorp, infoMode, loadState } from "$lib/scripts/stores.js";
+    import { remountSearchbar, infoMode, loadState } from "$lib/scripts/stores.js";
 
     /** @type {import('./$types').PageData} */
-    //import { getContext, setContext } from 'svelte';
 
     export let title = "Title";
     export let subtitle = "Longer description";
-    export let mapbox_token;
 
     onMount(() => {
         loadState.set(true);
@@ -25,11 +22,6 @@
         }
     });
 
-    function handleSearch(event) {
-        const searchTerm = event.detail;
-        // TODO: add logic to update the map based on the search term
-    }
-
 </script>
 
 {#if $infoMode === "home"}
@@ -43,12 +35,7 @@
             {subtitle}
         </div>
         <div class="centered">
-            {#key $site}
-                <SearchBar
-                    key={$site}
-                    on:search={handleSearch}
-                />
-            {/key}
+            <div id="geocoder"></div>
         </div>
     </div>
 {:else}

@@ -1,44 +1,14 @@
 <script>
-    import { afterUpdate, onMount, onDestroy } from "svelte";
     /** @type {import('./$types').PageData} */
-    // import { getContext } from "svelte";
-    // import { mapbox, key } from "$lib/scripts/utils";
     import NavButton from "$lib/components/InfoPanel/NavButton.svelte";
     import HL from "$lib/components/InfoPanel/HL.svelte";
-    import OtherNamesCard from "$lib/components/InfoPanel/Cards/OtherNamesCard.svelte";
-    import DownloadDatasetsCard from "$lib/components/InfoPanel/Cards/DownloadDatasetsCard.svelte";
-    import MetacorpCard from "$lib/components/InfoPanel/Cards/MetacorpCard.svelte";
-    import AddressCard from "$lib/components/InfoPanel/Cards/AddressCard.svelte";
-    import LandlordCard from "$lib/components/InfoPanel/Cards/LandlordCard.svelte";
-    import { getMap, getMetaCorp, getSite, metacorp, site, infoMode } from "$lib/scripts/stores.js";
-
-    let map;
-    const unsubscribeMap = getMap.subscribe((retrieveMap) => {
-        map = retrieveMap();
-    });
-
-    let fetchMetaCorp = (meta_id) => {
-        $getMetaCorp(meta_id)
-    };
-
-    onDestroy(() => {
-        // unsubscribe();
-        unsubscribeMap();
-    });
+    import { getMetaCorp, getSite, metacorp, site, infoMode } from "$lib/scripts/stores.js";
 </script>
 
 
 <div class="has-text-left column p-5">
     <NavButton />
-    <!-- {#if $metacorp.prop_count > 1 } 
-
-        <span
-        class="has-text-dark p-1 px-2 is-size-6 has-text-left block has-text-weight-semibold is-uppercase has-background-danger">
-            Corporate Landlord
-        </span>
-    {/if} -->
-    
-    {#if $infoMode === "site"}
+    {#if $infoMode === "site" }
         <div class="is-uppercase title has-text-dark is-size-1 mt-1 has-text-left block">
             {$site.properties.address.addr}
         </div>
@@ -53,7 +23,7 @@
             <div class="block is-size-6 my-2 has-text-gray">
                 {#if $site.properties.metacorp.prop_count > 1}
                         <p>This owner may own <HL>{$site.properties.metacorp.prop_count}</HL> properties, including <HL>{$site.properties.metacorp.unit_count}</HL> units.</p>
-                        <button class="button is-ghost has-shadow mt-2" on:click={fetchMetaCorp($site.properties.metacorp.id)}>See Details</button>
+                        <button class="button is-ghost has-shadow mt-2" on:click={$getMetaCorp($site.properties.metacorp.id)}>See Details</button>
                 {:else}
                         <p>We couldn't find any additional properties held by this owner.</p>
                 {/if}
