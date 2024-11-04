@@ -1,9 +1,8 @@
 <script>
     import { onDestroy, onMount, setContext } from "svelte";
-    import { page } from "$app/stores";
-    import ForwardGeocoder from "$lib/components/Map/Geocoders/ForwardGeocoder.svelte";
-    import SelectedGeometry from "$lib/components/Map/SelectedGeometry.svelte";
     import RippleLoader from "$lib/components/RippleLoader.svelte";
+    import { goto, invalidate } from '$app/navigation';
+    import { siteNav } from "$lib/scripts/utils";
    
     import bbox from "@turf/bbox";
     /* Helper functions */  
@@ -18,20 +17,18 @@
 
     import Device from "svelte-device-info";
     import {
-        remountSearchbar,
         site,
         getMap,
-        getSite,
-        company_id,
-        infoMode,
+        mapLoad,
         metacorp,
-        loadState
+        loadState,
+        gcResult
     } from "$lib/scripts/stores.js";
 
     let mobile;
-    onMount(() => {
-        loadState.set(true);
-    });
+    // onMount(() => {
+    //     loadState.set(true);
+    // });
 
     export let mapbox_token;
 
@@ -52,17 +49,9 @@
 
     export let resultZoom = 18;
 
-    let container;
     let map;
     let lngLat;
-    let gcResult;
     let selected;
-
-    //Get remount searchbar value from store
-    let remountSearchbar_value;
-    const unsubscribe = remountSearchbar.subscribe((value) => {
-        remountSearchbar_value = value;
-    });
 
     function flyToLngLat(lngLat, zoom = resultZoom) {
         map.flyTo({
@@ -73,92 +62,93 @@
         });
     }
 
-    async function flyToQuery() {
-        let resultSiteId;
-        loadState.set(true);
-        map.once('idle', async (e) => {
-            let features = map.queryRenderedFeatures({
-                layers: ["id"],
-            });
-            console.log(features);
-            if (features.length > 0) {
-                let selected = features.filter(feature => feature.properties.addr.toUpperCase() === gcResult.address.toUpperCase())
-                if (selected.length > 0) {
-                    resultSiteId = await $getSite(selected[0].properties.site_id);
-                } else {
+    const flyToQuery = async () => {
+        if (map) {
+            let resultSiteId;
+            loadState.set(true);
+            map.once('idle', async (e) => {
+                let features = map.queryRenderedFeatures({
+                    layers: ["id"],
+                });
+                if (features.length > 0) {
+                    let selected = features.filter(feature => feature.properties.addr.toUpperCase() === $gcResult.address.toUpperCase())
+                    if (selected.length > 0) {
+                        await siteNav(selected[0].properties.site_id);
+                    } else {
+                        resultSiteId = null;
+                    }
                     resultSiteId = null;
                 }
-                resultSiteId = null;
-            }
-            loadState.set(false);
-            gcResult = null;
-            return resultSiteId
-        })
-        flyToLngLat(gcResult.lngLat)
-    }
-
-    function renderMetaCorp(mc_sites={}) {
-        if(Object.keys(mc_sites).length > 1){
-            infoMode.set("metaCorp")
-            if (typeof map.getLayer("selectedMetaCorpLayer") !== "undefined") {
-                map.removeLayer("selectedMetaCorpLayer");
-                map.removeSource("selectedMetaCorp");
-            }
-            map.addSource('selectedMetaCorp', {
-                'type': 'geojson',
-                'data': mc_sites
-            });
-            map.addLayer({
-                id: "selectedMetaCorpLayer",
-                source: 'selectedMetaCorp',
-                type: 'circle',
-                paint: {
-                    "circle-radius": 10,
-                    "circle-color": "blue",
-                    "circle-opacity": 1
-                }
-            });
-
-            let jsonBbox = bbox(mc_sites);
-            map.fitBounds(jsonBbox, {
-                padding: 50
-            });
+                loadState.set(false);
+                return resultSiteId
+            })
+            flyToLngLat($gcResult.lngLat)
         }
     }
 
-    function renderSite(site={}) {
-        if(Object.keys(site).length > 0){
-            infoMode.set("site")
-            if (typeof map.getLayer("selectedSiteLayer") !== "undefined") {
-                map.removeLayer("selectedSiteLayer");
-                map.removeSource("selectedSite");
-            }
-            map.addSource('selectedSite', {
-                'type': 'geojson',
-                'data': site
-            });
-            map.addLayer({
-                id: "selectedSiteLayer",
-                source: 'selectedSite',
-                type: 'circle',
-                paint: {
-                    "circle-radius": 10,
-                    "circle-color": "blue",
-                    "circle-opacity": 1
+    const renderMetaCorp = (mc_sites) => {
+        if(mc_sites && map){
+            if(Object.keys(mc_sites).length > 1) {
+                if (typeof map.getLayer("selectedMetaCorpLayer") !== "undefined") {
+                    map.removeLayer("selectedMetaCorpLayer");
+                    map.removeSource("selectedMetaCorp");
                 }
-            });
+                map.addSource('selectedMetaCorp', {
+                    'type': 'geojson',
+                    'data': mc_sites
+                });
+                map.addLayer({
+                    id: "selectedMetaCorpLayer",
+                    source: 'selectedMetaCorp',
+                    type: 'circle',
+                    paint: {
+                        "circle-radius": 10,
+                        "circle-color": "blue",
+                        "circle-opacity": 1
+                    }
+                });
+
+                let jsonBbox = bbox(mc_sites);
+                map.fitBounds(jsonBbox, {
+                    padding: 50
+                });
+            }
         }
     }
 
-    $: lngLat ? flyToLngLat(lngLat) : null;
-    $: gcResult ? flyToQuery(gcResult): null;
+    const renderSite = (site) => {
+        if(site && map ){
+            if(Object.keys(site).length > 0) {
+                if (typeof map.getLayer("selectedSiteLayer") !== "undefined") {
+                    map.removeLayer("selectedSiteLayer");
+                    map.removeSource("selectedSite");
+                }
+                map.addSource('selectedSite', {
+                    'type': 'geojson',
+                    'data': site
+                });
+                map.addLayer({
+                    id: "selectedSiteLayer",
+                    source: 'selectedSite',
+                    type: 'circle',
+                    paint: {
+                        "circle-radius": 10,
+                        "circle-color": "blue",
+                        "circle-opacity": 1
+                    }
+                });
+            }
+        }
+    }
+    
+    $: flyToQuery($gcResult);
     $: renderMetaCorp($metacorp.sites); 
     $: renderSite($site);
 
     onMount(() => {
         mobile = Device.isPhone;
         let mapOptions = {
-            container: container,
+            container: "map",
             style: "mapbox://styles/mapbox/light-v11",
             center: initLngLat,
             zoom: initZoom.length === 2 ? initZoom[0] : initZoom,
@@ -170,7 +160,7 @@
         map = new mapbox.Map(mapOptions);
 
         map.on("load", async () => {
-
+            mapLoad.set(true);
             map.addSource("parcelPoints", {
                 type: "vector",
                 url: "mapbox://mit-spatial-action.companies_103120241149",
@@ -200,7 +190,7 @@
         });
 
         map.once("zoomend", () => {
-            loadState.set(!loadState);
+            // loadState.set(!loadState);
             map.setMinZoom(initZoom.length === 2 ? initZoom[1] : initZoom);
         });
 
@@ -210,10 +200,10 @@
                 var feature = e.features[0];
                 // var network = drawNetwork(feature.geometry.coordinates);
                 // var networkPoints = drawNetworkPoints();
-
-                await $getSite(feature.properties.site_id);
-
-                updateLocationURL(feature.properties.site_id);
+                await goto(
+                    `/site/${feature.properties.site_id}`
+                );
+                await invalidate('site');
 
             // Add network, if 1+ affiliated companies
                 // if(network.features.length > 0){
@@ -310,7 +300,6 @@
         if (map) {
             map.remove();
         }
-        unsubscribe(); // Unsubscribes from the remountSearchBar dummy
     });
 
 </script>
@@ -318,13 +307,9 @@
 <div
     id="map"
     class={selected !== undefined && mobile ? "non-interactive" : null}
-    bind:this={container}
 >
     {#if map}
         <RippleLoader />
-        {#key remountSearchbar_value}
-            <ForwardGeocoder bind:gcResult />
-        {/key}
     {/if}
 </div>
 
