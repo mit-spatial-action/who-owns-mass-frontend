@@ -1,8 +1,8 @@
 <script>
     import { selectedFeature } from "$lib/scripts/stores.js";
     import { onDestroy } from "svelte";
-    import LandlordEvictionsGraph from "$lib/components/InfoPanel/Cards/LandlordEvictionsGraph.svelte";
-    import CorporateAddressCard from "$lib/components/InfoPanel/Cards/CorporateAddressCard.svelte";
+    import LandlordEvictionsGraph from "$lib/components/Panels/Cards/LandlordEvictionsGraph.svelte";
+    import CorporateAddressCard from "$lib/components/Panels/Cards/CorporateAddressCard.svelte";
     // import { company } from "$lib/scripts/stores.js";
     window.company = company;
     /** @type {import('./$types').PageData} */
