@@ -6,11 +6,9 @@
    
     import bbox from "@turf/bbox";
     /* Helper functions */  
-    import { drawNetwork, drawNetworkPoints }  from "$lib/components/Map/helper-functions/DrawNetwork.js";
+    // import { drawNetwork, drawNetworkPoints }  from "$lib/components/Map/helper-functions/DrawNetwork.js";
 
     import site_data from "$lib/config/instance.json";
- 
-
     import "mapbox-gl/dist/mapbox-gl.css";
 
     import { mapbox } from "$lib/scripts/utils";
@@ -18,7 +16,6 @@
     import Device from "svelte-device-info";
     import {
         site,
-        getMap,
         mapLoad,
         metacorp,
         loadState,
@@ -26,31 +23,21 @@
     } from "$lib/scripts/stores.js";
 
     let mobile;
-    // onMount(() => {
-    //     loadState.set(true);
-    // });
 
     export let mapbox_token;
 
     mapbox.accessToken = mapbox_token;
 
-    export let style = "mapbox://styles/mit-spatial-action/cluwwvx8l00gi01pe8mi4e64o";
-
-    export let projection = "globe";
+    export let style = site_data.map.style;
+    export let projection = site_data.map.projection;
     export let initLngLat = site_data.map.init.lngLat;
     initLngLat = new mapbox.LngLat(initLngLat[0], initLngLat[1]);
     export let initZoom = site_data.map.init.zoom;
-    export let initZoomDur = 500; //change back to 3000 after dev
-
-    export let maxBounds = [
-        [-179, 19],
-        [-67, 72],
-    ];
-
-    export let resultZoom = 18;
+    export let initZoomDur = site_data.map.init.zoomDur; //change back to 3000 after dev
+    export let maxBounds = site_data.map.maxBounds;
+    export let resultZoom = site_data.map.resultZoom;
 
     let map;
-    let lngLat;
     let selected;
 
     function flyToLngLat(lngLat, zoom = resultZoom) {
@@ -86,20 +73,33 @@
         }
     }
 
-    const renderMetaCorp = (mc_sites) => {
-        if(mc_sites && map){
-            if(Object.keys(mc_sites).length > 1) {
-                if (typeof map.getLayer("selectedMetaCorpLayer") !== "undefined") {
-                    map.removeLayer("selectedMetaCorpLayer");
-                    map.removeSource("selectedMetaCorp");
+    const pointerEvents = (name) => {
+        if (map) {
+            map.on('mouseenter', name, () => {
+                    map.getCanvas().style.cursor = 'pointer';
+                });
+
+            // Change it back to a pointer when it leaves.
+            map.on('mouseleave', name, () => {
+                map.getCanvas().style.cursor = '';
+            });
+        }
+    }
+
+    const renderGeoJSONLayer = (geojson, name) => {
+        if(geojson && map){
+            if(Object.keys(geojson).length > 1) {
+                if (typeof map.getLayer(`selected${name}Layer`) !== "undefined") {
+                    map.removeLayer(`selected${name}Layer`);
+                    map.removeSource(`selected${name}`);
                 }
-                map.addSource('selectedMetaCorp', {
+                map.addSource(`selected${name}`, {
                     'type': 'geojson',
-                    'data': mc_sites
+                    'data': geojson
                 });
                 map.addLayer({
-                    id: "selectedMetaCorpLayer",
-                    source: 'selectedMetaCorp',
+                    id: `selected${name}Layer`,
+                    source: `selected${name}`,
                     type: 'circle',
                     paint: {
                         "circle-radius": 10,
@@ -108,48 +108,25 @@
                     }
                 });
 
-                let jsonBbox = bbox(mc_sites);
+                pointerEvents(name);
+
+                let jsonBbox = bbox(geojson);
                 map.fitBounds(jsonBbox, {
                     padding: 50
                 });
             }
         }
     }
-
-    const renderSite = (site) => {
-        if(site && map ){
-            if(Object.keys(site).length > 0) {
-                if (typeof map.getLayer("selectedSiteLayer") !== "undefined") {
-                    map.removeLayer("selectedSiteLayer");
-                    map.removeSource("selectedSite");
-                }
-                map.addSource('selectedSite', {
-                    'type': 'geojson',
-                    'data': site
-                });
-                map.addLayer({
-                    id: "selectedSiteLayer",
-                    source: 'selectedSite',
-                    type: 'circle',
-                    paint: {
-                        "circle-radius": 10,
-                        "circle-color": "blue",
-                        "circle-opacity": 1
-                    }
-                });
-            }
-        }
-    }
     
     $: flyToQuery($gcResult);
-    $: renderMetaCorp($metacorp.sites); 
-    $: renderSite($site);
+    $: renderGeoJSONLayer($metacorp.sites, "MetaCorp"); 
+    $: renderGeoJSONLayer($site, "Site");
 
     onMount(() => {
         mobile = Device.isPhone;
         let mapOptions = {
             container: "map",
-            style: "mapbox://styles/mapbox/light-v11",
+            style: style,
             center: initLngLat,
             zoom: initZoom.length === 2 ? initZoom[0] : initZoom,
             bearing: 0,
@@ -198,14 +175,11 @@
             map.on("click", "id", async (e) => {
 
                 var feature = e.features[0];
+                await siteNav(feature.properties.site_id)
+
                 // var network = drawNetwork(feature.geometry.coordinates);
                 // var networkPoints = drawNetworkPoints();
-                await goto(
-                    `/site/${feature.properties.site_id}`
-                );
-                await invalidate('site');
-
-            // Add network, if 1+ affiliated companies
+                // Add network, if 1+ affiliated companies
                 // if(network.features.length > 0){
 
                 //     map.addSource('routes', {
@@ -266,14 +240,7 @@
 
             });
 
-            map.on('mouseenter', 'id', () => {
-                map.getCanvas().style.cursor = 'pointer';
-            });
-
-            // Change it back to a pointer when it leaves.
-            map.on('mouseleave', 'id', () => {
-                map.getCanvas().style.cursor = '';
-            });
+            pointerEvents("id");
 
             map.setFog({
                 range: [9, 20],
@@ -292,8 +259,6 @@
                 });
             }
         });
-
-        getMap.set(() => map);
     });
 
     onDestroy(() => {

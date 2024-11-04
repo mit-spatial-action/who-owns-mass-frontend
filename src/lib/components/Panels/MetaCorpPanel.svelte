@@ -37,8 +37,8 @@
     <div class="box" style="max-height: 300px; overflow-y: auto;">
         <div class="has-text-weight-bold">Properties</div>
         {#each metacorp.sites.features as site}
-            <div class="box">
-                <div><a class="has-text-weight-bold" on:click={siteNav(site.id)}>{site.properties.address.addr}</a></div>
+            <div class="box" role="button" tabindex="0" on:click={siteNav(site.id)} on:keyup={siteNav(site.id)}>
+                <div class="has-text-weight-bold">{site.properties.address.addr}</div>
                 <div>{#if site.properties.address.muni}{site.properties.address.muni}, {/if}{#if site.properties.address.state}{site.properties.address.state} {/if}{#if site.properties.address.postal}{site.properties.address.postal}{/if}</div>
             </div>
         {/each}
@@ -51,9 +51,3 @@
     </div>
 </div>
 </Panel>
-<style>
-    .has-shadow {
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adjust the values as needed */
-    }
-
-</style>
