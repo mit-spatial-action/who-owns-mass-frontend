@@ -23,7 +23,11 @@
     <slot/>
     {#if mapbox_token }
     <div class="column has-background-light homepage" id="right-panel">
-        <Map mapbox_token={mapbox_token} />
+        <Map 
+            {mapbox_token}
+            projection={site_data.map.projection}
+            style={site_data.map.style}
+            />
     </div>
     {/if}
 </div>
