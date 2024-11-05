@@ -3,9 +3,9 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"css-build": "sass --no-source-map --load-path=node_modules/ src/lib/styles/style.scss src/lib/styles/style.css",
-		"css-watch": "npm run css-build -- --watch",
-		"dev": "vite dev & npm run css-watch",
+		"css-build": "sass --load-path=node_modules/ src/lib/styles/style.scss src/lib/styles/style.css",
+		"start": "npm run css-build -- --watch",
+		"dev": "vite dev & npm run start",
 		"build": "npm run css-build & vite build",
 		"preview": "vite preview"
 	},
