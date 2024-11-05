@@ -1,27 +1,28 @@
-# svelte-map-app
+# Who Owns Massachusetts Frontend
 
-## New branch for mass evictions mockup 
-This mass evictions mockup builds on the Svelte template. The October 2023 proof of concept includes hard-coded components. 
+[![Netlify Status](https://api.netlify.com/api/v1/badges/2c1b6580-ad37-4653-806f-b085e9e85e09/deploy-status)](https://app.netlify.com/sites/who-owns-mass-frontend/deploys)
 
-## Template overview
+[![Screenshot of the Who Owns Massachusetts Interface](public/who-owns-mass-frontend.png)]
 
-<img width="1333" alt="screenshot" src="https://github.com/Unnamed-Lab-DUSP/svelte-map-app/assets/10646361/1bb15da4-d70e-4a84-8349-9d8cb00fef13">
-
-This is a simple templated mapping application, built using Svelte, SvelteKit, Node, Bulma, and Mapbox that can be easily customized using the fields in `src/config/instance.json`. It includes basic, but common, documentation pages, which can be written in markdown, and the map allows the user to select locations using click events or forward geocoding, which populate a bare-bones info panel.
+This is the codebase for the front end of the Who Owns Massachusetts application. It's built using Svelte and SvelteKit and draws on the Bulma CSS/SCSS framework.
 
 ## Configuration
 
 ### Node
-Assuming you have node installed, you can install all dependencies by running `npm install` from the root directory.
 
-### MapBox Token
-For the application to run, you'll need a MapBox token. The application expects it to be stored in a `.env` file in the root directory. E.g., this file should look like...
+Assuming you have `node` installed, you can install all dependencies by running `npm install` from the root directory.
+
+### .env Configuration
+
+The application expects several environment variables in an `.env` file located in the project's root directory. These are...
 
 ```
-MAPBOX_TOKEN='your token here`
+PUBLIC_MAPBOX_TOKEN='your token here`
+VITE_PUBLIC_API_URL='http://djangoserverhost'
 ```
 
-Important note: the token _will be exposed to the client_! As such, before deploying, you should make sure that your token is appropriately scoped and that it has URL restrictions in place. 
+Note that your Mapbox token will be exposed to the client! As such, before deploying, you should make sure that your token is appropriately scoped and that it has URL restrictions in place. 
 
 ## Running
-Run `npm run css-build && npm run dev` from the root folder. (On subsequent runs, you can simply run `npm run dev`. This starts a vite server (`vite dev`) and a node-sass watcher that watches for changes in `src/styles/style.scss` (the latter supports rapid Bulma development). 
+
+Run `npm run dev` from the root folder. This starts a vite server (`vite dev`) and a sass watcher that watches for changes in `src/styles/style.scss.`
