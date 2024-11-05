@@ -4,7 +4,7 @@
 
 
 <style>
-button {
+.button {
     cursor: pointer;
   }
 </style>
