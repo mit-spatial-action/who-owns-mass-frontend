@@ -2,7 +2,7 @@ import { loadState } from "$lib/scripts/stores.js";
 
 export const getFromApi = async (loadFetch, apiUrl, endpoint, siteId) => {
     loadState.set(true);
-    let queryUrl = `${apiUrl}${endpoint}/${siteId}`;
+    let queryUrl = `${apiUrl}/${endpoint}/${siteId}/`;
     return await loadFetch(queryUrl, {
             method: "GET",
             headers: {
