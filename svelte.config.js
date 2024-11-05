@@ -6,7 +6,7 @@ import { mdsvex } from 'mdsvex';
 const mdsvexOptions = {
 	extensions: ['.md', '.mdx'],
 	layout: {
-		titled: './src/lib/layouts/titled.svelte'
+		// titled: './src/lib/layouts/titled.svelte'
 	},
 }
 

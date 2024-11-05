@@ -5,7 +5,6 @@
 	import { site, metacorp } from "$lib/scripts/stores.js";
 
     /** @type {import('./$types').PageData} */
-    export let data;
     site.set({})
     metacorp.set({})
 

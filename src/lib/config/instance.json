@@ -30,16 +30,9 @@
             "description": "Temporary placeholder description"
         }
     ],
-    "pages": {
-        "Home": "/",
-        "Documentation": "documentation",
-        "Eviction Statistics": "eviction-statistics",
-        "See a Random Evictor": "random-evictor",
-        "Gallery": "gallery",
-        "Links and Info": "info",
-        "About": "about",
-        "Contact": "contact"
-    },
+    "pages": [
+        {"Home": "/"}
+    ],
     "keywords": [
         "evictions",
         "mapping"

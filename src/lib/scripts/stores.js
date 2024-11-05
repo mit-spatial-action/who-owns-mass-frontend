@@ -6,8 +6,6 @@ export const selectedFeature = writable([]);
 
 export const getMap = writable(() => { });
 
-export const company_id = writable({});
-export const company = writable({});
 export const metacorp = writable({});
 export const site = writable({});
 export const gcResult = writable({});

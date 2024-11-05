@@ -1,9 +1,9 @@
 import { getFromApi } from "$lib/scripts/apiCalls.js";
-const apiUrl = import.meta.env.VITE_PUBLIC_SERVER_URL;
+import { PUBLIC_API_URL } from '$env/static/public';
 
 export const load = async ({ params, fetch }) => {
     let { id } = params;
-    const metaCorpData = await getFromApi(fetch, apiUrl, 'meta', id);
+    const metaCorpData = await getFromApi(fetch, PUBLIC_API_URL, 'meta', id);
     return { 
         metaCorpData 
     }

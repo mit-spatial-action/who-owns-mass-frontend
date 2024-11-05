@@ -4,11 +4,11 @@
     import { onMount, onDestroy } from 'svelte';
     import { mapbox } from '$lib/scripts/utils';
     import { gcResult } from "$lib/scripts/stores.js";
-
-    const mapbox_token = import.meta.env.VITE_PUBLIC_MAPBOX_TOKEN;
+    
+    import { PUBLIC_MAPBOX_TOKEN } from '$env/static/public';
 
     const geocoder = new MapboxGeocoder({
-            accessToken: mapbox_token,
+            accessToken: PUBLIC_MAPBOX_TOKEN,
             placeholder: 'Search for an address!',
             marker: false,
             countries: 'us',
@@ -37,3 +37,11 @@
 </script>
 
 <div id="geocoder"></div>
+
+<style>
+    #geocoder {
+        display: flex;
+        justify-content: center;
+        padding: 2vh;
+    }
+</style>

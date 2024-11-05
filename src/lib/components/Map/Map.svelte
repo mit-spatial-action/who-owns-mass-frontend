@@ -1,8 +1,6 @@
 <script>
-    import { onDestroy, onMount, setContext } from "svelte";
-    import RippleLoader from "$lib/components/RippleLoader.svelte";
-    import { goto, invalidate } from '$app/navigation';
-    import { siteNav } from "$lib/scripts/utils";
+    import { onDestroy, onMount } from "svelte";
+    import { siteNav, mapbox } from "$lib/scripts/utils";
    
     import bbox from "@turf/bbox";
     /* Helper functions */  
@@ -10,8 +8,6 @@
 
     import site_data from "$lib/config/instance.json";
     import "mapbox-gl/dist/mapbox-gl.css";
-
-    import { mapbox } from "$lib/scripts/utils";
 
     import Device from "svelte-device-info";
     import {
@@ -21,26 +17,30 @@
         loadState,
         gcResult
     } from "$lib/scripts/stores.js";
+    
+    import { PUBLIC_MAPBOX_TOKEN } from '$env/static/public';
 
     let mobile;
 
-    export let mapbox_token;
+    mapbox.accessToken = PUBLIC_MAPBOX_TOKEN;
 
-    mapbox.accessToken = mapbox_token;
+    let map_config = site_data.map;
 
-    export let style = site_data.map.style;
-    export let projection = site_data.map.projection;
-    export let initLngLat = site_data.map.init.lngLat;
-    initLngLat = new mapbox.LngLat(initLngLat[0], initLngLat[1]);
-    export let initZoom = site_data.map.init.zoom;
-    export let initZoomDur = site_data.map.init.zoomDur; //change back to 3000 after dev
-    export let maxBounds = site_data.map.maxBounds;
-    export let resultZoom = site_data.map.resultZoom;
+    export let style = map_config.style;
+    export let projection = map_config.projection;
+    export let initLngLat = new mapbox.LngLat(
+        map_config.init.lngLat[0],
+        map_config.init.lngLat[1]
+    );
+    export let initZoom = map_config.init.zoom;
+    export let initZoomDur = map_config.init.zoomDur; //change back to 3000 after dev
+    export let maxBounds = map_config.maxBounds;
+    export let resultZoom = map_config.resultZoom;
 
     let map;
     let selected;
 
-    function flyToLngLat(lngLat, zoom = resultZoom) {
+    const flyToLngLat = (lngLat, zoom = resultZoom) => {
         map.flyTo({
             center: lngLat,
             zoom: map.getZoom() > zoom ? map.getZoom() : zoom,
@@ -79,7 +79,6 @@
                     map.getCanvas().style.cursor = 'pointer';
                 });
 
-            // Change it back to a pointer when it leaves.
             map.on('mouseleave', name, () => {
                 map.getCanvas().style.cursor = '';
             });
@@ -117,7 +116,7 @@
             }
         }
     }
-    
+    loadState.set(true);
     $: flyToQuery($gcResult);
     $: renderGeoJSONLayer($metacorp.sites, "MetaCorp"); 
     $: renderGeoJSONLayer($site, "Site");
@@ -167,7 +166,7 @@
         });
 
         map.once("zoomend", () => {
-            // loadState.set(!loadState);
+            loadState.set(false);
             map.setMinZoom(initZoom.length === 2 ? initZoom[1] : initZoom);
         });
 
@@ -273,13 +272,14 @@
     id="map"
     class={selected !== undefined && mobile ? "non-interactive" : null}
 >
-    {#if map}
-        <RippleLoader />
-    {/if}
 </div>
 
 <style>
     .non-interactive {
         pointer-events: none;
+    }
+    #map {
+        height: 100%;
+        width: 100%;
     }
 </style>

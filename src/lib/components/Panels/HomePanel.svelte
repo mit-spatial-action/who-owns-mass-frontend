@@ -1,16 +1,11 @@
 <script>
     import { afterUpdate, onMount } from "svelte";
     import ForwardGeocoder from "$lib/components/Map/Geocoders/ForwardGeocoder.svelte";
-    import Panel from "$lib/components/Panels/Panel.svelte";
-
+    import PanelTitle from "$lib/components/Panels/PanelTitle.svelte";
     /** @type {import('./$types').PageData} */
 
     export let title = "Title";
     export let subtitle = "Longer description";
-
-    // onMount(() => {
-    //     loadState.set(true);
-    // });
 
     // afterUpdate(() => {
     //     if (document.getElementById("geocoder")) {
@@ -23,18 +18,25 @@
     // });
 
 </script>
-<Panel>
-    <div class="home-panel p-5">
-        <div class="title has-text-dark is-size-1 has-text-centered">
-            {title}
-        </div>
+
+<div id="home-panel" class="home-panel p-5 columns  is-vcentered">
+    <div class="column">
+        <div class="has-text-centered">
+        <PanelTitle>{title}</PanelTitle>
         <div
-            class="subtitle mt-1 has-text-dark is-size-6 has-text-centered m-6 px-6"
+            class="subtitle mt-1 has-text-dark is-size-6 m-6 px-6"
         >
             {subtitle}
         </div>
-        <div class="centered">
-            <ForwardGeocoder />
         </div>
+    <div class="centered">
+        <ForwardGeocoder />
     </div>
-</Panel>
+    </div>
+</div>
+
+<style>
+    #home-panel {
+        height: 500px;
+    }
+</style>

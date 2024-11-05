@@ -1,218 +1,25 @@
-@charset "utf-8";
-@import "variables";
+$yellow: #f0a800;
+$green: #177E8A;
+$blue: #4223FF;
+$pink: #d63088;
+$opaque-grey: hsl(0, 0%, 21%);
+$sidebar: #F1F0F0;
+$border:  #343434;
 
-@import url('https://fonts.googleapis.com/css?family=Nunito:400,700');
+@use "bulma/sass" with (
+  $family-primary: '"Figtree", sans-serif',
+  $success: $green,
+  $primary: $yellow,
+  $link: $blue,
+  $danger: $pink,
+  $body-background-color: $opaque-grey,
+  $column-gap: 0rem
+);
+
 @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
-$family-sans-serif: 'Inter', sans-serif;
-$column-gap: 0rem; //changed from 
-
-@import "bulma/sass/utilities/_all.sass";
-@import "bulma/sass/base/_all.sass";
-@import "bulma/sass/elements/container.sass";
-@import "bulma/sass/elements/button.sass";
-@import "bulma/sass/elements/icon.sass";
-@import "bulma/sass/elements/title.sass";
-@import "bulma/sass/elements/tag.sass";
-@import "bulma/sass/elements/box.sass";
-@import "bulma/sass/elements/other.sass";
-@import "bulma/sass/form/_all.sass";
-@import "bulma/sass/grid/columns.sass";
-@import "bulma/sass/helpers/typography.sass";
-@import "bulma/sass/helpers/spacing.sass";
-@import "bulma/sass/helpers/flexbox.sass";
-@import "bulma/sass/helpers/color.sass";
-@import "bulma/sass/components/navbar.sass";
-@import "bulma/sass/components/tabs.sass";
-@import "bulma/sass/components/card.sass";
-@import "bulma/sass/layout/section.sass";
-@import "bulma/sass/layout/hero.sass";
-
-html {
-  font-family: 'Inter' sans-serif;
-  
-}
 
 * {
   box-sizing: border-box;
-}
-
-.shadow {
-  filter: drop-shadow(.18rem .18rem 0rem $danger-dark);
-}
-
-#map {
-  height: inherit;
-  width: 100%; //Consider changing this (relative to column width). 
-  // top: 0;
-}
-
-.homepage {
-  height: 100vh;
-}
-
-@include mobile {
-  .mapboxgl-ctrl-top-left {
-    //right: 0;
-    //padding: 0.75rem;
-  }
-
-  .mapboxgl-ctrl-top-left>.mapboxgl-ctrl-geocoder.mapboxgl-ctrl {
-    z-index: 100 !important;
-    margin: 0;
-  }
-
-  .info-box {
-    margin-top: calc(36px + 1.5rem);
-  }
-}
-
-.container {
-  margin-left: 0;
-  margin-right: 0;
-}
-
-.title {
-  font-weight: 700px;
-  font-size: 58px;
-}
-
-.wrapper {
-  display: flex;
-  color: #444;
-}
-
-/*
-#left-panel, #right-panel {
-   // Use box-sizing so that element's outerwidth will match width property 
-  box-sizing: border-box !important;
-  
-  // Allow box to grow and shrink, and ensure they are all equally sized 
-  flex: 1 1 auto !important;
-}
-
-*/
-
-#left-panel {
-  max-height: 100vh !important;
-  overflow-y: scroll;
-  display: flex;
-  border-left: 2px solid $border;
-  border-right: 2px solid $border;
-  justify-content: center;
-}
-
-.handler {
-  z-index: 999;
-  width: 4px;
-  padding: 0;
-  // cursor: ew-resize;
-  flex: 0 0 auto;
-}
-
-.handler::before {
-  content: '';
-  display: block;
-  width: 4px;
-  height: 100%;
-  margin: 0 auto;
-}
-
-.home-panel {
-  align-self: center !important;
-}
-
-#geocoder {
-  display: flex;
-  justify-content: center;
-  padding: 2vh;
-}
-
-#querySearchBar {
-  // Temporary - remove when search bars are merged
-
-  display: flex;
-  justify-content: center;
-}
-
-.menu {
-  position: sticky;
-  display: inline-flex;
-  vertical-align: top;
-  max-height: 100vh;
-  overflow-y: auto;
-  width: 200px;
-  top: 0;
-  bottom: 0;
-  padding: 30px;
-}
-
-.content {
-  display: inline-block;
-}
-
-//Sidebar code
-
-.sidebar {
-  height: 100%;
-  width: 0;
-  position: fixed;
-  z-index: 1;
-  top: 0;
-  left: 0;
-  background-color: $sidebar;
-  border-right: 0px solid $border;
-  overflow-x: hidden;
-  transition: 0.3s;
-  padding-top: 60px;
-}
-
-.sidebar a {
-  margin: 15px 30px 15px 32px;
-  text-decoration: none;
-  font-size: 16px;
-  color: #000000;
-  display: block;
-  transition: 0.3s;
-  border-bottom: 1px solid black;
-}
-
-.sidebar a:hover {
-  color: #f1f1f1;
-}
-
-.sidebar .closebtn {
-  position: absolute;
-  top: 0;
-  right: 25px;
-  font-size: 36px;
-  margin-left: 50px;
-  color: #000000;
-  cursor: pointer;
-}
-
-.openbtn {
-  font-size: 45px;
-  cursor: pointer;
-  color: black;
-  padding: 8px 8px;
-  border: none;
-  background-color: $sidebar;
-}
-
-.openbtn:hover {
-  background-color: #444;
-}
-
-#main {
-  transition: margin-left .5s;
-  padding: 16px;
-}
-
-#collapsed-navbar {
-  width: 3.5rem;
-  height: 100vh;
-  background-color: $sidebar;
 }
 
 //Dotted line above cards
@@ -224,8 +31,4 @@ hr {
   background-color: #fff;
   height: 1px;
   width: 50%;
-}
-
-.has-background-danger {
-  background-color: #FF8D37 !important;
 }
