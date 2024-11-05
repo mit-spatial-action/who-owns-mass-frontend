@@ -1,3 +1,7 @@
+[build]
+  command = "npm run build && npm run export"
+  publish = "public"
+
 [[redirects]]
   from = "/api/*"
   to = "http://143.198.175.79/:splat"
