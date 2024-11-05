@@ -5,8 +5,8 @@
 	"scripts": {
 		"css-build": "sass --load-path=node_modules/ src/lib/styles/style.scss src/lib/styles/style.css",
 		"start": "npm run css-build -- --watch",
-		"dev": "vite dev & npm run start",
-		"build": "npm run css-build & vite build",
+		"dev": "vite dev && npm run start",
+		"build": "npm run css-build && vite build",
 		"preview": "vite preview"
 	},
 	"devDependencies": {
