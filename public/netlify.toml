@@ -1,4 +1,4 @@
 [[redirects]]
   from = "/api/*"
-  to = "http://143.198.175.79/:splat"
+  to = "${VITE_PUBLIC_API_URL}/:splat"
   status = 200
