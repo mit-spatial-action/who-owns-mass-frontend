@@ -1,5 +1,5 @@
 // generate-redirects.js
-import { writeFile } from 'fs/promises';
+import { writeFile, mkdir } from 'fs/promises';
 
 // Read the API URL from the environment variable
 const apiUrl = process.env.VITE_PUBLIC_API_URL;
