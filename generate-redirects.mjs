@@ -14,6 +14,7 @@ const redirectsContent = `/api/* ${apiUrl}/:splat 200`;
 
 // Write the redirects content to the _redirects file in the build directory
 try {
+  await mkdir('build', { recursive: true });
   await writeFile('build/_redirects', redirectsContent, 'utf8');
   console.log("Redirects file generated with API URL:", apiUrl);
 } catch (error) {
