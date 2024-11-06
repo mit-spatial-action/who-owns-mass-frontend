@@ -10,7 +10,7 @@ if (!apiUrl) {
 }
 
 // Define the redirect rule with the API URL included
-const redirectsContent = `/api/* ${apiUrl}/:splat 200`;
+const redirectsContent = `\n/api/* ${apiUrl}/:splat 200`;
 
 // Write the redirects content to the _redirects file in the build directory
 try {
