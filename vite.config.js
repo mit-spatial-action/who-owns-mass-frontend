@@ -12,9 +12,6 @@ export default ({ mode }) => {
 				}
 			}
 		},
-		build: {
-			outDir: 'dist',
-		},
 		server: {
 			proxy: {
 				'/api': { //Note: need to use "http://127.0.0.1:8000" in env - localhost is not working. 

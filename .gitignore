@@ -5,6 +5,7 @@ node_modules
 /package
 .env
 .env.*
+*.css.map
 !.env.example
 .npmrc
 vite.config.js.timestamp-*
