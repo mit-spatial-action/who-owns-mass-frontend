@@ -1,11 +1,11 @@
 <script>
 	import MetaCorpPanel from "$lib/components/Panels/MetaCorpPanel.svelte";
 	import { metacorp } from "$lib/scripts/stores.js";
-	import { page } from '$app/stores';
-	
-	$: metaCorpData = $page.data.metaCorpData;
-	$: if (metaCorpData) {
-		metacorp.set(metaCorpData);
+	/** @type {{ data: import('./$types').PageData }} */
+	let { data } = $props();
+
+	if (data.metaCorpData) {
+		metacorp.set(data.metaCorpData);
 	}
 </script>
-<MetaCorpPanel metacorp={metaCorpData}/>
+<MetaCorpPanel metacorp={data.metaCorpData}/>
