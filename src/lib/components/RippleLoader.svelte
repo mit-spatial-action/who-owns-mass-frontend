@@ -24,9 +24,10 @@
             <div class="ripple-wave" style="
             --duration: {duration}; 
             --border: {border};
-            animation-delay: -{ step * duration / denom}s;"/>
+            animation-delay: -{ step * duration / denom}s;">
+            </div>
         {/each}
-        <div class="circle-core"/>
+        <div class="circle-core"></div>
     </div>
 </div>
 {/if}
