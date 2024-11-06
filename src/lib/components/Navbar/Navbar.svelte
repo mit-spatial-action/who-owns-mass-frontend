@@ -40,7 +40,7 @@
 <style lang="scss">
 
   #navbar {
-    position: sticky;
+    position: sticky !important;
     top: 1.5rem; /* Adjust this value as needed */
   }
   #sidebar {

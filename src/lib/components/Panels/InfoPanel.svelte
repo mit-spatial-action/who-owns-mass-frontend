@@ -6,15 +6,18 @@
 
 <Panel>
     <div id="info">
-        <div class="block">
-            <Navbar menuItems={site_data.pages}/>
-        </div>
+        <Navbar menuItems={site_data.pages}/>
+        <div id="details">
         <slot/>
+        </div>
     </div>
 </Panel>
 
 <style>
 #info {
     padding: 1.5rem;
+}
+#details {
+    padding: 1rem;
 }
 </style>

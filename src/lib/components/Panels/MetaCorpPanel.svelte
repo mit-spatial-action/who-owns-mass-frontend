@@ -7,7 +7,7 @@
 </script>
 
 
-<div class="has-text-left column p-5">
+<div class="has-text-left column">
     <PanelTitle> {metacorp.name}</PanelTitle>
 
     <div class="box">
