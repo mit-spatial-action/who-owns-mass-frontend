@@ -6,8 +6,8 @@
 
 This is the codebase for the front end of the Who Owns Massachusetts application. It's built using Svelte and SvelteKit and draws on the Bulma CSS/SCSS framework. Both production and staging branches available at...
 
-+ [Production](https://staging--who-owns-mass-frontend.netlify.app/): Builds from `main` branch.
-+ [Staging](https://who-owns-mass-frontend.netlify.app/): Builds from `staging` branch.
++ [Production](https://who-owns-mass-frontend.netlify.app/): Builds from `main` branch.
++ [Staging](https://staging--who-owns-mass-frontend.netlify.app/): Builds from `staging` branch.
 
 ## Configuration
 
