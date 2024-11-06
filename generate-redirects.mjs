@@ -1,5 +1,5 @@
 // generate-redirects.js
-import 'fs';
+import { writeFile } from 'fs/promises';
 
 // Read the API URL from the environment variable
 const apiUrl = process.env.VITE_PUBLIC_API_URL;
@@ -13,5 +13,10 @@ if (!apiUrl) {
 const redirectsContent = `/api/* ${apiUrl}/:splat 200`;
 
 // Write the redirects content to the _redirects file in the build directory
-fs.writeFileSync('build/_redirects', redirectsContent, 'utf8');
-console.log("Redirects file generated with API URL:", apiUrl);
+try {
+  await writeFile('build/_redirects', redirectsContent, 'utf8');
+  console.log("Redirects file generated with API URL:", apiUrl);
+} catch (error) {
+  console.error("Failed to write redirects file:", error);
+  process.exit(1);
+}
