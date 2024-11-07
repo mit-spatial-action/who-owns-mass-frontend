@@ -13,9 +13,9 @@ export const siteNav = async (id) => {
     await invalidate('site');
 }
 
-export const getFromApi = async (loadFetch, apiUrl, endpoint, siteId) => {
+export const getFromApi = async (loadFetch, apiUrl, endpoint, siteId, format="json") => {
     loadState.set(true);
-    let queryUrl = `${apiUrl}/${endpoint}/${siteId}/`;
+    let queryUrl = `${apiUrl}/${endpoint}/${siteId}/?format=${format}`;
     return await loadFetch(queryUrl, {
             method: "GET",
             headers: {
@@ -28,12 +28,10 @@ export const getFromApi = async (loadFetch, apiUrl, endpoint, siteId) => {
         })
         .then((data) => {
             loadState.set(false);
-            console.log(`Fetched ${endpoint} ${siteId} from ${queryUrl}`);
             return data
         })
-        .catch((error) => {
+        .catch(() => {
             loadState.set(false);
-            console.log(error)
             return {}
         });
         
