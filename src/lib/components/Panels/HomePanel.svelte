@@ -1,21 +1,10 @@
-<script>
-    import { afterUpdate, onMount } from "svelte";
+<script lang="ts">
     import ForwardGeocoder from "$lib/components/Map/Geocoders/ForwardGeocoder.svelte";
     import PanelTitle from "$lib/components/Panels/PanelTitle.svelte";
     /** @type {import('./$types').PageData} */
 
-    export let title = "Title";
-    export let subtitle = "Longer description";
-
-    // afterUpdate(() => {
-    //     if (document.getElementById("geocoder")) {
-    //         let length = document.getElementById("geocoder").children.length;
-
-    //         if (length == 0) {
-    //             remountSearchbar.update((n) => n + 1);
-    //         }
-    //     }
-    // });
+    export let title: string = "Title";
+    export let subtitle: string = "Longer description";
 
 </script>
 

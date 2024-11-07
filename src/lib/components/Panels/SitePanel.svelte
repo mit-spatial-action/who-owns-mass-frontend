@@ -1,9 +1,8 @@
-<script>
+<script lang="ts">
     import HL from "$lib/components/Panels/HL.svelte";
     import PanelTitle from "$lib/components/Panels/PanelTitle.svelte";
     
     export let site;
-
 </script>
 
 
@@ -20,7 +19,7 @@
         <div class="block is-size-6 my-2 has-text-gray">
             {#if site.metacorp.prop_count > 1}
                     <p>This owner may own <HL>{site.metacorp.prop_count}</HL> properties, including <HL>{site.metacorp.unit_count}</HL> units.</p>
-                    <a class="button is-ghost has-shadow mt-2" data-sveltekit-preload-data="off" href={`/meta/${site.metacorp.id}`}>See Details</a>
+                    <a class="button is-ghost mt-2" data-sveltekit-preload-data="off" href={`/meta/${site.metacorp.id}`}>See Details &#8594</a>
             {:else}
                     <p>We couldn't find any additional properties held by this owner.</p>
             {/if}
@@ -49,10 +48,3 @@
         </div>
     </div>
 </div>
-
-<style>
-    .has-shadow {
-        box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); /* Adjust the values as needed */
-    }
-
-</style>

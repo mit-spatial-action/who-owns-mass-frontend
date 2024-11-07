@@ -1,5 +1,5 @@
 <script>
-    import { selectedFeature } from '$lib/scripts/stores.js';
+    import { selectedFeature } from '$lib/scripts/stores.ts';
     import { onMount } from 'svelte';
     /** @type {import('./$types').PageData} */
    

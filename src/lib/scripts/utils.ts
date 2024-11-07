@@ -1,32 +1,38 @@
 import mapbox from 'mapbox-gl';
 import { goto, invalidate } from '$app/navigation';
-import { loadState } from "$lib/scripts/stores.js";
+import { loadState } from "$lib/scripts/stores";
 
-const key = Symbol();
+// const key = Symbol();
 
-export { mapbox, key };
+export { mapbox };
 
-export const siteNav = async (id) => {
+export const siteNav = async (id: number) => {
     await goto(
                 `/site/${id}`
             );
     await invalidate('site');
 }
 
-export const getFromApi = async (loadFetch, apiUrl, endpoint, siteId, format="json") => {
+export const getFromApi = async (
+    loadFetch: Function, 
+    apiUrl: string, 
+    endpoint: string, 
+    id: string | number, 
+    format="json"
+    ) => {
     loadState.set(true);
-    let queryUrl = `${apiUrl}/${endpoint}/${siteId}/?format=${format}`;
+    let queryUrl: string = `${apiUrl}/${endpoint}/${id}/?format=${format}`;
     return await loadFetch(queryUrl, {
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
             },
         })
-        .then((response) => {
+        .then((response: Response) => {
             let json = response.json();
             return json
         })
-        .then((data) => {
+        .then((data: object) => {
             loadState.set(false);
             return data
         })

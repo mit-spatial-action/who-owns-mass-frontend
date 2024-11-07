@@ -1,10 +1,10 @@
-<script>
+<script lang="ts">
   import NavButton from "$lib/components/Navbar/NavButton.svelte";
   export let menuItems = [
         {"Home": "/"}
     ];
 
-    let active = false;
+    let active: boolean = false;
     import { page } from '$app/stores';
     $: pathname = $page.url.pathname;
 </script>
@@ -15,7 +15,7 @@
     >
     <div class="columns is-vcentered">
       <div class="column">
-        <button id="openbtn" class="has-background-light" on:click={() => active = !active}>☰</button>
+        <button id="openbtn" class="button" on:click={() => active = !active}>☰</button>
       </div>
       {#if pathname !== "/"}
       <div class="column has-text-right">
@@ -50,7 +50,7 @@
     top: 0;
     left: -150px;
     min-width: 150px;
-    border-right: 0px solid $border;
+    // border-right: 0px solid $border;
     overflow-x: hidden;
     transition: 0.3s;
   }
@@ -82,14 +82,9 @@
   }
 
   button {
-    font-size: 45px;
+    // font-size: 45px;
     cursor: pointer;
     color: black;
-    border: none;
-  }
-
-  button:hover {
-    background-color: #000;
   }
 
   #collapsed-sidebar {

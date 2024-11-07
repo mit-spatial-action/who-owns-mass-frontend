@@ -4,10 +4,12 @@
 
 
 <style lang="scss">
+    @use "src/lib/styles/variables";
+
     div {
         max-height: 100vh !important;
         overflow-y: scroll;
-        border-left: 2px solid $border;
-        border-right: 2px solid $border;
+        border-left: 2px solid variables.$border;
+        border-right: 2px solid variables.$border;
     }
 </style>

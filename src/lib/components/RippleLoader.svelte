@@ -1,5 +1,5 @@
 <script>
-    import { loadState } from "$lib/scripts/stores.js";
+    import { loadState } from "$lib/scripts/stores.ts";
     import { fade, fly } from 'svelte/transition';
 
     export let duration = 1.2;
@@ -33,6 +33,7 @@
 {/if}
 
 <style lang="scss">
+    @use "src/lib/styles/variables";
     .wrapper {
 		display: flex;
 		flex-direction: column;
@@ -45,7 +46,7 @@
         z-index: 100;
 		bottom: 0;
 		/* color: rebeccapurple; */
-		background: #363636BB;
+		background: variables.$body-background-color;
     }
 
     .rippler,
@@ -73,7 +74,7 @@
     }
 
     .rippler .circle-core {
-        background: $danger;
+        background: variables.$primary;
         top: 30px;
         left: 30px;
         width: 20px;
@@ -87,7 +88,7 @@
             width: 8px;
             height: 8px;
             opacity: 0.8;
-            border-color: $danger;
+            border-color: variables.$primary;
         }
         10% {
             top: 36px;
@@ -95,7 +96,7 @@
             width: 8px;
             height: 8px;
             opacity: 0.8;
-            border-color: $danger;
+            border-color: variables.$primary;
         }
         15% {
             top: 36px;
@@ -103,7 +104,7 @@
             width: 8px;
             height: 8px;
             opacity: 0.8;
-            border-color: $danger;
+            border-color: variables.$primary;
         }
         100% {
             top: 0;
@@ -111,7 +112,7 @@
             width: 80px;
             height: 80px;
             opacity: 0.5;
-            border-color: $primary;
+            border-color: variables.$primary;
         }
     }
 </style>

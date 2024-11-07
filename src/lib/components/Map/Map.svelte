@@ -12,11 +12,10 @@
     import Device from "svelte-device-info";
     import {
         site,
-        mapLoad,
         metacorp,
         loadState,
         gcResult
-    } from "$lib/scripts/stores.js";
+    } from "$lib/scripts/stores.ts";
     
     import { PUBLIC_MAPBOX_TOKEN } from '$env/static/public';
 
@@ -136,7 +135,6 @@
         map = new mapbox.Map(mapOptions);
 
         map.on("load", async () => {
-            mapLoad.set(true);
             map.addSource("parcelPoints", {
                 type: "vector",
                 url: "mapbox://mit-spatial-action.companies_103120241149",
@@ -212,30 +210,6 @@
                 //         }
                 //     });
                 // }
-
-                // map.addSource("selectedGeom", {
-                //     type: "geojson",
-                //     data: feature.toJSON(),
-                // });
-                // map.addLayer({
-                //     id: "selectedGeom",
-                //     type: "circle",
-                //     source: "selectedGeom",
-                //     paint: {
-                //         "circle-radius": [
-                //             "interpolate",
-                //             ["linear"],
-                //             ["get", "evictions"],
-                //             0,
-                //             2,
-                //             400,
-                //             35,
-                //         ],
-                //         "circle-color": "#4223FF",
-                //         "circle-opacity": 0.8,
-                //     },
-                // });
-
 
             });
 

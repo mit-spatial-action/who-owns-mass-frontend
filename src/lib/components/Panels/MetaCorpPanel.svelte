@@ -1,9 +1,8 @@
-<script>
+<script lang="ts">
     import HL from "$lib/components/Panels/HL.svelte";
     import PanelTitle from "$lib/components/Panels/PanelTitle.svelte";
     
     export let metacorp;
-
 </script>
 
 

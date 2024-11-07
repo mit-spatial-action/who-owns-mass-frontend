@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import site_data from '$lib/config/instance.json';
     import Navbar from '$lib/components/Navbar/Navbar.svelte';
     import Panel from "$lib/components/Panels/Panel.svelte";

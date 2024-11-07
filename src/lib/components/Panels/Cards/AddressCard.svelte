@@ -1,7 +1,6 @@
 <script>
-    import { selectedFeature } from '$lib/scripts/stores.js';
     import { onDestroy } from 'svelte';
-    import { metacorp } from "$lib/scripts/stores.js";
+    import { metacorp } from "$lib/scripts/stores.ts";
 
     /** @type {import('./$types').PageData} */
 

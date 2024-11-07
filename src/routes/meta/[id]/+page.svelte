@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
 	import MetaCorpPanel from "$lib/components/Panels/MetaCorpPanel.svelte";
-	import { metacorp } from "$lib/scripts/stores.js";
+	import { metacorp } from "$lib/scripts/stores";
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
 
@@ -8,4 +8,5 @@
 		metacorp.set(data.metaCorpData);
 	}
 </script>
+
 <MetaCorpPanel metacorp={data.metaCorpData}/>

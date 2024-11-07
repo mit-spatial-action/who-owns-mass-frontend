@@ -1,5 +1,5 @@
 <script>
-    import { selectedFeature } from "$lib/scripts/stores.js";
+    import { selectedFeature } from "$lib/scripts/stores.ts";
     import { onDestroy } from "svelte";
     import LandlordEvictionsGraph from "$lib/components/Panels/Cards/LandlordEvictionsGraph.svelte";
     import CorporateAddressCard from "$lib/components/Panels/Cards/CorporateAddressCard.svelte";

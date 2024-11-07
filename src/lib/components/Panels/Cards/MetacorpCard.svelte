@@ -1,7 +1,5 @@
 <script>
-    import { selectedFeature } from '$lib/scripts/stores.js';
-    import { metacorp } from "$lib/scripts/stores.js";
-
+    import { selectedFeature, metacorp } from '$lib/scripts/stores.ts';
     /** @type {import('./$types').PageData} */
 
     const evictor_rank = "Major Evictor";

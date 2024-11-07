@@ -2,11 +2,12 @@
     <slot/>
 </span>
 
-<style>
-span{
-    display: inline-block;
-    padding: .125em 0.125em;
-    background: #FF5F05;
-    color: #ffffff;
-}
+<style lang="scss">
+    @use "src/lib/styles/variables";
+    span{
+        display: inline-block;
+        padding: .125em 0.125em;
+        background: variables.$primary;
+        color: #ffffff;
+    }
 </style>
