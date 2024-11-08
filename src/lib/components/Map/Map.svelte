@@ -1,6 +1,7 @@
-<script>
+<script lang="ts">
     import { onDestroy, onMount } from "svelte";
     import { siteNav, mapbox } from "$lib/scripts/utils";
+    import type { FeatureCollection, Feature } from "geojson";
    
     import bbox from "@turf/bbox";
     /* Helper functions */  
@@ -15,13 +16,13 @@
         metacorp,
         loadState,
         gcResult
-    } from "$lib/scripts/stores.ts";
-    
-    import { PUBLIC_MAPBOX_TOKEN } from '$env/static/public';
+    } from "$lib/scripts/stores";
 
-    let mobile;
+    export let mapbox_token: string;
 
-    mapbox.accessToken = PUBLIC_MAPBOX_TOKEN;
+    let mobile:boolean = false;
+
+    mapbox.accessToken = mapbox_token;
 
     let map_config = site_data.map;
 
@@ -36,10 +37,9 @@
     export let maxBounds = map_config.maxBounds;
     export let resultZoom = map_config.resultZoom;
 
-    let map;
-    let selected;
+    let map: mapboxgl.Map;
 
-    const flyToLngLat = (lngLat, zoom = resultZoom) => {
+    const flyToLngLat = (lngLat: mapboxgl.LngLat, zoom: number = resultZoom) => {
         map.flyTo({
             center: lngLat,
             zoom: map.getZoom() > zoom ? map.getZoom() : zoom,
@@ -50,11 +50,11 @@
 
     const flyToQuery = async () => {
         if (map) {
-            let resultSiteId;
+            let resultSiteId: string | number;
             loadState.set(true);
-            map.once('idle', async (e) => {
+            map.once('idle', async (e: Event) => {
                 let features = map.queryRenderedFeatures({
-                    layers: ["id"],
+                    layers: ["sites"],
                 });
                 if (features.length > 0) {
                     let selected = features.filter(feature => feature.properties.addr.toUpperCase() === $gcResult.address.toUpperCase())
@@ -72,7 +72,7 @@
         }
     }
 
-    const pointerEvents = (name) => {
+    const pointerEvents = (name: string) => {
         if (map) {
             map.on('mouseenter', name, () => {
                     map.getCanvas().style.cursor = 'pointer';
@@ -84,7 +84,7 @@
         }
     }
 
-    const renderGeoJSONLayer = (geojson, name) => {
+    const renderGeoJSONLayer = (geojson: FeatureCollection | Feature, name: string) => {
         if(geojson && map){
             if(Object.keys(geojson).length > 1) {
                 if (typeof map.getLayer(`selected${name}Layer`) !== "undefined") {
@@ -135,14 +135,14 @@
         map = new mapbox.Map(mapOptions);
 
         map.on("load", async () => {
-            map.addSource("parcelPoints", {
+            map.addSource("sites", {
                 type: "vector",
-                url: "mapbox://mit-spatial-action.companies_103120241149",
+                url: "mapbox://mit-spatial-action.who-owns-mass-sites",
             });
 
             map.addLayer({
-                id: "id",
-                source: "parcelPoints",
+                id: "sites",
+                source: "sites",
                 maxZoom: resultZoom,
                 "source-layer": "geographies",
                 type: "circle",
@@ -163,57 +163,44 @@
             });
         });
 
+        const popup = new mapbox.Popup({
+            closeButton: true,
+            closeOnClick: true
+        });
+
+        map.on('mouseenter', 'sites', (e) => {
+
+            const coordinates = e.features[0].geometry.coordinates.slice();
+            const address = e.features[0].properties.addr;
+            const own_name = e.features[0].properties.own_name;
+            const muni = e.features[0].properties.muni;
+
+            let popupHTML = "<p><strong>"+address+"</strong></p>"
+            popupHTML += "<p>"+own_name+"</p>"
+            popupHTML += "<p>"+muni+", MA</p>"
+
+            while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+                coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+            }
+
+            popup.setLngLat(coordinates).setHTML(popupHTML).addTo(map);
+        })
+
+
         map.once("zoomend", () => {
             loadState.set(false);
             map.setMinZoom(initZoom.length === 2 ? initZoom[1] : initZoom);
         });
 
         map.on("style.load", () => {
-            map.on("click", "id", async (e) => {
-
+            map.on("click", "sites", async (e) => {
                 var feature = e.features[0];
+                console.log(feature.properties);
                 await siteNav(feature.properties.site_id)
-
-                // var network = drawNetwork(feature.geometry.coordinates);
-                // var networkPoints = drawNetworkPoints();
-                // Add network, if 1+ affiliated companies
-                // if(network.features.length > 0){
-
-                //     map.addSource('routes', {
-                //         'type': 'geojson',
-                //         'data': network
-                //     });
-
-                //     map.addSource('affiliates', {
-                //         'type': 'geojson',
-                //         'data': networkPoints
-                //     });
-
-                //     map.addLayer({
-                //         id: "network",
-                //         source: 'routes',
-                //         type: 'line',
-                //         paint: {
-                //             'line-width': 1.5,
-                //             'line-color': '#806cf9',
-                //             'line-opacity': 0.8
-                //         }
-                //     });
-
-                //     map.addLayer({
-                //         id: "affiliates",
-                //         source: 'affiliates',
-                //         type: 'circle',
-                //         paint: {
-                //             "circle-color": "#806cf9",
-                //             "circle-opacity": 1,
-                //         }
-                //     });
-                // }
 
             });
 
-            pointerEvents("id");
+            pointerEvents("sites");
 
             map.setFog({
                 range: [9, 20],
@@ -244,7 +231,7 @@
 
 <div
     id="map"
-    class={selected !== undefined && mobile ? "non-interactive" : null}
+    class={mobile ? "non-interactive" : null}
 >
 </div>
 
