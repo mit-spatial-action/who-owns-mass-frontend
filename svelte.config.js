@@ -2,6 +2,7 @@ import adapter from '@sveltejs/adapter-netlify';
 import { sveltePreprocess } from 'svelte-preprocess';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
 import { mdsvex } from 'mdsvex';
+import path from 'path';
 
 /** @type {import('mdsvex').MdsvexOptions} */
 const mdsvexOptions = {
@@ -26,6 +27,10 @@ const config = {
 		adapter: adapter(),
 		csrf: {
 			checkOrigin: false
+		},
+		alias: {
+			$lib: path.resolve('src/lib'),
+			$types: path.resolve('src/types'),
 		}
 	},
 };

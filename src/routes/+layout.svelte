@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
     import site_data from '$lib/config/instance.json';
     import "$lib/styles/style.css";
     import InfoPanel from "$lib/components/Panels/InfoPanel.svelte";

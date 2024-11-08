@@ -1,13 +1,20 @@
 {
     "extends": "./.svelte-kit/tsconfig.json",
     "compilerOptions": {
-      "paths": {
-        "$lib/*": ["./src/lib/*"],
-        "$routes/*": ["./src/routes/*"],
-        "$types": ["./.svelte-kit/types/src/routes/$types"]
-      }
+      "module": "esnext",
+      "target": "esnext",
+      "resolveJsonModule": true,
+      "moduleResolution": "node",
+      "esModuleInterop": true,
+      "types": [
+        "@sveltejs/kit", 
+        "svelte"
+      ]
     },
-    "include": ["src/**/*.ts", "src/**/*.js", "src/**/*.svelte", ".svelte-kit/types/src/*"],
+    "include": [
+      "src/**/*", 
+      "svelte.config.js"
+    ],
     "exclude": ["node_modules"]
   }
   

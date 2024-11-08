@@ -13,3 +13,4 @@ vite.config.ts.timestamp-*
 src/lib/styles/style.css
 # Local Netlify folder
 .netlify
+tsconfig.tsbuildinfo
