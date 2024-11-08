@@ -10,7 +10,7 @@ export const siteNav = async (id: number) => {
     await goto(
                 `/site/${id}`
             );
-    await invalidate('site');
+    // await invalidate('site');
 }
 
 export const getFromApi = async (

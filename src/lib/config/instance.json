@@ -38,7 +38,7 @@
         "mapping"
     ],
     "map": {
-        "style": "mapbox://styles/mit-spatial-action/cluwwvx8l00gi01pe8mi4e64o",
+        "style": "mapbox://styles/mapbox/light-v11",
         "maxBounds": [
             [
                 -179,
@@ -54,14 +54,14 @@
         "projection": "globe",
         "init": {
             "lngLat": [
-                -71.89,
+                -70.89,
                 42.34
             ],
             "zoom": [
                 5,
-                8
+                9
             ],
-            "zoomDur": 500
+            "zoomDur": 2000
         }
     }
 }

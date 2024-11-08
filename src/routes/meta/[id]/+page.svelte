@@ -1,12 +1,15 @@
 <script lang="ts">
 	import MetaCorpPanel from "$lib/components/Panels/MetaCorpPanel.svelte";
-	import { metacorp } from "$lib/scripts/stores";
+	import { site, metacorp, homeState } from "$lib/scripts/stores";
 	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
-
-	if (data.metaCorpData) {
-		metacorp.set(data.metaCorpData);
-	}
+	$effect(() => {
+		if (data.metaCorpData) {
+			metacorp.set(data.metaCorpData);
+			site.set({});
+			homeState.set(false);
+		}
+	});	
 </script>
 
 <MetaCorpPanel metacorp={data.metaCorpData}/>

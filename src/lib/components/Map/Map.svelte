@@ -15,6 +15,7 @@
         site,
         metacorp,
         loadState,
+        homeState,
         gcResult
     } from "$lib/scripts/stores";
 
@@ -39,17 +40,39 @@
 
     let map: mapboxgl.Map;
 
+    let markers: mapboxgl.Marker[] = [];
+
+    const removeAllMarkers = () => {
+        markers.forEach(marker => marker.remove()); // Remove each marker
+        markers.length = 0; // Clear the array
+    }
+
+    const addMarker = (coords) => {
+        if (map) {
+            const marker = new mapbox.Marker({
+                    color: "#FF5F05"
+                    })
+                .setLngLat(coords)
+                .addTo(map);
+
+            markers.push(marker); // Add marker to the array
+        }
+    }
+
+
     const flyToLngLat = (lngLat: mapboxgl.LngLat, zoom: number = resultZoom) => {
         map.flyTo({
             center: lngLat,
             zoom: map.getZoom() > zoom ? map.getZoom() : zoom,
-            duration: 0,
+            duration: initZoomDur,
             essential: true,
+            bearing: -45,
+            pitch: 45
         });
     }
 
-    const flyToQuery = async () => {
-        if (map) {
+    const flyToQuery = async (gcResult) => {
+        if (map && gcResult) {
             let resultSiteId: string | number;
             loadState.set(true);
             map.once('idle', async (e: Event) => {
@@ -57,7 +80,7 @@
                     layers: ["sites"],
                 });
                 if (features.length > 0) {
-                    let selected = features.filter(feature => feature.properties.addr.toUpperCase() === $gcResult.address.toUpperCase())
+                    let selected = features.filter(feature => feature.properties.addr.toUpperCase() === gcResult.address.toUpperCase())
                     if (selected.length > 0) {
                         await siteNav(selected[0].properties.site_id);
                     } else {
@@ -68,7 +91,7 @@
                 loadState.set(false);
                 return resultSiteId
             })
-            flyToLngLat($gcResult.lngLat)
+            flyToLngLat(gcResult.lngLat)
         }
     }
 
@@ -84,13 +107,46 @@
         }
     }
 
-    const renderGeoJSONLayer = (geojson: FeatureCollection | Feature, name: string) => {
-        if(geojson && map){
-            if(Object.keys(geojson).length > 1) {
+    const clearLayersSources = async (names) => {
+        console.log("clearing all layers");
+        if (map){
+            removeAllMarkers();
+            names.forEach((name) => {
                 if (typeof map.getLayer(`selected${name}Layer`) !== "undefined") {
+                    console.log(`Clearing selected${name}Layer`)
                     map.removeLayer(`selected${name}Layer`);
                     map.removeSource(`selected${name}`);
                 }
+            })
+        }
+    }
+
+    const oneOrManyMarkers = (geojson) => {
+        if (geojson.type === "FeatureCollection") {
+            geojson.features.forEach((feature) => {
+                const { coordinates } = feature.geometry;
+                const { title } = feature.properties;
+                addMarker(coordinates);
+            });
+        } else {
+            console.log("hellO")
+            const { coordinates } = geojson.geometry;
+            addMarker(coordinates);
+        }
+    }
+
+    const getLabelLayerId = () => {
+        const layers = map.getStyle().layers;
+        return layers.find(
+            (layer) => layer.type === 'symbol' && layer.layout['text-field']
+        ).id;
+    }
+
+    const renderGeoJSONLayer = async (geojson: FeatureCollection | Feature, name: string) => {
+        console.log("Triggering renderGeoJSONLayer")
+        if(geojson && map){
+            if(Object.keys(geojson).length > 1) {
+                await clearLayersSources(["Site", "MetaCorp"])
                 map.addSource(`selected${name}`, {
                     'type': 'geojson',
                     'data': geojson
@@ -100,25 +156,59 @@
                     source: `selected${name}`,
                     type: 'circle',
                     paint: {
-                        "circle-radius": 10,
-                        "circle-color": "blue",
+                        "circle-radius": 1,
+                        "circle-color": "#FF5F05",
                         "circle-opacity": 1
                     }
                 });
 
+                oneOrManyMarkers(geojson);
+                
+                // let radius = 1
+                // let opacity = 1;
+                // const opacityStep = 0.05
+                // setInterval(() => {
+                //     map.setPaintProperty(`selected${name}Layer`, 'circle-radius', radius);
+                //     radius = (radius + 1) % 20;
+                //     map.setPaintProperty(`selected${name}Layer`, 'circle-opacity', opacity);
+                //     opacity -= opacityStep;
+
+                //     if (opacity <= 0) {
+                //         opacity = 1;
+                //     }
+                // }, 30);
+                
                 pointerEvents(name);
 
                 let jsonBbox = bbox(geojson);
                 map.fitBounds(jsonBbox, {
-                    padding: 50
+                    padding: 50,
+                    pitch: 45,
+                    bearing: -45
                 });
             }
         }
     }
+
+    // Function to toggle the layer visibility
+    const toggleLayerVisibility = (condition, layerId) => {
+        if (map) {
+            if (!condition) {
+                console.log("visibility off");
+                // Set the visibility to 'none' to hide the layer
+                map.setLayoutProperty(layerId, 'visibility', 'none');
+            } else {
+                // Set the visibility to 'visible' to show the layer
+                map.setLayoutProperty(layerId, 'visibility', 'visible');
+            }
+        }
+    }
+    
     loadState.set(true);
     $: flyToQuery($gcResult);
     $: renderGeoJSONLayer($metacorp.sites, "MetaCorp"); 
     $: renderGeoJSONLayer($site, "Site");
+    // $: toggleLayerVisibility($homeState, "hexes");
 
     onMount(() => {
         mobile = Device.isPhone;
@@ -127,7 +217,8 @@
             style: style,
             center: initLngLat,
             zoom: initZoom.length === 2 ? initZoom[0] : initZoom,
-            bearing: 0,
+            bearing: -60,
+            pitch: 65,
             projection: projection,
             maxBounds: maxBounds,
             maxZoom: resultZoom
@@ -148,12 +239,12 @@
                 type: "circle",
                 paint: {
                     "circle-radius": 5,
-                    "circle-color": "#FF5F05",
+                    "circle-color": "#3CAAA9",
                     "circle-opacity": [
                         'interpolate',
                         ['exponential', 0.5],
                         ['zoom'],
-                        resultZoom - 5,
+                        resultZoom - 4,
                         0,
                         // When zoom is 18 or higher, buildings will be 100% opaque.
                         resultZoom,
@@ -195,19 +286,107 @@
         map.on("style.load", () => {
             map.on("click", "sites", async (e) => {
                 var feature = e.features[0];
-                console.log(feature.properties);
                 await siteNav(feature.properties.site_id)
-
             });
+
+            const labelLayerId = getLabelLayerId();
+            map.addSource("hexes", {
+                type: "vector",
+                url: "mapbox://mit-spatial-action.who-owns-mass-hexes",
+            });
+
+            map.addLayer({
+                id: "hexes",
+                source: "hexes",
+                maxZoom: resultZoom,
+                "source-layer": "geographies",
+                type: "fill-extrusion",
+                filter: ['==', ['get', 'size'], 0.5],
+                paint: {
+                    "fill-extrusion-height": [
+                        'interpolate',
+                        ['exponential', 1.5],
+                        ['get', 'prop_count_mean_ntile'],
+                        0, 0,
+                        10, 3000
+                    ],
+                    "fill-extrusion-color": [
+                        'interpolate',
+                        ['exponential', 1.5],
+                        ['get', 'prop_count_mean_ntile'],
+                        0, 'white',
+                        // When zoom is 18 or higher, buildings will be 100% opaque.
+                        10, "#3CAAA9"
+                    ],
+                    'fill-extrusion-opacity': 0.9
+                    // "circle-opacity": [
+                    //     'interpolate',
+                    //     ['exponential', 0.5],
+                    //     ['zoom'],
+                    //     resultZoom - 4,
+                    //     0,
+                    //     // When zoom is 18 or higher, buildings will be 100% opaque.
+                    //     resultZoom,
+                    //     1
+                    // ],
+                },
+            },
+            labelLayerId);
+
+            map.on('zoom', function() {
+                const zoomLevel = map.getZoom();  // Get the current zoom level
+
+                if (zoomLevel < 12 && $homeState) {
+                    // Show the layer when zoom level is greater than the threshold
+                    map.setLayoutProperty('hexes', 'visibility', 'visible');
+                } else {
+                    // Hide the layer when zoom level is less than or equal to the threshold
+                    map.setLayoutProperty('hexes', 'visibility', 'none');
+                }
+            });
+
+            map.addLayer(
+                {
+                id: '3d-buildings',
+                source: 'composite',
+                'source-layer': 'building',
+                filter: ['==', 'extrude', 'true'],
+                type: 'fill-extrusion',
+                minzoom: 15,
+                paint: {
+                    'fill-extrusion-color': '#fff',
+                    'fill-extrusion-height': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    15,
+                    0,
+                    15.05,
+                    ['get', 'height']
+                    ],
+                    'fill-extrusion-base': [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    15,
+                    0,
+                    15.05,
+                    ['get', 'min_height']
+                    ],
+                    'fill-extrusion-opacity': 1
+                }
+                },
+                labelLayerId
+            );
 
             pointerEvents("sites");
 
             map.setFog({
-                range: [9, 20],
-                color: "#f0a800",
-                "high-color": "#d63088",
-                "horizon-blend": 0.02, // default: .1
-                "space-color": "#000000",
+                range: [0.25, 2],
+                color: "#fff",
+                "high-color": "#fff",
+                "horizon-blend": 0.1, // default: .1
+                "space-color": "#3CAAA9",
                 "star-intensity": 0.1,
             });
             if (initZoom.length === 2) {

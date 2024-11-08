@@ -2,11 +2,14 @@
     import HomePanel from "$lib/components/Panels/HomePanel.svelte";
     import site_data from "$lib/config/instance.json";
     import "$lib/styles/style.css";
-	import { site, metacorp } from "$lib/scripts/stores";
+	import { site, metacorp, homeState } from "$lib/scripts/stores";
 
     /** @type {import('./$types').PageData} */
-    site.set({})
-    metacorp.set({})
+    $effect(() => {
+        site.set({});
+        metacorp.set({});
+        homeState.set(true);
+    })
 
 </script>
 
