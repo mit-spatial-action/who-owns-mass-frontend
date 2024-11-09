@@ -280,7 +280,7 @@
 
         map.once("zoomend", () => {
             loadState.set(false);
-            map.setMinZoom(initZoom.length === 2 ? initZoom[1] : initZoom);
+            // map.setMinZoom(initZoom.length === 2 ? initZoom[1] : initZoom);
         });
 
         map.on("style.load", () => {
