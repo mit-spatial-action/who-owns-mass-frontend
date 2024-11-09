@@ -308,7 +308,7 @@
                         ['exponential', 1.5],
                         ['get', 'prop_count_mean_ntile'],
                         0, 0,
-                        10, 3000
+                        5, 3000
                     ],
                     "fill-extrusion-color": [
                         'interpolate',
@@ -316,7 +316,7 @@
                         ['get', 'prop_count_mean_ntile'],
                         0, 'white',
                         // When zoom is 18 or higher, buildings will be 100% opaque.
-                        10, "#3CAAA9"
+                        5, "#3CAAA9"
                     ],
                     'fill-extrusion-opacity': 0.9
                     // "circle-opacity": [
