@@ -15,13 +15,19 @@
   $link: variables.$link,
   $danger: variables.$danger,
   $body-background-color: variables.$body-background-color,
-  $column-gap: 0rem
+  $column-gap: 0rem,
+  $card-radius: 0rem,
+  $radius: 0rem,
 );
 
 @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 * {
   box-sizing: border-box;
+}
+
+#geocoder > * {
+    border-radius: 0rem;
 }
 
 //Dotted line above cards

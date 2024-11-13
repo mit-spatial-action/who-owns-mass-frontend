@@ -1,6 +1,6 @@
 <script>
     import { onDestroy } from 'svelte';
-    import { metacorp } from "$lib/scripts/stores.ts";
+    import { metacorp } from "$lib/stores";
 
     /** @type {import('./$types').PageData} */
 

@@ -17,7 +17,7 @@
         loadState,
         homeState,
         gcResult
-    } from "$lib/scripts/stores";
+    } from "$lib/stores";
 
     export let mapbox_token: string;
 

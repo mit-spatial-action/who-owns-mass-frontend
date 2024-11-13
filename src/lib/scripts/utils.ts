@@ -1,5 +1,5 @@
 import mapbox from 'mapbox-gl';
-import { goto, invalidate } from '$app/navigation';
+import { goto } from '$app/navigation';
 import { loadState } from "$lib/scripts/stores";
 
 // const key = Symbol();
@@ -10,7 +10,6 @@ export const siteNav = async (id: number) => {
     await goto(
                 `/site/${id}`
             );
-    // await invalidate('site');
 }
 
 export const getFromApi = async (
