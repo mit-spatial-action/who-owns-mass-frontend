@@ -1,6 +1,6 @@
 <script>
-    import { loadState } from "$lib/scripts/stores.ts";
-    import { fade, fly } from 'svelte/transition';
+    import { fly } from 'svelte/transition';
+    import Modal from "$lib/components/Modal.svelte";
 
     export let duration = 1.2;
     export let border = 4;
@@ -14,41 +14,25 @@
 
 </script>
 
-{#if $loadState}
-<div transition:fade={{duration: 800}} class="wrapper">
-    <div transition:fly={{ 
-        y: flyInProps.distance, 
-        duration: flyInProps.duration 
-        }} class="rippler">
-        {#each steps as step}
-            <div class="ripple-wave" style="
-            --duration: {duration}; 
-            --border: {border};
-            animation-delay: -{ step * duration / denom}s;">
-            </div>
-        {/each}
-        <div class="circle-core"></div>
+<Modal closeBtn={false}>
+    <div class="has-text-centered">
+        <div transition:fly={{ 
+            y: flyInProps.distance, 
+            duration: flyInProps.duration 
+            }} class="rippler">
+            {#each steps as step}
+                <div class="ripple-wave" style="
+                --duration: {duration}; 
+                --border: {border};
+                animation-delay: -{ step * duration / denom}s;">
+                </div>
+            {/each}
+            <div class="circle-core"></div>
+        </div>
     </div>
-</div>
-{/if}
+</Modal>
 
 <style lang="scss">
-    @use "src/lib/styles/variables";
-    .wrapper {
-		display: flex;
-		flex-direction: column;
-		align-items:center;
-		justify-content: center;
-		position: absolute;
-		left: 0;
-		right: 0;
-		top: 0;
-        z-index: 100;
-		bottom: 0;
-		/* color: rebeccapurple; */
-		background: variables.$body-background-color;
-    }
-
     .rippler,
     .rippler div {
         z-index: 1000;
@@ -74,7 +58,7 @@
     }
 
     .rippler .circle-core {
-        background: variables.$primary;
+        background: $primary;
         top: 30px;
         left: 30px;
         width: 20px;
@@ -88,7 +72,7 @@
             width: 8px;
             height: 8px;
             opacity: 0.8;
-            border-color: variables.$primary;
+            border-color: $primary;
         }
         10% {
             top: 36px;
@@ -96,7 +80,7 @@
             width: 8px;
             height: 8px;
             opacity: 0.8;
-            border-color: variables.$primary;
+            border-color: $primary;
         }
         15% {
             top: 36px;
@@ -104,7 +88,7 @@
             width: 8px;
             height: 8px;
             opacity: 0.8;
-            border-color: variables.$primary;
+            border-color: $primary;
         }
         100% {
             top: 0;

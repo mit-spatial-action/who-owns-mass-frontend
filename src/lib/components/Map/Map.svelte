@@ -16,13 +16,16 @@
         metacorp,
         loadState,
         homeState,
+        homeState,
         gcResult
-    } from "$lib/scripts/stores";
+    } from "$lib/stores";
 
     export let mapbox_token: string;
 
     let mobile:boolean = false;
+    let mobile:boolean = false;
 
+    mapbox.accessToken = mapbox_token;
     mapbox.accessToken = mapbox_token;
 
     let map_config = site_data.map;
@@ -37,6 +40,27 @@
     export let initZoomDur = map_config.init.zoomDur; //change back to 3000 after dev
     export let maxBounds = map_config.maxBounds;
     export let resultZoom = map_config.resultZoom;
+
+    let map: mapboxgl.Map;
+
+    let markers: mapboxgl.Marker[] = [];
+
+    const removeAllMarkers = () => {
+        markers.forEach(marker => marker.remove()); // Remove each marker
+        markers.length = 0; // Clear the array
+    }
+
+    const addMarker = (coords) => {
+        if (map) {
+            const marker = new mapbox.Marker({
+                    color: "#FF5F05"
+                    })
+                .setLngLat(coords)
+                .addTo(map);
+
+            markers.push(marker); // Add marker to the array
+        }
+    }
 
     let map: mapboxgl.Map;
 

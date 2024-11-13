@@ -6,44 +6,68 @@
 </script>
 
 
-<div class="has-text-left">
+<header class="card-header is-shadowless">
     <PanelTitle>{site.address.addr}</PanelTitle>
-    <div class="subtitle has-text-dark is-size-5 mt-1 has-text-left block">
+
+    <!-- <div class="subtitle has-text-dark is-size-5 mt-1 has-text-left block">
         {site.address.muni}, {site.address.state}
-    </div>
-    <div class="has-text-dark is-size-5 mt-1 has-text-left block box">
-        <div class="has-text-weight-bold">Owner(s)</div>
+    </div> -->
+</header>
+<div class="card-content">
+    <div class="title">Owners</div>
+    <div class="grid">
         {#each site.owners as owner, index}
-            { index == site.owners.length-1 ? owner.properties.name : `${owner.properties.name}, `}
+            <div class="cell">
+                <div class="card">
+                    <div class="card-content">
+                        {owner.properties.name}
+                    </div>
+                </div>
+            </div>
         {/each}
-        <div class="block is-size-6 my-2 has-text-gray">
-            {#if site.metacorp.prop_count > 1}
-                    <p>This owner may own <HL>{site.metacorp.prop_count}</HL> properties, including <HL>{site.metacorp.unit_count}</HL> units.</p>
-                    <a class="button is-ghost mt-2" data-sveltekit-preload-data="off" href={`/meta/${site.metacorp.id}`}>See Details &#8594</a>
-            {:else}
-                    <p>We couldn't find any additional properties held by this owner.</p>
-            {/if}
-        </div>
     </div>
-    <div class="box">
-        <div class="columns">
-            <div class="column mr-1">
-                <div class="has-text-weight-bold">Year of Record</div>
-                {#if site.fy}{site.fy}{:else}Unknown.{/if}
-            </div>
-            <div class="column mr-1">
-                <div class="has-text-weight-bold">Estimated Units</div>
-                {#if site.units}{site.units}{:else}Unknown.{/if}
+    <div class="block">
+        {#if site.metacorp.prop_count > 1}
+                <p>This owner may own <HL>{site.metacorp.prop_count}</HL> properties, including <HL>{site.metacorp.unit_count}</HL> units.</p>
+                <a class="button mt-2" data-sveltekit-preload-data="off" href={`/meta/${site.metacorp.id}`}>
+                    See Details &#8594
+                </a>
+        {:else}
+                <p>We couldn't find any additional properties held by this owner.</p>
+        {/if}
+    </div>
+    <div class="title">Property Details</div>
+    <div class="grid">
+        <div class="cell">
+            <div class="card">
+                <div class="card-content">
+                    <div class="has-text-weight-bold">Year of Record</div>
+                    {#if site.fy}{site.fy}{:else}Unknown.{/if}
+                </div>
             </div>
         </div>
-        <div class="columns">
-            <div class="column mr-1">
-                <div class="has-text-weight-bold">Last Sale Date</div>
-                {#if site.ls_date}{new Date(site.ls_date).toLocaleDateString()}{:else}Unknown.{/if}
+        <div class="cell">
+            <div class="card">
+                <div class="card-content">
+                    <div class="has-text-weight-bold">Estimated Units</div>
+                    {#if site.units}{site.units}{:else}Unknown.{/if}
+                </div>
             </div>
-            <div class="column mr-1">
-                <div class="has-text-weight-bold">Last Sale Price</div>
-                {#if site.ls_price}${site.ls_price.toLocaleString()}{:else}Unknown.{/if}
+        </div>
+        <div class="cell">
+            <div class="card">
+                <div class="card-content">
+                    <div class="has-text-weight-bold">Last Sale Date</div>
+                    {#if site.ls_date}{new Date(site.ls_date).toLocaleDateString()}{:else}Unknown.{/if}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="card">
+                <div class="card-content">
+                    <div class="has-text-weight-bold">Last Sale Price</div>
+                    {#if site.ls_price}${site.ls_price.toLocaleString()}{:else}Unknown.{/if}
+                </div>
             </div>
         </div>
     </div>

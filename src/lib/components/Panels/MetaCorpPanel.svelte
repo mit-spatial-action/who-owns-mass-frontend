@@ -6,40 +6,78 @@
 </script>
 
 
-<div class="has-text-left column">
+<header class="card-header is-shadowless">
     <PanelTitle> {metacorp.name}</PanelTitle>
-
-    <div class="box">
-        <div class="columns">
-            <div class="column mr-1">
-                <div class="has-text-weight-bold">Units Owned</div>
-                {#if metacorp.unit_count}{metacorp.unit_count}{:else}Unknown.{/if}
-            </div>
-            <div class="column mr-1">
-                <div class="has-text-weight-bold">Properties Owned</div>
-                {#if metacorp.prop_count}{metacorp.prop_count}{:else}Unknown.{/if}
+</header>
+<div class="card-content">
+    <div class="grid">
+        <div class="cell">
+            <div class="card">
+                <div class="card-content">
+                    <div class="has-text-weight-bold">Units Owned</div>
+                    {#if metacorp.unit_count}
+                        {metacorp.unit_count}
+                    {:else}
+                        Unknown.
+                    {/if}
+                </div>
             </div>
         </div>
-        <div class="columns">
-            <div class="column mr-1">
-                <div class="has-text-weight-bold">Total Assessed Value</div>
-                {#if metacorp.val}${metacorp.val.toLocaleString()}{:else}Unknown.{/if}
+        <div class="cell">
+            <div class="card">
+                <div class="card-content">
+                    <div class="has-text-weight-bold">Properties Owned</div>
+                    {#if metacorp.prop_count}
+                        {metacorp.prop_count}
+                    {:else}
+                        Unknown.
+                    {/if}
+                </div>
+            </div>
+        </div>
+        <div class="cell">
+            <div class="card">
+                <div class="card-content">
+                    <div class="has-text-weight-bold">Total Assessed Value</div>
+                    {#if metacorp.val}
+                        ${metacorp.val.toLocaleString()}
+                    {:else}
+                        Unknown.
+                    {/if}
+                </div>
             </div>
         </div>
     </div>
-    <div class="box" style="max-height: 300px; overflow-y: auto;">
-        <div class="has-text-weight-bold">Properties</div>
-        {#each metacorp.sites.features as site}
-            <a class="box" role="button" tabindex="0" data-sveltekit-preload-data="off" href={`/site/${site.id}`}>
-                <div class="has-text-weight-bold">{site.properties.address.addr}</div>
-                <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}{#if site.properties.address.state}{`${site.properties.address.state} `} {/if}{#if site.properties.address.postal}{site.properties.address.postal}{/if}</div>
-            </a>
+</div>
+<div class="card-content">
+    <div class="title">Properties</div>
+    <div class="grid">
+        {#each metacorp.sites.features.slice(0, 3) as site}
+            <div class="cell">
+                <a tabindex="0" data-sveltekit-preload-data="off" href={`/site/${site.id}`}>
+                    <div class="card">
+                        <div class="card-content">
+                            <div class="has-text-weight-bold">{site.properties.address.addr}</div>
+                            <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}{#if site.properties.address.state}{`${site.properties.address.state} `} {/if}{#if site.properties.address.postal}{site.properties.address.postal}{/if}</div>
+                        </div>
+                    </div>
+                </a>
+            </div>
         {/each}
     </div>
-    <div class="box mb-3" style="max-height: 300px; overflow-y: auto;">
-        <div class="has-text-weight-bold">Other Names</div>
-        {#each metacorp.aliases as alias, index}
-            { index == metacorp.aliases.length-1 ? alias : `${alias}, `}
-        {/each}
+    {#if metacorp.sites.features.length > 3}
+    <button class="button mt-2" data-sveltekit-preload-data="off">
+        See All {metacorp.sites.features.length} Properties &#8594
+    </button>
+    {/if}
+</div>
+<div class="card-content">
+    <div class="title">Other Names</div>
+        <div class="card">
+            <div class="card-content">
+                {#each metacorp.aliases as alias, index}
+                    { index == metacorp.aliases.length-1 ? alias : `${alias}, `}
+                {/each}
+            </div>
     </div>
 </div>
