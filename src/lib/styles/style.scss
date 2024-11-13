@@ -1,25 +1,33 @@
-$yellow: #f0a800;
-$green: #177E8A;
-$blue: #4223FF;
-$pink: #d63088;
-$opaque-grey: hsl(0, 0%, 21%);
-$sidebar: #F1F0F0;
-$border:  #343434;
+// $yellow: #f0a800;
+// $green: #177E8A;
+// $blue: #4223FF;
+// $pink: #d63088;
+// $opaque-grey: hsl(0, 0%, 21%);
+// $sidebar: #F1F0F0;
+// $border:  #343434;
+
+@use "variables";
 
 @use "bulma/sass" with (
   $family-primary: '"Figtree", sans-serif',
-  $success: $green,
-  $primary: $yellow,
-  $link: $blue,
-  $danger: $pink,
-  $body-background-color: $opaque-grey,
-  $column-gap: 0rem
+  $success: variables.$success,
+  $primary: variables.$primary,
+  $link: variables.$link,
+  $danger: variables.$danger,
+  $body-background-color: variables.$body-background-color,
+  $column-gap: 0rem,
+  $card-radius: 0rem,
+  $radius: 0rem,
 );
 
 @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 
 * {
   box-sizing: border-box;
+}
+
+#geocoder > * {
+    border-radius: 0rem;
 }
 
 //Dotted line above cards

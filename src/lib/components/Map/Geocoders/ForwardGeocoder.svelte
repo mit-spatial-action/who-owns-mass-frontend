@@ -3,7 +3,7 @@
     import '@mapbox/mapbox-gl-geocoder/dist/mapbox-gl-geocoder.css';
     import { onMount, onDestroy } from 'svelte';
     import { mapbox } from '$lib/scripts/utils';
-    import { gcResult } from "$lib/scripts/stores.js";
+    import { gcResult } from "$lib/stores";
     
     import { PUBLIC_MAPBOX_TOKEN } from '$env/static/public';
 
@@ -37,11 +37,3 @@
 </script>
 
 <div id="geocoder"></div>
-
-<style>
-    #geocoder {
-        display: flex;
-        justify-content: center;
-        padding: 2vh;
-    }
-</style>
