@@ -33,6 +33,7 @@
 </Modal>
 
 <style lang="scss">
+    @use "src/lib/styles/variables";
     .rippler,
     .rippler div {
         z-index: 1000;
@@ -58,7 +59,7 @@
     }
 
     .rippler .circle-core {
-        background: $primary;
+        background: variables.$primary;
         top: 30px;
         left: 30px;
         width: 20px;
@@ -72,7 +73,7 @@
             width: 8px;
             height: 8px;
             opacity: 0.8;
-            border-color: $primary;
+            border-color: variables.$primary;
         }
         10% {
             top: 36px;
@@ -80,7 +81,7 @@
             width: 8px;
             height: 8px;
             opacity: 0.8;
-            border-color: $primary;
+            border-color: variables.$primary;
         }
         15% {
             top: 36px;
@@ -88,7 +89,7 @@
             width: 8px;
             height: 8px;
             opacity: 0.8;
-            border-color: $primary;
+            border-color: variables.$primary;
         }
         100% {
             top: 0;
