@@ -108,12 +108,10 @@
     }
 
     const clearLayersSources = async (names) => {
-        console.log("clearing all layers");
         if (map){
             removeAllMarkers();
             names.forEach((name) => {
                 if (typeof map.getLayer(`selected${name}Layer`) !== "undefined") {
-                    console.log(`Clearing selected${name}Layer`)
                     map.removeLayer(`selected${name}Layer`);
                     map.removeSource(`selected${name}`);
                 }
@@ -129,7 +127,6 @@
                 addMarker(coordinates);
             });
         } else {
-            console.log("hellO")
             const { coordinates } = geojson.geometry;
             addMarker(coordinates);
         }
@@ -142,8 +139,25 @@
         ).id;
     }
 
+    let circleInterval;
+    const animateCircles = (name: string) => {
+        clearInterval(circleInterval);
+        let radius = 1;
+        let opacity = 1;
+        const opacityStep = 0.05
+        circleInterval = setInterval(() => {
+            map.setPaintProperty(`selected${name}Layer`, 'circle-radius', radius);
+            radius = (radius + 1) % 20;
+            map.setPaintProperty(`selected${name}Layer`, 'circle-opacity', opacity);
+            opacity -= opacityStep;
+
+            if (opacity <= 0) {
+                opacity = 1;
+            }
+        }, 30);
+    }
+
     const renderGeoJSONLayer = async (geojson: FeatureCollection | Feature, name: string) => {
-        console.log("Triggering renderGeoJSONLayer")
         if(geojson && map){
             if(Object.keys(geojson).length > 1) {
                 await clearLayersSources(["Site", "MetaCorp"])
@@ -161,22 +175,8 @@
                         "circle-opacity": 1
                     }
                 });
-
                 oneOrManyMarkers(geojson);
-                
-                // let radius = 1
-                // let opacity = 1;
-                // const opacityStep = 0.05
-                // setInterval(() => {
-                //     map.setPaintProperty(`selected${name}Layer`, 'circle-radius', radius);
-                //     radius = (radius + 1) % 20;
-                //     map.setPaintProperty(`selected${name}Layer`, 'circle-opacity', opacity);
-                //     opacity -= opacityStep;
-
-                //     if (opacity <= 0) {
-                //         opacity = 1;
-                //     }
-                // }, 30);
+                animateCircles(name);
                 
                 pointerEvents(name);
 
@@ -194,7 +194,6 @@
     const toggleLayerVisibility = (condition, layerId) => {
         if (map) {
             if (!condition) {
-                console.log("visibility off");
                 // Set the visibility to 'none' to hide the layer
                 map.setLayoutProperty(layerId, 'visibility', 'none');
             } else {

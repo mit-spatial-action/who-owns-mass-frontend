@@ -1,6 +1,6 @@
 import mapbox from 'mapbox-gl';
 import { goto } from '$app/navigation';
-import { loadState } from "$lib/scripts/stores";
+import { loadState } from "$lib/stores";
 
 // const key = Symbol();
 
