@@ -1,5 +1,5 @@
 <script lang="ts">
-    import site_data from '$lib/config/instance.json';
+    import siteConfig from '$lib/config/site.json';
     import "$lib/styles/style.css";
     import InfoPanel from "$lib/components/Panels/InfoPanel.svelte";
     import Map from "$lib/components/Map/Map.svelte";
@@ -12,8 +12,8 @@
     import { PUBLIC_MAPBOX_TOKEN } from '$env/static/public';
 
 </script>
-<title>{site_data.title}</title>
-<link rel="icon" type="image/x-icon" href={site_data.favicon}>
+<title>{siteConfig.title}</title>
+<link rel="icon" type="image/x-icon" href={siteConfig.favicon}>
 <div id="homepage">
     {#if $loadState}
         <RippleLoader />
@@ -29,8 +29,6 @@
             {#if PUBLIC_MAPBOX_TOKEN }
             <Map 
                 mapbox_token={PUBLIC_MAPBOX_TOKEN}
-                projection={site_data.map.projection}
-                style={site_data.map.style}
                 />
             {/if}
         </Panel>
@@ -38,7 +36,7 @@
 </div>
 
 
-<style>
+<style lang="scss">
 
 #homepage {
     height: 100vh;

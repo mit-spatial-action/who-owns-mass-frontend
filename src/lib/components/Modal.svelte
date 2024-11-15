@@ -16,14 +16,14 @@
       <slot/>
     </div>
     {#if closeBtn}
-        <button class="modal-close is-large" aria-label="close" on:click={destroySelf}></button>
+        <button class="modal-close is-large" aria-label="Close modal" on:click={destroySelf}></button>
     {/if}
 </div>
 {/if}
 
 <style lang="scss">
-    @use "src/lib/styles/variables";
+    @use 'src/lib/styles/vars.scss' as *;
     .modal-background {
-        background-color: variables.$body-background-color;
+        background-color: $body-background-color;
     }
 </style>

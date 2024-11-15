@@ -2,13 +2,14 @@
     import { onDestroy, onMount } from "svelte";
     import { siteNav, mapbox } from "$lib/scripts/utils";
     import type { FeatureCollection, Feature } from "geojson";
-    
+    import styles from '$lib/config/styles.json';
+    // console.log($primary);
    
     import bbox from "@turf/bbox";
     /* Helper functions */  
     // import { drawNetwork, drawNetworkPoints }  from "$lib/components/Map/helper-functions/DrawNetwork.js";
 
-    import site_data from "$lib/config/instance.json";
+    import mapConfig from "$lib/config/map.json";
     import "mapbox-gl/dist/mapbox-gl.css";
 
     import Device from "svelte-device-info";
@@ -28,18 +29,16 @@
 
     mapbox.accessToken = mapbox_token;
 
-    let map_config = site_data.map;
-
-    export let style = map_config.style;
-    export let projection = map_config.projection;
+    export let style = mapConfig.style;
+    export let projection = mapConfig.projection;
     export let initLngLat = new mapbox.LngLat(
-        map_config.init.lngLat[0],
-        map_config.init.lngLat[1]
+        mapConfig.init.lngLat[0],
+        mapConfig.init.lngLat[1]
     );
-    export let initZoom = map_config.init.zoom;
-    export let initZoomDur = map_config.init.zoomDur; //change back to 3000 after dev
-    export let maxBounds = map_config.maxBounds;
-    export let resultZoom = map_config.resultZoom;
+    export let initZoom = mapConfig.init.zoom;
+    export let initZoomDur = mapConfig.init.zoomDur; //change back to 3000 after dev
+    export let maxBounds = mapConfig.maxBounds;
+    export let resultZoom = mapConfig.resultZoom;
 
     let map: mapboxgl.Map;
 
@@ -142,7 +141,7 @@
                 paint: {
                     "circle-radius": 3,
                     "circle-pitch-alignment": "map",
-                    "circle-color": "#FF5F05",
+                    "circle-color": styles.primary,
                     "circle-opacity": 1
                 }
             });
@@ -169,7 +168,7 @@
                 paint: {
                     'text-halo-color': 'white',
                     'text-halo-width': 1.5,
-                    'text-color': "#FF5F05",
+                    'text-color': styles.primary,
                     'text-halo-blur': 1
                 }
             });
@@ -181,7 +180,7 @@
             })
 
             map.on('mouseleave', 'selectedCircle', () => {
-                highlighted.set(-1);
+                highlighted.set(null);
             })
 
             map.on('click', 'selectedCircle', async (e) => {
@@ -193,7 +192,7 @@
             })
 
             map.on('mouseleave', 'selectedMarker', () => {
-                highlighted.set(-1);
+                highlighted.set(null);
             })
             
             map.on('click', 'selectedMarker', async (e) => {
@@ -204,7 +203,9 @@
             map.fitBounds(jsonBbox, {
                 padding: 50,
                 pitch: 45,
-                bearing: -45
+                bearing: -45,
+                animate: true,
+                duration: initZoomDur
             });
         };
     }
@@ -222,8 +223,8 @@
     }
 
     const highlightHovered = (map, highlighted) => {
-        if (!map && !highlighted) return undefined;
-        if (highlighted < 0) {
+        if (!map) return undefined;
+        if (!highlighted) {
             map.setPaintProperty(`selectedMarker`, 'text-opacity', 1)
         } else {
             map.setPaintProperty(
@@ -243,7 +244,7 @@
     $: $mapLoaded && Object.keys($metacorp).length > 1 ? renderGeoJSONLayer(map, $metacorp.sites) : null;
     $: $mapLoaded && Object.keys($site).length > 1 ? renderGeoJSONLayer(map, $site) : null;
     // $: console.log($highlighted)
-    $: $mapLoaded && $highlighted ? highlightHovered(map, $highlighted) : null;
+    $: $mapLoaded ? highlightHovered(map, $highlighted) : null;
     // $: toggleLayerVisibility($homeState, "hexes");
 
     onMount(() => {
@@ -284,7 +285,7 @@
                         resultZoom,
                         5
                     ],
-                    "circle-color": "#3CAAA9",
+                    "circle-color": styles.success,
                     "circle-opacity": [
                         'interpolate',
                         ['linear'],
@@ -432,7 +433,7 @@
                 color: "#fff",
                 "high-color": "#fff",
                 "horizon-blend": 0.1, // default: .1
-                "space-color": "#3CAAA9",
+                "space-color": styles.success,
                 "star-intensity": 0.1,
             });
             if (initZoom.length === 2) {

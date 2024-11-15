@@ -13,7 +13,7 @@
 
 <div id="sidebar" class="has-background-light p-4" transition:fly={{ x: -350, duration: 300 }}>
   <aside class="menu">
-    <button class="button" on:click={makeInactive}>
+    <button class="button" on:click={makeInactive} aria-label="Close sidebar">
       <i class="fa-solid fa-x"></i>
     </button>
     <p class="menu-label">Who Owns Massachusetts?</p>
@@ -26,13 +26,13 @@
 </div>
 
 <style lang="scss">
-  @use "src/lib/styles/variables";
+  @use 'src/lib/styles/vars.scss' as *;
   #sidebar {
     height: 100%;
     position: fixed;
     z-index: 2;
     top: 0;
     left: 0px;
-    border-right: 2px solid variables.$border;
+    border-right: 2px solid $border;
   }
 </style>

@@ -2,23 +2,9 @@
     import HL from "$lib/components/Panels/HL.svelte";
     import PanelTitle from "$lib/components/Panels/PanelTitle.svelte";
     import {
-        highlighted,
-        mapLoaded
+        highlighted
     } from "$lib/stores";
     export let metacorp;
-    let activeProp: number | null = null;
-    
-    const setActive = (id) => {
-        highlighted.set(id)
-        activeProp = id
-    }
-
-    const clearActive = () => {
-        highlighted.set(-1)
-        activeProp = null;
-    }
-
-    $: $mapLoaded && $highlighted ? setActive($highlighted) : null;
 </script>
 
 
@@ -70,21 +56,21 @@
     <div class="grid">
         {#each metacorp.sites.features.slice(0, 3) as site}
             <div class="cell">
-                <a tabindex="0" data-sveltekit-preload-data="off" href={`/site/${site.id}`}>
-                    <div class="card 
-                        {activeProp === site.id ? 'active has-background-primary has-text-white' : ''}"
-                        on:mouseover={() => setActive(site.id)} on:mouseleave={() => clearActive()}>
-                        <div class="card-content">
+                <a class="card button is-fullwidth has-text-left is-justify-content-left" 
+                aria-label="Select Property {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off" href={`/site/${site.id}`}
+                on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
+                    <!-- <div class="card"> -->
+                        <div class="card-content px-0">
                             <div class="has-text-weight-bold">{site.properties.address.addr}</div>
                             <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}{#if site.properties.address.state}{`${site.properties.address.state} `} {/if}{#if site.properties.address.postal}{site.properties.address.postal}{/if}</div>
                         </div>
-                    </div>
+                    <!-- </div> -->
                 </a>
             </div>
         {/each}
     </div>
     {#if metacorp.sites.features.length > 3}
-    <button class="button mt-2" data-sveltekit-preload-data="off">
+    <button class="button mt-2" data-sveltekit-preload-data="off" aria-label="See all Properties">
         See All {metacorp.sites.features.length} Properties &#8594
     </button>
     {/if}
@@ -99,10 +85,3 @@
             </div>
     </div>
 </div>
-
-<!-- <style lang="scss">
-  @use "src/lib/styles/variables";
-  .active {
-    background-color: variables.$primary;
-  }
-</style> -->
