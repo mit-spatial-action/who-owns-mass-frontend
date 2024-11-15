@@ -16,7 +16,7 @@
     }
 </script>
 
-<nav class="navbar is-vcentered is-light">
+<nav class="navbar is-fixed-top is-light">
   <div class="navbar-menu">
     <div class="navbar-start">
       <div class="navbar-item">
@@ -36,7 +36,7 @@
 </nav>
 
 <style lang="scss">
-  nav {
+  nav.navbar {
     z-index: 1;
     position: sticky !important;
   }
