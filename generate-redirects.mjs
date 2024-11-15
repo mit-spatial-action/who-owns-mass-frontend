@@ -1,5 +1,5 @@
 // generate-redirects.js
-import { readFileSync, writeFile } from 'fs';
+import { readFileSync, writeFileSync } from 'fs';
 
 // Read the API URL from the environment variable
 const apiUrl = process.env.VITE_PUBLIC_API_URL;
@@ -16,7 +16,7 @@ const redirectsContent = `/api/* ${apiUrl}/:splat 200!\n`;
 try {
   const contents = await readFileSync('build/_redirects', 'utf8');
   const newContents = redirectsContent + contents;
-  await writeFile('build/_redirects', newContents)
+  await writeFileSync('build/_redirects', newContents)
   console.log("Redirects file generated with API URL:", apiUrl);
 } catch (error) {
   console.error("Failed to write redirects file:", error);
