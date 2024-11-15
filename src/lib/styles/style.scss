@@ -1,3 +1,5 @@
+@use 'vars.scss' as *;
+
 @use "bulma/sass" with (
   $family-primary: '"Figtree", sans-serif',
   $success: $success,

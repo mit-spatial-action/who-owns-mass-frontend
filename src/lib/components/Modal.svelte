@@ -16,7 +16,7 @@
       <slot/>
     </div>
     {#if closeBtn}
-        <button class="modal-close is-large" aria-label="close" on:click={destroySelf}></button>
+        <button class="modal-close is-large" aria-label="Close modal" on:click={destroySelf}></button>
     {/if}
 </div>
 {/if}

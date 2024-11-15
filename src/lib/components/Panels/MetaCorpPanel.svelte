@@ -56,8 +56,9 @@
     <div class="grid">
         {#each metacorp.sites.features.slice(0, 3) as site}
             <div class="cell">
-                <a class="card button is-fullwidth has-text-left is-justify-content-left" tabindex="0" data-sveltekit-preload-data="off" href={`/site/${site.id}`}
-                on:mouseover={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
+                <a class="card button is-fullwidth has-text-left is-justify-content-left" 
+                aria-label="Select Property {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off" href={`/site/${site.id}`}
+                on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
                     <!-- <div class="card"> -->
                         <div class="card-content px-0">
                             <div class="has-text-weight-bold">{site.properties.address.addr}</div>
@@ -69,7 +70,7 @@
         {/each}
     </div>
     {#if metacorp.sites.features.length > 3}
-    <button class="button mt-2" data-sveltekit-preload-data="off">
+    <button class="button mt-2" data-sveltekit-preload-data="off" aria-label="See all Properties">
         See All {metacorp.sites.features.length} Properties &#8594
     </button>
     {/if}

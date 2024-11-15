@@ -20,7 +20,7 @@
   <div class="navbar-menu">
     <div class="navbar-start">
       <div class="navbar-item">
-        <button class="button" on:click={makeActive}>
+        <button class="button" on:click={makeActive} aria-label="Expand sidebar.">
           <i class="fa-solid fa-bars"></i>
         </button>
       </div>

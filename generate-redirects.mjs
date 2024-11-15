@@ -1,5 +1,5 @@
 // generate-redirects.js
-import { readFileSync, writeFile } from 'fs/promises';
+import { readFileSync, writeFile } from 'fs';
 
 // Read the API URL from the environment variable
 const apiUrl = process.env.VITE_PUBLIC_API_URL;

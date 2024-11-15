@@ -13,7 +13,7 @@
 
 <div id="sidebar" class="has-background-light p-4" transition:fly={{ x: -350, duration: 300 }}>
   <aside class="menu">
-    <button class="button" on:click={makeInactive}>
+    <button class="button" on:click={makeInactive} aria-label="Close sidebar">
       <i class="fa-solid fa-x"></i>
     </button>
     <p class="menu-label">Who Owns Massachusetts?</p>
