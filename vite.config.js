@@ -8,13 +8,13 @@ export default ({ mode }) => {
 		css: {
 			preprocessorOptions: {
 				scss: {
-					additionalData: `@import '$lib/styles/variables';`
+					prependData: `@import '$lib/styles/vars.scss';`
 				}
 			}
 		},
 		server: {
 			proxy: {
-				'/api': { //Note: need to use "http://127.0.0.1:8000" in env - localhost is not working. 
+				'/api': { 
 					target: process.env.VITE_PUBLIC_API_URL,
 					changeOrigin: true,
 					rewrite: (path) => path.replace(/^\/api/, ''),

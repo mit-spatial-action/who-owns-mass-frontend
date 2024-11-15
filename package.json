@@ -4,9 +4,10 @@
 	"private": true,
 	"scripts": {
 		"css-build": "sass --load-path=node_modules/ src/lib/styles/style.scss src/lib/styles/style.css",
+		"convert-json": "node src/lib/scripts/json-to-scss.js",
 		"start": "npm run css-build -- --watch",
-		"dev": "vite dev && npm run start",
-		"build": "npm run css-build && vite build && node generate-redirects.mjs",
+		"dev": "npm run convert-json && vite dev && npm run start",
+		"build": "npm run convert-json && npm run css-build && vite build && node generate-redirects.mjs",
 		"preview": "vite preview"
 	},
 	"devDependencies": {

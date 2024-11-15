@@ -1,6 +1,6 @@
 <script lang="ts">
     import HomePanel from "$lib/components/Panels/HomePanel.svelte";
-    import site_data from "$lib/config/instance.json";
+    import siteConfig from "$lib/config/site.json";
     import "$lib/styles/style.css";
 	import { site, metacorp, homeState } from "$lib/stores";
 
@@ -15,5 +15,5 @@
 
 
 <HomePanel
-    title={site_data.title}
-    subtitle={site_data.description}/>
+    title={siteConfig.title}
+    subtitle={siteConfig.description}/>

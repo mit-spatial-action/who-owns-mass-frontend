@@ -26,13 +26,13 @@
 </div>
 
 <style lang="scss">
-  @use "src/lib/styles/variables";
+  @use 'src/lib/styles/vars.scss' as *;
   #sidebar {
     height: 100%;
     position: fixed;
     z-index: 2;
     top: 0;
     left: 0px;
-    border-right: 2px solid variables.$border;
+    border-right: 2px solid $border;
   }
 </style>

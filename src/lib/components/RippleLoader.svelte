@@ -3,7 +3,7 @@
     import Modal from "$lib/components/Modal.svelte";
 
     export let duration = 1.2;
-    export let border = 4;
+    export let borderWidth = 4;
     
     export let flyInProps = {
         "duration": 500,
@@ -23,7 +23,7 @@
             {#each steps as step}
                 <div class="ripple-wave" style="
                 --duration: {duration}; 
-                --border: {border};
+                --border-width: {borderWidth};
                 animation-delay: -{ step * duration / denom}s;">
                 </div>
             {/each}
@@ -33,7 +33,7 @@
 </Modal>
 
 <style lang="scss">
-    @use "src/lib/styles/variables";
+    @use 'src/lib/styles/vars.scss' as *;
     .rippler,
     .rippler div {
         z-index: 1000;
@@ -54,12 +54,12 @@
     }
 
     .rippler .ripple-wave {
-        border: calc(var(--border) * 1px) solid;
+        border: calc(var(--border-width) * 1px) solid;
         animation: ripple calc(var(--duration) * 1s) cubic-bezier(0, 0.2, 0.8, 1) infinite;
     }
 
     .rippler .circle-core {
-        background: variables.$primary;
+        background: $primary;
         top: 30px;
         left: 30px;
         width: 20px;
@@ -72,32 +72,15 @@
             left: 36px;
             width: 8px;
             height: 8px;
-            opacity: 0.8;
-            border-color: variables.$primary;
-        }
-        10% {
-            top: 36px;
-            left: 36px;
-            width: 8px;
-            height: 8px;
-            opacity: 0.8;
-            border-color: variables.$primary;
-        }
-        15% {
-            top: 36px;
-            left: 36px;
-            width: 8px;
-            height: 8px;
-            opacity: 0.8;
-            border-color: variables.$primary;
+            border-color: $primary;
         }
         100% {
             top: 0;
             left: 0;
             width: 80px;
             height: 80px;
-            opacity: 0.5;
-            border-color: variables.$primary;
+            opacity: 0.1;
+            border-color: $primary;
         }
     }
 </style>

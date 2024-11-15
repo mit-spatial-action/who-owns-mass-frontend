@@ -36,31 +36,5 @@
     "keywords": [
         "evictions",
         "mapping"
-    ],
-    "map": {
-        "style": "mapbox://styles/mapbox/light-v11",
-        "maxBounds": [
-            [
-                -179,
-                19
-            ],
-            [
-                -67,
-                72
-            ]
-        ],
-        "resultZoom": 17,
-        "singleMarker": true,
-        "projection": "globe",
-        "init": {
-            "lngLat": [
-                -70.89,
-                42.34
-            ],
-            "zoom": [
-                9
-            ],
-            "zoomDur": 2000
-        }
-    }
+    ]
 }

@@ -3,11 +3,11 @@
 </span>
 
 <style lang="scss">
-    @use "src/lib/styles/variables";
+    @use 'src/lib/styles/vars.scss' as *;
     span{
         display: inline-block;
         padding: .125em 0.125em;
-        background: variables.$primary;
+        background: $primary;
         color: #ffffff;
     }
 </style>

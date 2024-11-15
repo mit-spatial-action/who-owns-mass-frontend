@@ -1,20 +1,10 @@
-// $yellow: #f0a800;
-// $green: #177E8A;
-// $blue: #4223FF;
-// $pink: #d63088;
-// $opaque-grey: hsl(0, 0%, 21%);
-// $sidebar: #F1F0F0;
-// $border:  #343434;
-
-@use "variables";
-
 @use "bulma/sass" with (
   $family-primary: '"Figtree", sans-serif',
-  $success: variables.$success,
-  $primary: variables.$primary,
-  $link: variables.$link,
-  $danger: variables.$danger,
-  $body-background-color: variables.$body-background-color,
+  $success: $success,
+  $primary: $primary,
+  $link: $link,
+  $danger: $danger,
+  $body-background-color: $body-background-color,
   $column-gap: 0rem,
   $card-radius: 0rem,
   $radius: 0rem,
