@@ -6,7 +6,7 @@
 	$effect(() => {
 		if (data.siteData) {
 			site.set(data.siteData);
-			metacorp.set({});
+			metacorp.set(null);
 			homeState.set(false);
 		}
 	});
