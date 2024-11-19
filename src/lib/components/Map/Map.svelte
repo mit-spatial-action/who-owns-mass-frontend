@@ -63,8 +63,7 @@
                 layers: ["sites"],
             });
             if (features.length > 0) {
-                let selected = features.filter(
-                    feature => feature.properties.addr.toUpperCase() === gcResult.address.toUpperCase())
+                let selected = features.filter(feature => feature.properties.addr.toUpperCase() === gcResult.address.toUpperCase())
                 if (selected.length > 0) {
                     await siteNav(selected[0].properties.site_id);
                 } else {
@@ -241,13 +240,11 @@
     }
     
     loadState.set(true);
-
     $: $mapLoaded && Object.keys($gcResult).length > 1 ? flyToQuery(map, $gcResult) : null;
     $: $mapLoaded && Object.keys($metacorp).length > 1 ? renderGeoJSONLayer(map, $metacorp.sites) : null;
     $: $mapLoaded && Object.keys($site).length > 1 ? renderGeoJSONLayer(map, $site) : null;
     // $: console.log($highlighted)
-    $: $mapLoaded && $highlighted ? highlightHovered(map, $highlighted) : null;
-
+    $: $mapLoaded ? highlightHovered(map, $highlighted) : null;
     // $: toggleLayerVisibility($homeState, "hexes");
 
     onMount(() => {
@@ -457,9 +454,16 @@
 
 </script>
 
-<div id="map"></div>
+<div
+    id="map"
+    class={mobile ? "non-interactive" : null}
+>
+</div>
 
 <style>
+    .non-interactive {
+        pointer-events: none;
+    }
     #map {
         height: 100%;
         width: 100%;

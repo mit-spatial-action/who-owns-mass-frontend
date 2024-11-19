@@ -5,35 +5,46 @@
     import Map from "$lib/components/Map/Map.svelte";
     import RippleLoader from "$lib/components/RippleLoader.svelte";
     // import Modal from "$lib/components/Modal.svelte";
-    import MapPanel from "$lib/components/Panels/MapPanel.svelte";
+    import Panel from "$lib/components/Panels/Panel.svelte";
 
     import { loadState } from "$lib/stores";
-    
+
+    import { PUBLIC_MAPBOX_TOKEN } from '$env/static/public';
+
 </script>
 <title>{siteConfig.title}</title>
 <link rel="icon" type="image/x-icon" href={siteConfig.favicon}>
-<section class="hero is-fullheight">
-    <div class="hero-body p-0">
-        {#if $loadState}
-            <RippleLoader />
-        {/if}
-        <div id="panels" class="columns has-background-light">
-            <!-- <Modal >
-                <slot name="modal-content" />
-            </Modal> -->
-            <InfoPanel>
-                <slot />
-            </InfoPanel>
-            <MapPanel/>
-        </div>
+<div id="homepage">
+    {#if $loadState}
+        <RippleLoader />
+    {/if}
+    <div id="panels" class="columns">
+        <!-- <Modal >
+            <slot name="modal-content" />
+        </Modal> -->
+        <InfoPanel>
+            <slot />
+        </InfoPanel>
+        <Panel>
+            {#if PUBLIC_MAPBOX_TOKEN }
+            <Map 
+                mapbox_token={PUBLIC_MAPBOX_TOKEN}
+                />
+            {/if}
+        </Panel>
     </div>
-</section>
+</div>
 
 
 <style lang="scss">
 
-#panels {
+#homepage {
     height: 100vh;
-    width: 100%;
+    color: #444;
+}
+
+#panels {
+    height: inherit;
+    display: flex;
 }
 </style>
