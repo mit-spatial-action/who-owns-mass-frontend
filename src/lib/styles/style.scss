@@ -7,28 +7,21 @@
   $link: $link,
   $danger: $danger,
   $body-background-color: $body-background-color,
-  $column-gap: 0rem,
-  $card-radius: 0rem,
-  $radius: 0rem,
+  $column-gap: 0,
+  $card-radius: 0,
+  $radius: 0,
+  $radius-medium: 0,
+  $radius-small: 0,
+  $radius-large: 0,
+  $button-radius: 0,
+  $control-radius: 0,
 );
 
 @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,700;1,400;1,700&display=swap');
-
 * {
   box-sizing: border-box;
 }
 
 #geocoder > * {
     border-radius: 0rem;
-}
-
-//Dotted line above cards
-
-hr {
-  border: none;
-  border-top: 1px dotted #f00;
-  color: #fff;
-  background-color: #fff;
-  height: 1px;
-  width: 50%;
 }
