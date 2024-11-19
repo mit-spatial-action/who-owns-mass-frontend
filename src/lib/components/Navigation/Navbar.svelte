@@ -2,6 +2,7 @@
     import { page } from '$app/stores';
     import type { Writable } from 'svelte/store';
     import { getContext } from 'svelte';
+    import { goto } from '$app/navigation';
 
     const active: Writable<boolean> = getContext('active');
 
@@ -14,30 +15,35 @@
     const makeActive = () => {
       active.set(true)
     }
+    const goHome = () => {
+      goto("/")
+    }
 </script>
 
-<nav class="navbar is-fixed-top is-light">
-  <div class="navbar-menu">
-    <div class="navbar-start">
-      <div class="navbar-item">
-        <button class="button" on:click={makeActive} aria-label="Expand sidebar.">
-          <i class="fa-solid fa-bars"></i>
-        </button>
-      </div>
-    </div>
-    <div class="navbar-end">
-      {#if currentPage.url.pathname !== "/"}
-        <div class="navbar-item">
-          <a class="button" href="/">&#8592 Return to Search</a>
-        </div>
-      {/if}
-    </div>
+<div class="level is-mobile is-small has-background-light buttons p-3">
+  <div class="level-left">
+    <button class="button level-item is-responsive" on:click={makeActive} aria-label="Expand sidebar.">
+      <span class="icon">
+        <i class="fa-solid fa-bars"></i>
+      </span>
+    </button>
   </div>
-</nav>
+  {#if currentPage.url.pathname !== "/"}
+  <div class="level-right">
+    <button class="button level-item is-responsive" on:click={goHome}>
+      <span class="icon">
+        <i class="fa-solid fa-arrow-left"></i>
+      </span>
+      <span>Return to Search</span>
+    </button>
+  </div>
+  {/if}
+</div>
 
-<style lang="scss">
-  nav.navbar {
-    z-index: 1;
-    position: sticky !important;
+<style>
+  .level {
+    position: sticky;
+    top: 0;
+    z-index: 10;
   }
 </style>

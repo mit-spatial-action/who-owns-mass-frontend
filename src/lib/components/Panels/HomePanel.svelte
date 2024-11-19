@@ -8,7 +8,7 @@
 
 </script>
 
-<div id="home-panel mt-6">
+<div id="home-panel">
     <div class="card-content mt-6">
         <div class="title is-size-1 has-text-centered">
             {title}

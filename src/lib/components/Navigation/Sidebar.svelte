@@ -30,7 +30,7 @@
   #sidebar {
     height: 100%;
     position: fixed;
-    z-index: 2;
+    z-index: 100;
     top: 0;
     left: 0px;
     border-right: 2px solid $border;
