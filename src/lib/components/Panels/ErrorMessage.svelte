@@ -1,11 +1,18 @@
 <script lang="ts">
-
-    import { errorState } from "$lib/stores";
-
+    export let errorState
+    const states = {
+        "addressNotFound": {
+            "descShort": "We couldn't find this address!",
+            "descLong": "This is probably because the owner's listed address matches the property address. Please search for a different or select a property on the map."
+        }
+    }
  </script>
  
-<div class="card">
-    <div class="card-content message is-warning">
-        <div >{$errorState}</div>
+ <article class="message is-warning">
+    <div class="message-header">
+        {states[errorState].descShort}
     </div>
-</div>
+    <div class="message-body">
+        {states[errorState].descLong}
+    </div>
+</article>

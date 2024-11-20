@@ -23,8 +23,6 @@
         mapLoaded,
         highlighted
     } from "$lib/stores";
-
-    import errorMessages from "$lib/config/errors.json";
     
     export let mapbox_token: string;
 
@@ -71,11 +69,9 @@
                 if (selected.length > 0) {
                     await siteNav(selected[0].properties.site_id);
                 } else {
-                    errorState.set(errorMessages.noLocation);
-                    console.log($errorState);
+                    errorState.set("addressNotFound");
                     resultSiteId = null;
                 }
-                resultSiteId = null;
             }
             loadState.set(false);
             return resultSiteId

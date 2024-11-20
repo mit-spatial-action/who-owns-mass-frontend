@@ -22,9 +22,9 @@
         <div class="block is-flex has-content-centered is-justify-content-center">
             <ForwardGeocoder />
         </div>
-       {#if $errorState.length > 1}
+       {#if $errorState }
             <div class="block is-flex has-content-centered is-justify-content-center">
-                <ErrorMessage />
+                <ErrorMessage errorState={$errorState} />
             </div>
         {/if}
 
