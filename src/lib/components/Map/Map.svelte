@@ -16,6 +16,8 @@
         site,
         metacorp,
         loadState,
+        homeState,
+        errorState,
         gcResult,
         mapLoaded,
         highlighted
@@ -70,9 +72,9 @@
                 if (selected.length > 0) {
                     await siteNav(selected[0].properties.site_id);
                 } else {
+                    errorState.set("addressNotFound");
                     resultSiteId = null;
                 }
-                resultSiteId = null;
             }
             loadState.set(false);
             return resultSiteId
