@@ -7,3 +7,4 @@ export const homeState = writable<Boolean>(true);
 export const loadState = writable<Boolean>(false);
 export const mapLoaded = writable<Boolean>(false);
 export const highlighted = writable<Number | null>(null);
+export const errorState = writable<String | null>(""); 

@@ -18,11 +18,14 @@
         metacorp,
         loadState,
         homeState,
+        errorState,
         gcResult,
         mapLoaded,
         highlighted
     } from "$lib/stores";
 
+    import errorMessages from "$lib/config/errors.json";
+    
     export let mapbox_token: string;
 
     let mobile:boolean = false;
@@ -68,6 +71,8 @@
                 if (selected.length > 0) {
                     await siteNav(selected[0].properties.site_id);
                 } else {
+                    errorState.set(errorMessages.noLocation);
+                    console.log($errorState);
                     resultSiteId = null;
                 }
                 resultSiteId = null;
@@ -247,6 +252,8 @@
     $: $mapLoaded && Object.keys($site).length > 1 ? renderGeoJSONLayer(map, $site) : null;
     // $: console.log($highlighted)
     $: $mapLoaded && $highlighted ? highlightHovered(map, $highlighted) : null;
+    $: $mapLoaded && Object.keys($site).length > 1 ? errorState.set("") : null;
+
 
     // $: toggleLayerVisibility($homeState, "hexes");
 
