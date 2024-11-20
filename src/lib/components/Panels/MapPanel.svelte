@@ -7,7 +7,7 @@
 <div id="mappanel" class="column">
     {#if PUBLIC_MAPBOX_TOKEN }
     <Map 
-        mapbox_token={PUBLIC_MAPBOX_TOKEN}
+        mapboxToken={PUBLIC_MAPBOX_TOKEN}
         />
     {/if}
 </div>
