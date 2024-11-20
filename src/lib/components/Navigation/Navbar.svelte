@@ -1,10 +1,8 @@
 <script lang="ts">
     import { page } from '$app/stores';
-    import type { Writable } from 'svelte/store';
-    import { getContext } from 'svelte';
     import { goto } from '$app/navigation';
 
-    const active: Writable<boolean> = getContext('active');
+    export let active = false;
 
     let currentPage;
 
@@ -13,7 +11,7 @@
     });
     
     const makeActive = () => {
-      active.set(true)
+      active = true
     }
     const goHome = () => {
       goto("/")

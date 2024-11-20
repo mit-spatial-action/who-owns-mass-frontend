@@ -3,7 +3,6 @@
     import { siteNav, mapbox } from "$lib/scripts/utils";
     import type { FeatureCollection, Feature } from "geojson";
     import styles from '$lib/config/styles.json';
-    // console.log($primary);
    
     import bbox from "@turf/bbox";
     /* Helper functions */  
@@ -94,7 +93,6 @@
             map.getCanvas().style.cursor = '';
         });
         map.on('click', layerId, async (e) => {
-            console.log(e.features);
             await siteNav(e.features[0][idCol])
         })
         if (highlight) {
@@ -216,7 +214,6 @@
 
     const animateMarkers = (map:Map, layerId):string => {
         if (!map) return undefined;
-        console.log("animateMarkers")
         intervals.markers.push(animateProperty(map, layerId, 'text-offset', [0, -0.35], 1000))
     }
 
@@ -257,7 +254,7 @@
         layerId:string, 
         color:string) => {
         await clearLayers(map, [layerId])
-        clearIntervals(intervals.markers);
+        // clearIntervals(intervals.markers);
         map.addLayer({
             id: layerId,
             source: {
@@ -280,7 +277,7 @@
                 'text-halo-blur': 1
             }
         });
-        animateMarkers(map, layerId);
+        // animateMarkers(map, layerId);
         pointerEvents(map, layerId, true);
     }
 
@@ -290,7 +287,7 @@
         if (!map) return undefined;
         if(Object.keys(geojson).length > 1) {
             await addCircles(map, geojson, "selectedCircles", styles.primary);
-            // await addMarkers(map, geojson, "selectedMarkers", styles.primary);
+            await addMarkers(map, geojson, "selectedMarkers", styles.primary);
             let jsonBbox = bbox(geojson);
             map.fitBounds(jsonBbox, {
                 padding: 50,

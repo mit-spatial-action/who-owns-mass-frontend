@@ -1,5 +1,8 @@
 <script>
     import GeocoderSearch from "$lib/components/Search/GeocoderSearch.svelte";
+    import Searchbar from "$lib/components/Search/Searchbar.svelte";
+    import Suggestions from "$lib/components/Search/Suggestions.svelte";
+
     const searchModes = [
         {
             displayName: "Address",
@@ -10,8 +13,12 @@
             id: "owner"
         }
     ]
-    let hoverTab = searchModes[0].id;
-    let activeTab = hoverTab;
+
+    let suggestions = $state([]);
+    const initMode = searchModes[0].id
+    let hoverTab = $state(initMode);
+    let activeTab = $state(initMode);
+
     const setHover = (id) => {
         hoverTab = id;
     }
@@ -26,24 +33,21 @@
         {#each searchModes as mode}
             <a 
             class:is-active={mode.id === hoverTab} 
-            on:mouseenter={() => setHover(mode.id)}
-            on:mouseleave={() => setHover(activeTab)}
-            on:click ={() => setActive(mode.id)}
+            onmouseenter={() => setHover(mode.id)}
+            onmouseleave={() => setHover(activeTab)}
+            onclick ={() => setActive(mode.id)}
             >{mode.displayName}</a>
         {/each}
     </div>
     <div class="panel-block is-flex is-justify-content-center">
         <div class="control">
             {#if activeTab==="address"}
-                <GeocoderSearch />
+                <Searchbar/>
+                <GeocoderSearch bind:suggestions />
             {:else}
-                <p class="control has-icons-left">
-                    <input class="input" type="text" placeholder="Search" />
-                    <span class="icon is-left">
-                    <i class="fas fa-search" aria-hidden="true"></i>
-                    </span>
-                </p>
+            
             {/if}
-            </div>
+            <Suggestions bind:suggestions/>
+        </div>
     </div>
   </div>

@@ -1,6 +1,5 @@
 <script lang="ts">
     import siteConfig from '$lib/config/site.json';
-    import Panel from "$lib/components/Panels/Panel.svelte";
     import Navigation from "$lib/components/Navigation/Navigation.svelte";
 </script>
 

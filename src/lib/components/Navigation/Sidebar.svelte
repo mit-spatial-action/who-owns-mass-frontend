@@ -1,13 +1,11 @@
 <script lang="ts">
-  import type { Writable } from 'svelte/store';
-  import { getContext } from 'svelte';
   export let menuItems;
   import { fly } from 'svelte/transition';
 
-  const active: Writable<boolean> = getContext('active');
+  export let active;
 
   const makeInactive = () => {
-    active.set(false)
+    active = false;
   }
 </script>
 
