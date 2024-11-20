@@ -6,8 +6,8 @@
 
     /** @type {import('./$types').PageData} */
     $effect(() => {
-        site.set({});
-        metacorp.set({});
+        site.set(null);
+        metacorp.set(null);
         homeState.set(true);
     })
 

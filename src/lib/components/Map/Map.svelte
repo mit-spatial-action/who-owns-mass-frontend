@@ -3,12 +3,11 @@
     import { siteNav, mapbox } from "$lib/scripts/utils";
     import type { FeatureCollection, Feature } from "geojson";
     import styles from '$lib/config/styles.json';
-    // console.log($primary);
    
     import bbox from "@turf/bbox";
     /* Helper functions */  
     // import { drawNetwork, drawNetworkPoints }  from "$lib/components/Map/helper-functions/DrawNetwork.js";
-
+    import type { MapOptions, LngLat, LngLatBoundsLike, Map } from 'mapbox-gl';
     import mapConfig from "$lib/config/map.json";
     import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -18,16 +17,21 @@
         metacorp,
         loadState,
         homeState,
+        errorState,
         gcResult,
         mapLoaded,
         highlighted
     } from "$lib/stores";
 
-    export let mapbox_token: string;
+    export let mapboxToken: string;
+    mapbox.accessToken = mapboxToken;
 
     let mobile:boolean = false;
 
-    mapbox.accessToken = mapbox_token;
+    let intervals = {
+        "circles": [],
+        "markers": []
+    };
 
     export let style = mapConfig.style;
     export let projection = mapConfig.projection;
@@ -35,14 +39,14 @@
         mapConfig.init.lngLat[0],
         mapConfig.init.lngLat[1]
     );
+    export let maxBounds:LngLatBoundsLike = new mapbox.LngLatBounds(mapConfig.maxBounds);
     export let initZoom = mapConfig.init.zoom;
-    export let initZoomDur = mapConfig.init.zoomDur; //change back to 3000 after dev
-    export let maxBounds = mapConfig.maxBounds;
+    export let initZoomDur = mapConfig.init.zoomDur;
     export let resultZoom = mapConfig.resultZoom;
 
-    let map: mapboxgl.Map;
+    let map:Map;
 
-    const flyToLngLat = (map, lngLat: mapboxgl.LngLat, zoom: number = resultZoom) => {
+    const flyToLngLat = (map:Map, lngLat:LngLat, zoom:number = resultZoom) => {
         if (!map) return undefined;
         map.flyTo({
             center: lngLat,
@@ -54,7 +58,7 @@
         });
     }
 
-    const flyToQuery = async (map, gcResult) => {
+    const flyToQuery = async (map:Map, gcResult) => {
         if (!map) return undefined;
         let resultSiteId: string | number;
         loadState.set(true);
@@ -68,9 +72,9 @@
                 if (selected.length > 0) {
                     await siteNav(selected[0].properties.site_id);
                 } else {
+                    errorState.set("addressNotFound");
                     resultSiteId = null;
                 }
-                resultSiteId = null;
             }
             loadState.set(false);
             return resultSiteId
@@ -78,30 +82,45 @@
         flyToLngLat(map, gcResult.lngLat)
     }
 
-    const pointerEvents = (map, layer) => {
+    const pointerEvents = (
+        map:Map, 
+        layerId:string,
+        highlight:boolean = false, 
+        idCol:string="id") => {
         if (!map) return undefined;
-        map.on('mouseenter', layer, () => {
-                map.getCanvas().style.cursor = 'pointer';
-            });
-
-        map.on('mouseleave', layer, () => {
+        map.on('mouseenter', layerId, () => {
+            map.getCanvas().style.cursor = 'pointer';
+        });
+        map.on('mouseleave', layerId, () => {
             map.getCanvas().style.cursor = '';
         });
+        map.on('click', layerId, async (e) => {
+            await siteNav(e.features[0][idCol])
+        })
+        if (highlight) {
+            map.on('mouseenter', layerId, (e) => {
+            highlighted.set(e.features[0][idCol]);
+            })
+
+            map.on('mouseleave', layerId, () => {
+                highlighted.set(null);
+            })
+        }
     }
 
-    const clearLayersSources = async (map, names, suffixes) => {
+    const clearLayers = async (map:Map, layerIds:string[]) => {
         if (!map) return undefined;
-        suffixes.forEach((suffix) => {
-            if (typeof map.getLayer(`selected${suffix}`) !== "undefined") {
-                map.removeLayer(`selected${suffix}`);
+        layerIds.forEach((layerId) => {
+            if (typeof map.getLayer(layerId) !== "undefined") {
+                map.removeLayer(layerId);
             }
-            if (typeof map.getSource(`selected${suffix}`) !== "undefined") {
-                map.removeSource(`selected${suffix}`);
+            if (typeof map.getSource(layerId) !== "undefined") {
+                map.removeSource(layerId);
             }
         })
     }
 
-    const getLabelLayerId = (map) => {
+    const getLabelLayerId = (map:Map) => {
         if (!map) return undefined;
         const layers = map.getStyle().layers;
         return layers.find(
@@ -109,97 +128,168 @@
         ).id;
     }
 
-    let circleInterval;
-    const animateCircles = (map, suffix="Circle") => {
-        if (!map) return undefined;
-        let radius = 1;
-        let opacity = 1;
-        const opacityStep = 0.05
-        circleInterval = setInterval(() => {
-            map.setPaintProperty(`selected${suffix}`, 'circle-radius', radius);
-            radius = (radius + 1) % 20;
-            map.setPaintProperty(`selected${suffix}`, 'circle-opacity', opacity);
-            opacity -= opacityStep;
-
-            if (opacity <= 0) {
-                opacity = 1;
-            }
-        }, 40);
+    const getPaintOrLayout = (map:Map, layerId:string, property:string) => {
+        const layer = map.getLayer(layerId);
+        if (property in layer.paint) {
+            return "paint"
+        } else if (property in layer.layout) {
+            return "layout"
+        } else {
+            undefined
+        }
     }
 
-    const renderGeoJSONLayer = async (map, geojson: FeatureCollection | Feature) => {
+    const animateProperty = (
+        map:Map, 
+        layerId:string, 
+        property:string, 
+        end:number | number[], 
+        duration:number, 
+        bounce:boolean = false, 
+        delay:number = 40) => {
         if (!map) return undefined;
-        await clearLayersSources(map, ["Site", "MetaCorp"], ["Marker", "Circle"])
-        clearInterval(circleInterval);
+        let start;
+        let delta;
+        let step;
+        let progress;
+
+        let type = getPaintOrLayout(map, layerId, property)
+        if (type === "paint") {
+            start = map.getPaintProperty(layerId, property)
+        } else if (type === "layout") {
+            start = map.getLayoutProperty(layerId, property)
+        }
+        
+        let val = start;
+        if (Array.isArray(end)) {
+            delta = end.map((a, i) => a - start[i]);
+            step = delta.map((a) => a * (delay / duration));
+            progress = [0, 0];
+        } else {
+            delta = (end - start);
+            step = delta * (delay / duration);
+            progress = 0;
+        }
+        
+        return setInterval(() => {
+            if (type === "paint") {
+                map.setPaintProperty(layerId, property, val);
+            } else if (type === "layout") {
+                map.setLayoutProperty(layerId, property, val);
+            }
+            if (Array.isArray(end)) {
+                val = val.map((a, i) => a + step[i])
+                progress = progress.map((a, i) => a + step[i]);
+            } else {
+                val += step
+                progress += step
+            }
+            if (!bounce && Math.abs(progress) >= Math.abs(delta)) {
+                val = start;
+                if (Array.isArray(end)) {
+                    progress = [0, 0]
+                } else {
+                    progress = 0;
+                }
+            }
+            if (bounce && Math.abs(progress) >= Math.abs(delta)) {
+                if (Array.isArray(end)) {
+                    step = step.map((a) => -a)
+                    progress = [0, 0];
+                } else {
+                    step = -step;
+                    progress = 0;
+                }
+            }
+        }, 
+        delay
+        )
+    }
+
+    const animateCircles = (
+        map:Map, 
+        layerId:string) => {
+        if (!map) return undefined;
+        intervals.circles.push(animateProperty(map, layerId, 'circle-radius', 20, 1000))
+        intervals.circles.push(animateProperty(map, layerId, 'circle-opacity', 0, 1000))
+    }
+
+    const animateMarkers = (map:Map, layerId):string => {
+        if (!map) return undefined;
+        intervals.markers.push(animateProperty(map, layerId, 'text-offset', [0, -0.35], 1000))
+    }
+
+    const clearIntervals = (intervalArray: NodeJS.Timeout[]) => {
+        intervalArray.forEach((interval) => {
+            clearInterval(interval);
+        })
+    }
+
+    const addCircles = async (
+        map:Map, 
+        geojson:FeatureCollection|Feature, 
+        layerId:string, 
+        color:string) => {
+        await clearLayers(map, [layerId])
+        clearIntervals(intervals.circles);
+        map.addLayer({
+            id: layerId,
+            source: {
+                type: 'geojson',
+                data: geojson
+            },
+            type: 'circle',
+            paint: {
+                "circle-radius": 0,
+                "circle-pitch-alignment": "map",
+                "circle-color": color,
+                "circle-opacity": 1
+            }
+        });
+        animateCircles(map, layerId);
+        pointerEvents(map, layerId, true);
+    }
+
+    const addMarkers = async (
+        map:Map, 
+        geojson:FeatureCollection|Feature, 
+        layerId:string, 
+        color:string) => {
+        await clearLayers(map, [layerId])
+        // clearIntervals(intervals.markers);
+        map.addLayer({
+            id: layerId,
+            source: {
+                type: 'geojson',
+                data: geojson
+            },
+            type: 'symbol',
+            layout: {
+                'text-field': '\u25BC',
+                'text-size': 64,
+                'text-offset': [0, -0.25],
+                'text-anchor': "center",
+                'text-allow-overlap': true,
+                'text-ignore-placement': true
+            },
+            paint: {
+                'text-halo-color': 'white',
+                'text-halo-width': 1.5,
+                'text-color': color,
+                'text-halo-blur': 1
+            }
+        });
+        // animateMarkers(map, layerId);
+        pointerEvents(map, layerId, true);
+    }
+
+    const renderGeoJSONLayer = async (
+        map:Map, 
+        geojson:FeatureCollection|Feature) => {
+        if (!map) return undefined;
         if(Object.keys(geojson).length > 1) {
-            await map.addLayer({
-                id: `selectedCircle`,
-                source: {
-                    type: 'geojson',
-                    data: geojson
-                },
-                type: 'circle',
-                paint: {
-                    "circle-radius": 3,
-                    "circle-pitch-alignment": "map",
-                    "circle-color": styles.primary,
-                    "circle-opacity": 1
-                }
-            });
-
-            animateCircles(map);
-            
-            pointerEvents(map, 'selectedCirle');
-
-            await map.addLayer({
-                id: `selectedMarker`,
-                source: {
-                    type: 'geojson',
-                    data: geojson
-                },
-                type: 'symbol',
-                layout: {
-                    'text-field': '\u25BC',
-                    'text-size': 64,
-                    'text-offset': [0, -0.25],
-                    'text-anchor': "center",
-                    'text-allow-overlap': true,
-                    'text-ignore-placement': true
-                },
-                paint: {
-                    'text-halo-color': 'white',
-                    'text-halo-width': 1.5,
-                    'text-color': styles.primary,
-                    'text-halo-blur': 1
-                }
-            });
-            
-            pointerEvents(map, 'selectedMarker');
-
-            map.on('mouseenter', 'selectedCircle', (e) => {
-                highlighted.set(e.features[0].id);
-            })
-
-            map.on('mouseleave', 'selectedCircle', () => {
-                highlighted.set(null);
-            })
-
-            map.on('click', 'selectedCircle', async (e) => {
-                await siteNav(e.features[0].id)
-            })
-
-            map.on('mouseenter', 'selectedMarker', (e) => {
-                highlighted.set(e.features[0].id);
-            })
-
-            map.on('mouseleave', 'selectedMarker', () => {
-                highlighted.set(null);
-            })
-            
-            map.on('click', 'selectedMarker', async (e) => {
-                await siteNav(e.features[0].id)
-            })
-
+            await addCircles(map, geojson, "selectedCircles", styles.primary);
+            await addMarkers(map, geojson, "selectedMarkers", styles.primary);
             let jsonBbox = bbox(geojson);
             map.fitBounds(jsonBbox, {
                 padding: 50,
@@ -212,7 +302,10 @@
     }
 
     // Function to toggle the layer visibility
-    const toggleLayerVisibility = (map, condition, layerId) => {
+    const toggleLayerVisibility = (
+        map:Map, 
+        layerId: string,
+        condition:boolean) => {
         if (!map) return undefined;
         if (!condition) {
             // Set the visibility to 'none' to hide the layer
@@ -223,13 +316,16 @@
         }
     }
 
-    const highlightHovered = (map, highlighted) => {
+    const highlightHovered = (
+        map:Map, 
+        highlighted:string|number, 
+        layerId:string) => {
         if (!map) return undefined;
         if (!highlighted) {
-            map.setPaintProperty(`selectedMarker`, 'text-opacity', 1)
+            map.setPaintProperty(layerId, 'text-opacity', 1)
         } else {
             map.setPaintProperty(
-                `selectedMarker`,
+                layerId,
                 'text-opacity',
                 [
                     'case',
@@ -241,18 +337,15 @@
     }
     
     loadState.set(true);
-
-    $: $mapLoaded && Object.keys($gcResult).length > 1 ? flyToQuery(map, $gcResult) : null;
-    $: $mapLoaded && Object.keys($metacorp).length > 1 ? renderGeoJSONLayer(map, $metacorp.sites) : null;
-    $: $mapLoaded && Object.keys($site).length > 1 ? renderGeoJSONLayer(map, $site) : null;
-    // $: console.log($highlighted)
-    $: $mapLoaded && $highlighted ? highlightHovered(map, $highlighted) : null;
-
+    $: $mapLoaded && $gcResult ? flyToQuery(map, $gcResult) : null;
+    $: $mapLoaded && $metacorp ? renderGeoJSONLayer(map, $metacorp.sites) : null;
+    $: $mapLoaded && $site ? renderGeoJSONLayer(map, $site) : null;
+    // $: $mapLoaded ? highlightHovered(map, $highlighted, "selectedMarkers") : null;
     // $: toggleLayerVisibility($homeState, "hexes");
 
     onMount(() => {
         mobile = Device.isPhone;
-        let mapOptions = {
+        let mapOptions:MapOptions = {
             container: "map",
             style: style,
             center: initLngLat,
@@ -263,7 +356,8 @@
             maxBounds: maxBounds,
             maxZoom: resultZoom
         };
-        map = new mapbox.Map(mapOptions);
+
+        map = new mapbox.Map(mapOptions)
 
         map.on("load", async () => {
             map.addSource("sites", {
@@ -339,6 +433,14 @@
                 await siteNav(feature.properties.site_id)
             });
 
+            map.addSource('mapbox-dem', {
+                type: 'raster-dem',
+                url: 'mapbox://mapbox.mapbox-terrain-dem-v1',
+                tileSize: 512,
+                maxzoom: 18
+            })
+
+            map.setTerrain({source: 'mapbox-dem', exaggeration: 3})
             const labelLayerId = getLabelLayerId(map);
             // map.addSource("hexes", {
             //     type: "vector",
@@ -429,16 +531,16 @@
                 labelLayerId
             );
 
-            pointerEvents(map, "sites");
+            pointerEvents(map, "sites", false, "site_id");
 
-            map.setFog({
-                range: [0.25, 2],
-                color: "#fff",
-                "high-color": "#fff",
-                "horizon-blend": 0.1, // default: .1
-                "space-color": styles.success,
-                "star-intensity": 0.1,
-            });
+            // map.setFog({
+            //     range: [0.25, 2],
+            //     color: "#fff",
+            //     "high-color": "#fff",
+            //     "horizon-blend": 0.1, // default: .1
+            //     "space-color": styles.success,
+            //     "star-intensity": 0.1,
+            // });
             if (initZoom.length === 2) {
                 map.flyTo({
                     center: initLngLat,
@@ -452,7 +554,7 @@
 
     onDestroy(() => {
         if (map) map.remove();
-        if (circleInterval) clearInterval(circleInterval);
+        if (intervals.circles) clearIntervals(intervals.circles);
     });
 
 </script>

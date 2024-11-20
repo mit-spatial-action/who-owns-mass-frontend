@@ -1,14 +1,8 @@
 {
     "style": "mapbox://styles/mapbox/light-v11",
     "maxBounds": [
-        [
-            -179,
-            19
-        ],
-        [
-            -67,
-            72
-        ]
+        -179, 19,
+        -67, 72
     ],
     "resultZoom": 17,
     "singleMarker": true,

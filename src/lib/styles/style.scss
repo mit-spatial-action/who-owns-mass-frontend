@@ -7,12 +7,13 @@
   $link: $link,
   $danger: $danger,
   $body-background-color: $body-background-color,
-  $column-gap: 0,
-  $card-radius: 0,
-  $radius: 0,
-  $radius-medium: 0,
-  $radius-small: 0,
-  $radius-large: 0,
+  $button-focus-border-color: $primary,
+  $button-focus-box-shadow-color: $primary,
+  $column-gap: 0rem,
+  $card-radius: $radius,
+  $radius: $radius,
+  $panel-radius: $radius,
+  $panel-heading-radius: $radius
 );
 
 @import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,700;1,400;1,700&display=swap');

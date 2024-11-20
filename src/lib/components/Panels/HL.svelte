@@ -1,13 +1,3 @@
-<span>
+<span class="has-background-primary has-text-black p-2">
     <slot/>
 </span>
-
-<style lang="scss">
-    @use 'src/lib/styles/vars.scss' as *;
-    span{
-        display: inline-block;
-        padding: .125em 0.125em;
-        background: $primary;
-        color: #ffffff;
-    }
-</style>

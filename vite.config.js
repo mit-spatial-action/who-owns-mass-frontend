@@ -12,6 +12,9 @@ export default ({ mode }) => {
 				}
 			}
 		},
+		optimizeDeps: {
+		  include: ['mapbox-gl'],
+		},
 		server: {
 			proxy: {
 				'/api': { 

@@ -35,7 +35,7 @@
 		"bulma": "^1.0.2",
 		"dotenv": "^16.4.5",
 		"install": "^0.13.0",
-		"mapbox-gl": "^3.7.0",
+		"mapbox-gl": "^3.8.0",
 		"mdsvex": "^0.12.3",
 		"netlify-cli": "^17.37.2",
 		"npm": "^10.9.0",

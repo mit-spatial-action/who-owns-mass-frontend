@@ -4,14 +4,10 @@
 
     import siteConfig from "$lib/config/site.json";
     
-    import { writable } from 'svelte/store';
-    import { getContext, setContext } from 'svelte';
-
-    setContext('active', writable(false));
-    $: active = getContext('active')
+    let active = $state(false)
 </script>
 
-{#if $active}
-    <Sidebar menuItems={siteConfig.pages} />
+{#if active}
+    <Sidebar menuItems={siteConfig.pages} bind:active />
 {/if}
-<Navbar/>
+<Navbar bind:active/>
