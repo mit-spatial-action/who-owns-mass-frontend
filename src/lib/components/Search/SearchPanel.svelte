@@ -2,6 +2,7 @@
     import GeocoderSearch from "$lib/components/Search/GeocoderSearch.svelte";
     import Searchbar from "$lib/components/Search/Searchbar.svelte";
     import Suggestions from "$lib/components/Search/Suggestions.svelte";
+    import ErrorMessage from "$lib/components/Panels/ErrorMessage.svelte";
 
     const searchModes = [
         {
@@ -45,7 +46,7 @@
                 <Searchbar/>
                 <GeocoderSearch bind:suggestions />
             {:else}
-            
+                <ErrorMessage errorState="featureNotReady"/>
             {/if}
             <Suggestions bind:suggestions/>
         </div>

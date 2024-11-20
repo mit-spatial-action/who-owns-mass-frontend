@@ -1,6 +1,6 @@
 <script lang="ts">
     import SearchPanel from '$lib/components/Search/SearchPanel.svelte';
-    import ErrorMessage from "./ErrorMessage.svelte";
+    import ErrorMessage from "$lib/components/Panels/ErrorMessage.svelte";
     /** @type {import('./$types').PageData} */
 
     export let title: string = "Title";
