@@ -66,7 +66,8 @@
                 layers: ["sites"],
             });
             if (features.length > 0) {
-                let selected = features.filter(feature => feature.properties.addr.toUpperCase() === gcResult.address.toUpperCase())
+                let selected = features.filter(
+                    feature => feature.properties.addr.toUpperCase() === gcResult.address.toUpperCase())
                 if (selected.length > 0) {
                     await siteNav(selected[0].properties.site_id);
                 } else {
@@ -559,16 +560,9 @@
 
 </script>
 
-<div
-    id="map"
-    class={mobile ? "non-interactive" : null}
->
-</div>
+<div id="map"></div>
 
 <style>
-    .non-interactive {
-        pointer-events: none;
-    }
     #map {
         height: 100%;
         width: 100%;
