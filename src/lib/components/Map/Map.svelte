@@ -82,7 +82,7 @@
         flyToLngLat(map, gcResult.lngLat)
     }
 
-    const pointerEvents = () => (
+    const pointerEvents = (
         map:Map, 
         layerId:string,
         highlight:boolean = false, 
@@ -342,7 +342,7 @@
     $: $mapLoaded && $gcResult ? flyToQuery(map, $gcResult) : null;
     $: $mapLoaded && $metacorp ? renderGeoJSONLayer(map, $metacorp.sites) : null;
     $: $mapLoaded && $site ? renderGeoJSONLayer(map, $site) : null;
-    // $: $mapLoaded ? highlightHovered(map, $highlighted, "selectedMarkers") : null;
+    $: $mapLoaded && $highlighted ? highlightHovered(map, $highlighted, "selectedMarkers") : null;
     // $: toggleLayerVisibility($homeState, "hexes");
 
     onMount(() => {
