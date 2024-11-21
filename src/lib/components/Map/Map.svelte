@@ -82,7 +82,7 @@
         flyToLngLat(map, gcResult.lngLat)
     }
 
-    const pointerEvents = (
+    const pointerEvents = () => (
         map:Map, 
         layerId:string,
         highlight:boolean = false, 
@@ -95,11 +95,13 @@
             map.getCanvas().style.cursor = '';
         });
         map.on('click', layerId, async (e) => {
+            idCol === "id" ? e.features[0][idCol] : e.features[0].properties[idCol];
             await siteNav(e.features[0][idCol])
         })
         if (highlight) {
             map.on('mouseenter', layerId, (e) => {
-            highlighted.set(e.features[0][idCol]);
+                idCol === "id" ? e.features[0][idCol] : e.features[0].properties[idCol];
+                highlighted.set(e.features[0][idCol]);
             })
 
             map.on('mouseleave', layerId, () => {
