@@ -1,5 +1,5 @@
 <script lang="ts">
-    export let errorState
+    export let errorState: string;
     const states = {
         "addressNotFound": {
             "descShort": "We couldn't find this address!",

@@ -2,9 +2,7 @@
     import siteConfig from '$lib/config/site.json';
     import "$lib/styles/style.css";
     import InfoPanel from "$lib/components/Panels/InfoPanel.svelte";
-    import Map from "$lib/components/Map/Map.svelte";
     import RippleLoader from "$lib/components/RippleLoader.svelte";
-    // import Modal from "$lib/components/Modal.svelte";
     import MapPanel from "$lib/components/Panels/MapPanel.svelte";
 
     import { loadState } from "$lib/stores";
@@ -18,9 +16,6 @@
             <RippleLoader />
         {/if}
         <div id="panels" class="columns has-background-light">
-            <!-- <Modal >
-                <slot name="modal-content" />
-            </Modal> -->
             <InfoPanel>
                 <slot />
             </InfoPanel>
