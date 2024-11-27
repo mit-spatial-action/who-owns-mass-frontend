@@ -95,13 +95,14 @@
         map.on('mouseleave', layerId, () => {
             map.getCanvas().style.cursor = '';
         });
-       /* 
-       TODO: Commenting this section out because it rerenders with "undefined". Double check why it's included. 
+       
+    /* TODO: Eric will look into this.
        map.on('click', layerId, async (e) => {
             idCol === "id" ? e.features[0][idCol] : e.features[0].properties[idCol];
             console.log("idCOL: " + e.features[0][idCol]);
             await siteNav(e.features[0][idCol])
-        })*/
+        })
+            */ 
         if (highlight) {
             map.on('mouseenter', layerId, (e) => {
                 idCol === "id" ? e.features[0][idCol] : e.features[0].properties[idCol];
@@ -347,7 +348,10 @@
     $: $mapLoaded && $metacorp ? renderGeoJSONLayer(map, $metacorp.sites) : null;
     $: $mapLoaded && $site ? renderGeoJSONLayer(map, $site) : null;
     $: $mapLoaded && $highlighted ? highlightHovered(map, $highlighted, "selectedMarkers") : null;
-    $: $mapLoaded && $site == null && map.getLayer("selectedMarkers") ? clearLayers(map, ["selectedMarkers", "selectedCircles"]) : null;
+
+    // Clear selected markers when "Return to Map" button is clicked
+    $: $mapLoaded && !$site && !$metacorp && map.getLayer("selectedMarkers") ? clearLayers(map, ["selectedMarkers", "selectedCircles"]) : null;
+
     // $: toggleLayerVisibility($homeState, "hexes");
 
     onMount(() => {
