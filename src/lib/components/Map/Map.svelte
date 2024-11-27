@@ -70,6 +70,7 @@
                 let selected = features.filter(
                     feature => feature.properties.addr.toUpperCase() === gcResult.address.toUpperCase())
                 if (selected.length > 0) {
+                    console.log("siteNav: " + selected[0].properties.site_id);
                     await siteNav(selected[0].properties.site_id);
                 } else {
                     errorState.set("addressNotFound");
@@ -94,10 +95,13 @@
         map.on('mouseleave', layerId, () => {
             map.getCanvas().style.cursor = '';
         });
-        map.on('click', layerId, async (e) => {
+       /* 
+       TODO: Commenting this section out because it rerenders with "undefined". Double check why it's included. 
+       map.on('click', layerId, async (e) => {
             idCol === "id" ? e.features[0][idCol] : e.features[0].properties[idCol];
+            console.log("idCOL: " + e.features[0][idCol]);
             await siteNav(e.features[0][idCol])
-        })
+        })*/
         if (highlight) {
             map.on('mouseenter', layerId, (e) => {
                 idCol === "id" ? e.features[0][idCol] : e.features[0].properties[idCol];

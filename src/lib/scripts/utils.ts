@@ -5,6 +5,7 @@ import { loadState } from "$lib/stores";
 export { mapbox };
 
 export const siteNav = async (id: number) => {
+    console.log("ID: " + `${id}`);
     await goto(
                 `/site/${id}`
             );
