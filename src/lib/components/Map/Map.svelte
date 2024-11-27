@@ -125,6 +125,8 @@
                 map.removeSource(layerId);
             }
         })
+
+        map.flyTo({ pitch: 30, bearing: -50 })  
     }
 
     const getLabelLayerId = (map:Map) => {
