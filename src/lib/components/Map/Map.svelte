@@ -347,6 +347,7 @@
     $: $mapLoaded && $metacorp ? renderGeoJSONLayer(map, $metacorp.sites) : null;
     $: $mapLoaded && $site ? renderGeoJSONLayer(map, $site) : null;
     $: $mapLoaded && $highlighted ? highlightHovered(map, $highlighted, "selectedMarkers") : null;
+    $: $mapLoaded && $site == null && map.getLayer("selectedMarkers") ? clearLayers(map, ["selectedMarkers", "selectedCircles"]) : null;
     // $: toggleLayerVisibility($homeState, "hexes");
 
     onMount(() => {
