@@ -5,7 +5,6 @@
     import OrgCard from "$lib/components/Panels/Cards/OrgCard.svelte";
     import siteConfig from "$lib/config/site.json";
     import { slide } from 'svelte/transition';
-    import saarg from "$lib/assets/logos/saarg.png"
 </script>
 
 <div transition:slide={{duration:250, axis:'y'}}>
@@ -44,8 +43,5 @@
                 {/each}
                 </div>
             </div>
-        <!-- <figure class="image is-128x128">
-            <img alt="The project logo" src={saarg} />
-        </figure> -->
         </CardContent>
 </div>

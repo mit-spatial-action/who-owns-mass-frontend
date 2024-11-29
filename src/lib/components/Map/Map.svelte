@@ -379,7 +379,7 @@
             map.addLayer({
                 id: "sites",
                 source: "sites",
-                maxzoom: resultZoom,
+                // maxzoom: resultZoom,
                 "source-layer": "geographies",
                 type: "circle",
                 paint: {
