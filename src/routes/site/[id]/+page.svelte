@@ -1,6 +1,7 @@
 <script lang="ts">
 	import SitePanel from "$lib/components/Panels/SitePanel.svelte";
 	import { site, metacorp, homeState } from "$lib/stores";
+    import { slide } from 'svelte/transition';
   	/** @type {{ data: import('./$types').PageData }} */
 	let { data } = $props();
 	$effect(() => {
@@ -12,4 +13,6 @@
 	});
 </script>
 
-<SitePanel site={data.siteData.properties} />
+<div transition:slide={{duration:250, axis:'y'}}>
+	<SitePanel site={data.siteData.properties} />
+</div>

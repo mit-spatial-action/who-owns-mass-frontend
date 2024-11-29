@@ -5,33 +5,94 @@
     "favicon": "https://dusp.mit.edu/themes/basis/images/logo.svg",
     "authors": [
         {
-            "name": "Eric Robsky Huntley, PhD",
-            "affiliation": "MIT DUSP",
-            "role": "Project Lead",
+            "name": "Eric Robsky Huntley",
+            "creds": ["PhD", "GISP"],
+            "photo": "eric.jpg",
+            "affiliations": [
+                {
+                    "title": "Lecturer in Urban Science and Planning",
+                    "inst": "MIT Department of Urban Studies and Planning"
+                },
+                {
+                    "title": "Director",
+                    "inst": "Spatial Analysis & Action Research Group"
+                }
+            ],
+            "email": "ehuntley@mit.edu",
+            "roles": ["Project Lead"],
+            "socials": [
+                "https://github.com/ericrobskyhuntley",
+                "https://www.linkedin.com/in/ericrobskyhuntley"
+            ],
             "url": "https://dusp.mit.edu/people/eric-robsky-huntley"
         },
         {
-            "name": "Asya Aizman, MCP",
-            "affiliation": "MIT DUSP",
-            "role": "Backend Engineer, Data Scientist",
-            "url": "https://dusp.mit.edu/people/asya-aizman/"
+            "name": "Asya Aizman",
+            "creds": ["MCP"],
+            "photo": "asya.jpg",
+            "affiliations": [
+                {
+                    "title": "PhD Student",
+                    "inst": "MIT Department of Urban Studies and Planning"
+                }
+            ],
+            "roles": ["Backend Engineer", "Data Scientist"],
+            "socials": [
+                    "https://github.com/anastasia",
+                    "https://www.linkedin.com/in/asya-aizman-79b345334"
+            ],
+            "url": "https://asya.codes/"
         },
         {
             "name": "Milan Chuttani",
-            "affiliation": "MIT DUSP",
-            "role": "Frontend Engineer",
-            "url": "https://github.com/mit-spatial-action"
+            "creds": [],
+            "photo": "milan.jpg",
+            "affiliations": [
+                {
+                    "title": "MCP Candidate",
+                    "inst": "MIT Department of Urban Studies and Planning"
+                }
+            ],
+            "roles": ["Front End Engineer"],
+            "socials": [
+                "https://github.com/mchuttani18",
+                "https://www.linkedin.com/in/mchuttani"
+            ]
         }
     ],
-    "orgs": [
+    "org": [
         {
-            "name": "MIT Department of Urban Studies and Planning",
-            "url": "dusp.mit.edu",
-            "description": "Temporary placeholder description"
+            "logo": "saarg.png",
+            "name": "Spatial Analysis & Action Research Group",
+            "url": "https://mit-spatial-action.github.io/",
+            "socials": [
+                "https://github.com/mit-spatial-action/"
+            ],
+            "description": "The Spatial Analysis and Action Research Group, housed in MIT's Department of Urban Studies and Planning, uses spatial data science and mapping tools to support place-based movements for social justice in the northeastern United States. Our current research projects focus primarily on consolidation in the rental market and housing insecurity in Massachusetts."
+        }
+    ],
+    "partners": [
+        {
+            "logo": "hns.png",
+            "name": "Healthy Neighborhoods Study",
+            "url": "https://hns.mit.edu/"
+        },
+        {
+            "logo": "mapc.png",
+            "name": "Metropolitan Area Planning Council",
+            "url": "https://www.mapc.org/"
+        }
+    ],
+    "funders": [
+        {
+            "logo": "clf.png",
+            "name": "Conservation Law Foundation",
+            "url": "https://www.clf.org/"
         }
     ],
     "pages": [
-        {"Home": "/"}
+        {"Home": "/"},
+        {"Who We Are": "who-we-are"}
     ],
     "keywords": [
         "evictions",

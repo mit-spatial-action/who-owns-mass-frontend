@@ -25,8 +25,7 @@
 </section>
 
 
-<style lang="scss">
-
+<style>
 #panels {
     height: 100vh;
     width: 100%;

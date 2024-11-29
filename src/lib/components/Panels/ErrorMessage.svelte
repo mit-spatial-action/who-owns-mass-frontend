@@ -1,4 +1,5 @@
 <script lang="ts">
+    import { slide } from 'svelte/transition';
     export let errorState: string;
     const states = {
         "addressNotFound": {
@@ -14,7 +15,7 @@
     }
  </script>
  
- <article class="message is-{states[errorState].color}">
+ <article transition:slide={{duration:100, axis:'y'}} class="message is-{states[errorState].color}">
     <div class="message-header">
         {states[errorState].descShort}
     </div>

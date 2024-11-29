@@ -1,6 +1,7 @@
 <script lang="ts">
     import { gcResult } from "$lib/stores";
 
+    import { slide } from 'svelte/transition';
     export let suggestions = [];
 
     const handleClick = (suggestion) => {
@@ -13,9 +14,13 @@
     }
 </script>
 
-<div id="suggestions-list" class="card has-background-white">
+<div>
+<div 
+    id="suggestions-list" 
+    class="card has-background-white"
+    >
     {#each suggestions as suggestion }
-        <button class="button is-fullwidth is-small is-justify-content-flex-start"
+        <button transition:slide={{duration:250, axis:'y'}} class="button is-fullwidth is-small is-justify-content-flex-start"
         on:click={() => handleClick(suggestion)}>
         <span class="icon">
             <i class="fa-solid fa-address-book"></i>
@@ -25,4 +30,5 @@
         </span>
         </button>
     {/each}
+</div>
 </div>

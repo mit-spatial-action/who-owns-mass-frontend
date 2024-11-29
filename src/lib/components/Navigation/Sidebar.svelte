@@ -9,7 +9,7 @@
   }
 </script>
 
-<div id="sidebar" class="has-background-light p-4" transition:fly={{ x: -350, duration: 300 }}>
+<div id="sidebar" class="has-background-white p-6" transition:fly={{ x: -350, duration: 300 }}>
   <aside class="menu">
     <button class="button" on:click={makeInactive} aria-label="Close sidebar">
       <i class="fa-solid fa-x"></i>
@@ -31,6 +31,7 @@
     z-index: 100;
     top: 0;
     left: 0px;
-    border-right: 2px solid $border;
+    border: 0.4rem solid $success;
+    box-shadow: var(--bulma-shadow);
   }
 </style>
