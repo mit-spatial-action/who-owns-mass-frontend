@@ -12,40 +12,42 @@
     <PanelTitle> {metacorp.name}</PanelTitle>
 </header>
 <div class="card-content">
-    <div class="grid">
-        <div class="cell">
-            <div class="card">
-                <div class="card-content">
-                    <div class="has-text-weight-bold">Units Owned</div>
-                    {#if metacorp.unit_count}
-                        {metacorp.unit_count}
-                    {:else}
-                        Unknown.
-                    {/if}
+    <div class="fixed-grid">
+        <div class="grid">
+            <div class="cell">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="has-text-weight-bold">Units Owned</div>
+                        {#if metacorp.unit_count}
+                            {metacorp.unit_count}
+                        {:else}
+                            Unknown.
+                        {/if}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="cell">
-            <div class="card">
-                <div class="card-content">
-                    <div class="has-text-weight-bold">Properties Owned</div>
-                    {#if metacorp.prop_count}
-                        {metacorp.prop_count}
-                    {:else}
-                        Unknown.
-                    {/if}
+            <div class="cell">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="has-text-weight-bold">Properties Owned</div>
+                        {#if metacorp.prop_count}
+                            {metacorp.prop_count}
+                        {:else}
+                            Unknown.
+                        {/if}
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="cell">
-            <div class="card">
-                <div class="card-content">
-                    <div class="has-text-weight-bold">Total Assessed Value</div>
-                    {#if metacorp.val}
-                        ${metacorp.val.toLocaleString()}
-                    {:else}
-                        Unknown.
-                    {/if}
+            <div class="cell">
+                <div class="card">
+                    <div class="card-content">
+                        <div class="has-text-weight-bold">Total Assessed Value</div>
+                        {#if metacorp.val}
+                            ${metacorp.val.toLocaleString()}
+                        {:else}
+                            Unknown.
+                        {/if}
+                    </div>
                 </div>
             </div>
         </div>
@@ -53,7 +55,8 @@
 </div>
 <div class="card-content">
     <div class="title">Properties</div>
-    <div class="grid">
+    <div class="fixed-grid has-1-cols has-2-cols-tablet">
+        <div class="grid">
         {#each metacorp.sites.features.slice(0, 3) as site}
             <div class="cell">
                 <a class="card button is-fullwidth has-text-left is-justify-content-left" 
@@ -68,6 +71,7 @@
                 </a>
             </div>
         {/each}
+        </div>
     </div>
     {#if metacorp.sites.features.length > 3}
     <button class="button mt-2" data-sveltekit-preload-data="off" aria-label="See all Properties">

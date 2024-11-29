@@ -1,19 +1,17 @@
 <script lang="ts">
     import HL from "$lib/components/Panels/HL.svelte";
-    import PanelTitle from "$lib/components/Panels/PanelTitle.svelte";
-    
+    import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
+    import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
     export let site;
 </script>
 
 
-<header class="card-header is-shadowless">
-    <PanelTitle>{site.address.addr}</PanelTitle>
+<CardHeader>{site.address.addr}</CardHeader>
 
-    <!-- <div class="subtitle has-text-dark is-size-5 mt-1 has-text-left block">
-        {site.address.muni}, {site.address.state}
-    </div> -->
-</header>
-<div class="card-content">
+<!-- <div class="subtitle has-text-dark is-size-5 mt-1 has-text-left block">
+    {site.address.muni}, {site.address.state}
+</div> -->
+<CardContent>
     <div class="title">Owners</div>
     <div class="grid">
         {#each site.owners as owner, index}
@@ -71,4 +69,4 @@
             </div>
         </div>
     </div>
-</div>
+</CardContent>

@@ -96,13 +96,11 @@
             map.getCanvas().style.cursor = '';
         });
        
-    /* TODO: Eric will look into this.
        map.on('click', layerId, async (e) => {
-            idCol === "id" ? e.features[0][idCol] : e.features[0].properties[idCol];
-            console.log("idCOL: " + e.features[0][idCol]);
-            await siteNav(e.features[0][idCol])
+            let id = idCol === "id" ? e.features[0][idCol] : e.features[0].properties[idCol];
+            await siteNav(id)
         })
-            */ 
+
         if (highlight) {
             map.on('mouseenter', layerId, (e) => {
                 idCol === "id" ? e.features[0][idCol] : e.features[0].properties[idCol];
@@ -223,10 +221,10 @@
         intervals.circles.push(animateProperty(map, layerId, 'circle-opacity', 0, 1000))
     }
 
-    const animateMarkers = (map:Map, layerId):string => {
-        if (!map) return undefined;
-        intervals.markers.push(animateProperty(map, layerId, 'text-offset', [0, -0.35], 1000))
-    }
+    // const animateMarkers = (map:Map, layerId):string => {
+    //     if (!map) return undefined;
+    //     intervals.markers.push(animateProperty(map, layerId, 'text-offset', [0, -0.35], 1000))
+    // }
 
     const clearIntervals = (intervalArray: NodeJS.Timeout[]) => {
         intervalArray.forEach((interval) => {
@@ -381,11 +379,23 @@
             map.addLayer({
                 id: "sites",
                 source: "sites",
-                maxZoom: resultZoom,
+                maxzoom: resultZoom,
                 "source-layer": "geographies",
                 type: "circle",
                 paint: {
+                    "circle-pitch-alignment": "map",
                     "circle-radius": [
+                        'interpolate',
+                        ['linear'],
+                        ['zoom'],
+                        resultZoom - 4,
+                        0,
+                        resultZoom,
+                        8
+                    ],
+                    "circle-color": styles.success,
+                    "circle-stroke-color": "white",
+                    "circle-stroke-width": [
                         'interpolate',
                         ['linear'],
                         ['zoom'],
@@ -393,9 +403,8 @@
                         0,
                         // When zoom is 18 or higher, buildings will be 100% opaque.
                         resultZoom,
-                        5
+                        1.5
                     ],
-                    "circle-color": styles.success,
                     "circle-opacity": [
                         'interpolate',
                         ['linear'],
@@ -404,8 +413,8 @@
                         0,
                         // When zoom is 18 or higher, buildings will be 100% opaque.
                         resultZoom,
-                        1
-                    ],
+                        0.7
+                    ]
                 },
             });
         });

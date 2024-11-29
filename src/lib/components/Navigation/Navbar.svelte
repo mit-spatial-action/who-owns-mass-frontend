@@ -18,7 +18,7 @@
     }
 </script>
 
-<div class="level is-mobile is-small has-background-light buttons p-3">
+<div class="level is-mobile is-small buttons">
   <div class="level-left">
     <button class="button level-item is-responsive" on:click={makeActive} aria-label="Expand sidebar.">
       <span class="icon">
