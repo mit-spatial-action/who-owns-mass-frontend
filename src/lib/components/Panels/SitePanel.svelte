@@ -8,10 +8,15 @@
 
 <CardHeader>{site.address.addr}</CardHeader>
 
-<!-- <div class="subtitle has-text-dark is-size-5 mt-1 has-text-left block">
-    {site.address.muni}, {site.address.state}
-</div> -->
 <CardContent>
+    <div class="tags are-medium">
+        <div class="tag is-success is-light">
+            {site.address.muni}
+        </div>
+        <div class="tag is-success is-light">
+            {site.address.postal}
+        </div>
+    </div>
     <div class="title">Owners</div>
     <div class="grid">
         {#each site.owners as owner, index}
