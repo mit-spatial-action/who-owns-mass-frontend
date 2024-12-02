@@ -9,7 +9,6 @@
     
 </script>
 <title>{siteConfig.title}</title>
-<link rel="icon" type="image/png" href="/favicon.png">
 <section class="hero is-fullheight">
     <div class="hero-body p-0">
         {#if $loadState}

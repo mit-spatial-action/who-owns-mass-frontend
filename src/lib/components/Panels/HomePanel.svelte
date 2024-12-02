@@ -20,9 +20,9 @@
     <div class="title is-size-3 is-size-1-tablet has-text-centered">
         {title}
     </div>
-    <div class="block has-text-centered">
+    <!-- <div class="block has-text-centered">
         {subtitle}
-    </div>
+    </div> -->
     <div class="block">
         <SearchPanel/>
     </div>
@@ -54,7 +54,6 @@
     <div class="level has-text-centered">
         <!-- <div class="level-item"> -->
             Built by the MIT Spatial Action and Analysis Research Group.
-            Code available on Github.
         <!-- </div> -->
     </div>
 </div>

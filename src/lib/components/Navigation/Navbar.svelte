@@ -44,4 +44,8 @@
     top: 0;
     z-index: 10;
   }
+
+  .button {
+    border-radius: 0; 
+  }
 </style>

@@ -2,7 +2,7 @@
     import Navigation from "$lib/components/Navigation/Navigation.svelte";
 </script>
 
-<div id="infopanel" class="site-panel column is-half is-two-fifths-desktop p-6 has-background-white is-fullheight is-flex is-flex-direction-column">
+<div id="infopanel" class="site-panel column p-3 is-half is-two-fifths-desktop has-background-white is-fullheight is-flex is-flex-direction-column">
         <Navigation />
         <div class="card is-shadowless is-flex-grow-1 is-flex is-flex-direction-column">
             <slot/>
