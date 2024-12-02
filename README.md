@@ -2,7 +2,7 @@
 
 [![Netlify Status](https://api.netlify.com/api/v1/badges/2c1b6580-ad37-4653-806f-b085e9e85e09/deploy-status)](https://app.netlify.com/sites/who-owns-mass-frontend/deploys)
 
-![Screenshot of the Who Owns Massachusetts Interface](public/who-owns-mass-frontend.png)
+![Screenshot of the Who Owns Massachusetts Interface](static/who-owns-mass-frontend.png)
 
 This is the codebase for the front end of the Who Owns Massachusetts application. It's built using Svelte and SvelteKit and draws on the Bulma CSS/SCSS framework. Both production and staging branches available at...
 
