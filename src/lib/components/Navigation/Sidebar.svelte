@@ -1,6 +1,7 @@
 <script lang="ts">
   export let menuItems;
   import { fly } from 'svelte/transition';
+  import siteConfig from "$lib/config/site.json";
 
   export let active;
 
@@ -9,12 +10,16 @@
   }
 </script>
 
-<div id="sidebar" class="has-background-white p-6" transition:fly={{ x: -350, duration: 300 }}>
+<div id="sidebar" class="has-background-white p-3" transition:fly={{ x: -350, duration: 300 }}>
   <aside class="menu">
-    <button class="button" on:click={makeInactive} aria-label="Close sidebar">
-      <i class="fa-solid fa-x"></i>
-    </button>
-    <p class="menu-label">Who Owns Massachusetts?</p>
+    <div class="buttons is-small">
+      <button class="button is-responsive" on:click={makeInactive} aria-label="Close sidebar">
+        <span class="icon">
+          <i class="fa-solid fa-x"></i>
+        </span>
+      </button>
+    </div>
+    <p class="menu-label">{siteConfig.title}</p>
     <ul class="menu-list">
         {#each menuItems as item }
         <li><a href={item[Object.keys(item)[0]]} on:click={makeInactive}>{Object.keys(item)[0]}</a></li>

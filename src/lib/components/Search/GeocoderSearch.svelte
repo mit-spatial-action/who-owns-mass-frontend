@@ -12,8 +12,8 @@
     const buildResults = (results) => {
         results = results.map((r) => {
             return {
-                text: `${r.address} ${r.text}, 
-                ${r.context.filter(c => c.id.split('.').shift() === 'place')[0].text}, MA`,
+                text: `${r.address} ${r.text}`, 
+                location: `${r.context.filter(c => c.id.split('.').shift() === 'place')[0].text}, MA`,
                 lngLat: new mapbox.LngLat(r.center[0], r.center[1]),
                 address: `${r.address} ${r.text}`
             }
