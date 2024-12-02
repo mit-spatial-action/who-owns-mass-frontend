@@ -350,6 +350,7 @@
     $: $mapLoaded && $highlighted ? highlightHovered(map, $highlighted, "selectedMarkers") : null;
 
     // Clear selected markers when "Return to Map" button is clicked
+    $: $mapLoaded && !$site && !$metacorp ? clearIntervals(intervals.circles) : null;
     $: $mapLoaded && !$site && !$metacorp && map.getLayer("selectedMarkers") ? clearLayers(map, ["selectedMarkers", "selectedCircles"]) : null;
 
     // $: toggleLayerVisibility($homeState, "hexes");
