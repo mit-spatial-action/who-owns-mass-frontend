@@ -464,48 +464,48 @@
 
             map.setTerrain({source: 'mapbox-dem', exaggeration: 3})
             const labelLayerId = getLabelLayerId(map);
-            // map.addSource("hexes", {
-            //     type: "vector",
-            //     url: "mapbox://mit-spatial-action.who-owns-mass-hexes",
-            // });
+            map.addSource("hexes", {
+                type: "vector",
+                url: "mapbox://mit-spatial-action.who-owns-mass-hexes",
+            });
 
-            // map.addLayer({
-            //     id: "hexes",
-            //     source: "hexes",
-            //     maxZoom: resultZoom,
-            //     "source-layer": "geographies",
-            //     type: "fill-extrusion",
-            //     filter: ['==', ['get', 'size'], 0.5],
-            //     paint: {
-            //         "fill-extrusion-height": [
-            //             'interpolate',
-            //             ['exponential', 1.5],
-            //             ['get', 'prop_count_mean_ntile'],
-            //             0, 0,
-            //             5, 3000
-            //         ],
-            //         "fill-extrusion-color": [
-            //             'interpolate',
-            //             ['exponential', 1.5],
-            //             ['get', 'prop_count_mean_ntile'],
-            //             0, 'white',
-            //             // When zoom is 18 or higher, buildings will be 100% opaque.
-            //             5, "#3CAAA9"
-            //         ],
-            //         'fill-extrusion-opacity': 0.9
-            //         // "circle-opacity": [
-            //         //     'interpolate',
-            //         //     ['exponential', 0.5],
-            //         //     ['zoom'],
-            //         //     resultZoom - 4,
-            //         //     0,
-            //         //     // When zoom is 18 or higher, buildings will be 100% opaque.
-            //         //     resultZoom,
-            //         //     1
-            //         // ],
-            //     },
-            // },
-            // labelLayerId);
+            map.addLayer({
+                id: "hexes",
+                source: "hexes",
+                maxZoom: resultZoom,
+                "source-layer": "geographies",
+                type: "fill-extrusion",
+                filter: ['==', ['get', 'size'], 0.25],
+                paint: {
+                    "fill-extrusion-height": [
+                        'interpolate',
+                        ['exponential', 0.995],
+                        ['get', 'props'],
+                        1, 0,
+                        2435, 5000
+                    ],
+                    "fill-extrusion-color": [
+                        'interpolate',
+                        ['exponential', 0.995],
+                        ['get', 'props'],
+                        1, 'white',
+                        // When zoom is 18 or higher, buildings will be 100% opaque.
+                        2435, "#3CAAA9"
+                    ],
+                    'fill-extrusion-opacity': 0.9
+                    // "circle-opacity": [
+                    //     'interpolate',
+                    //     ['exponential', 0.5],
+                    //     ['zoom'],
+                    //     resultZoom - 4,
+                    //     0,
+                    //     // When zoom is 18 or higher, buildings will be 100% opaque.
+                    //     resultZoom,
+                    //     1
+                    // ],
+                },
+            },
+            labelLayerId);
 
             // map.on('zoom', function() {
             //     const zoomLevel = map.getZoom();  // Get the current zoom level
