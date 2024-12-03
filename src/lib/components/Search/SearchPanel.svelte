@@ -29,8 +29,8 @@
 </script>
 
 <div class="panel is-success">
-    <div class="panel-heading">Search for an Address or Owner</div>
-    <div class="panel-tabs">
+    <div class="panel-heading is-size-7 is-size-6-tablet">Search for an Address or Owner</div>
+    <div class="panel-tabs is-size-7 is-size-6-tablet">
         {#each searchModes as mode}
             <a 
             class:is-active={mode.id === hoverTab} 

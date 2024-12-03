@@ -3,7 +3,7 @@
     import { siteNav, mapbox } from "$lib/scripts/utils";
     import type { FeatureCollection, Feature } from "geojson";
     import styles from '$lib/config/styles.json';
-   
+    
     import bbox from "@turf/bbox";
     /* Helper functions */  
     // import { drawNetwork, drawNetworkPoints }  from "$lib/components/Map/helper-functions/DrawNetwork.js";
@@ -362,8 +362,8 @@
             style: style,
             center: initLngLat,
             zoom: initZoom.length === 2 ? initZoom[0] : initZoom,
-            bearing: -60,
-            pitch: 65,
+            bearing: mapConfig.init.bearing,
+            pitch: mapConfig.init.pitch,
             projection: projection,
             maxBounds: maxBounds,
             maxZoom: resultZoom
@@ -402,7 +402,6 @@
                         ['zoom'],
                         resultZoom - 4,
                         0,
-                        // When zoom is 18 or higher, buildings will be 100% opaque.
                         resultZoom,
                         1.5
                     ],
@@ -412,7 +411,6 @@
                         ['zoom'],
                         resultZoom - 4,
                         0,
-                        // When zoom is 18 or higher, buildings will be 100% opaque.
                         resultZoom,
                         0.7
                     ]
@@ -451,10 +449,12 @@
         });
 
         map.on("style.load", () => {
+
             map.on("click", "sites", async (e) => {
                 var feature = e.features[0];
                 await siteNav(feature.properties.site_id)
             });
+
 
             map.addSource('mapbox-dem', {
                 type: 'raster-dem',
@@ -463,107 +463,10 @@
                 maxzoom: 18
             })
 
-            map.setTerrain({source: 'mapbox-dem', exaggeration: 3})
-            const labelLayerId = getLabelLayerId(map);
-            // map.addSource("hexes", {
-            //     type: "vector",
-            //     url: "mapbox://mit-spatial-action.who-owns-mass-hexes",
-            // });
-
-            // map.addLayer({
-            //     id: "hexes",
-            //     source: "hexes",
-            //     maxZoom: resultZoom,
-            //     "source-layer": "geographies",
-            //     type: "fill-extrusion",
-            //     filter: ['==', ['get', 'size'], 0.5],
-            //     paint: {
-            //         "fill-extrusion-height": [
-            //             'interpolate',
-            //             ['exponential', 1.5],
-            //             ['get', 'prop_count_mean_ntile'],
-            //             0, 0,
-            //             5, 3000
-            //         ],
-            //         "fill-extrusion-color": [
-            //             'interpolate',
-            //             ['exponential', 1.5],
-            //             ['get', 'prop_count_mean_ntile'],
-            //             0, 'white',
-            //             // When zoom is 18 or higher, buildings will be 100% opaque.
-            //             5, "#3CAAA9"
-            //         ],
-            //         'fill-extrusion-opacity': 0.9
-            //         // "circle-opacity": [
-            //         //     'interpolate',
-            //         //     ['exponential', 0.5],
-            //         //     ['zoom'],
-            //         //     resultZoom - 4,
-            //         //     0,
-            //         //     // When zoom is 18 or higher, buildings will be 100% opaque.
-            //         //     resultZoom,
-            //         //     1
-            //         // ],
-            //     },
-            // },
-            // labelLayerId);
-
-            // map.on('zoom', function() {
-            //     const zoomLevel = map.getZoom();  // Get the current zoom level
-
-            //     if (zoomLevel < 12 && $homeState) {
-            //         // Show the layer when zoom level is greater than the threshold
-            //         map.setLayoutProperty('hexes', 'visibility', 'visible');
-            //     } else {
-            //         // Hide the layer when zoom level is less than or equal to the threshold
-            //         map.setLayoutProperty('hexes', 'visibility', 'none');
-            //     }
-            // });
-
-            map.addLayer(
-                {
-                id: '3d-buildings',
-                source: 'composite',
-                'source-layer': 'building',
-                filter: ['==', 'extrude', 'true'],
-                type: 'fill-extrusion',
-                minzoom: 15,
-                paint: {
-                    'fill-extrusion-color': '#fff',
-                    'fill-extrusion-height': [
-                    'interpolate',
-                    ['linear'],
-                    ['zoom'],
-                    15,
-                    0,
-                    15.05,
-                    ['get', 'height']
-                    ],
-                    'fill-extrusion-base': [
-                    'interpolate',
-                    ['linear'],
-                    ['zoom'],
-                    15,
-                    0,
-                    15.05,
-                    ['get', 'min_height']
-                    ],
-                    'fill-extrusion-opacity': 1
-                }
-                },
-                labelLayerId
-            );
+            map.setTerrain({source: 'mapbox-dem', exaggeration: 2.5})
 
             pointerEvents(map, "sites", false, "site_id");
 
-            // map.setFog({
-            //     range: [0.25, 2],
-            //     color: "#fff",
-            //     "high-color": "#fff",
-            //     "horizon-blend": 0.1, // default: .1
-            //     "space-color": styles.success,
-            //     "star-intensity": 0.1,
-            // });
             if (initZoom.length === 2) {
                 map.flyTo({
                     center: initLngLat,

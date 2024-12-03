@@ -1,7 +1,7 @@
 @use 'vars.scss' as *;
 
 @use "bulma/sass" with (
-  $family-primary: '"Figtree", sans-serif',
+  $family-primary: '"Manrope Variable", sans-serif',
   $success: $success,
   $primary: $primary,
   $link: $link,
@@ -16,7 +16,6 @@
   $panel-heading-radius: $radius
 );
 
-@import url('https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400;0,700;1,400;1,700&display=swap');
 * {
   box-sizing: border-box;
 }

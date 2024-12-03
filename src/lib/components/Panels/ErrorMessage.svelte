@@ -16,10 +16,10 @@
  </script>
  
  <article transition:slide={{duration:100, axis:'y'}} class="message is-{states[errorState].color}">
-    <div class="message-header">
+    <div class="message-header  is-size-7 is-size-6-tablet">
         {states[errorState].descShort}
     </div>
-    <div class="message-body">
+    <div class="message-body  is-size-7 is-size-6-tablet">
         {states[errorState].descLong}
     </div>
 </article>
