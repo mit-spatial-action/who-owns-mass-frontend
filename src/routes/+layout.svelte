@@ -7,6 +7,8 @@
 
     import { loadState } from "$lib/stores";
     
+    import "@fontsource-variable/manrope";
+
 </script>
 <title>{siteConfig.title}</title>
 <section class="hero is-fullheight">

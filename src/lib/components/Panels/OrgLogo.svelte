@@ -10,7 +10,7 @@
             src="{imageSrc}" 
             alt="Logo of {org.name}."/>
     </figure>
-    <figure class="image is-hidden-mobile is-96x96">
+    <figure class="image is-hidden-mobile is-64x64">
         <img 
             src="{imageSrc}" 
             alt="Logo of {org.name}."
