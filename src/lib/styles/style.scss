@@ -12,6 +12,7 @@
   $column-gap: 0rem,
   $card-radius: $radius,
   $radius: $radius,
+  $radius-small: $radius,
   $panel-radius: $radius,
   $panel-heading-radius: $radius
 );
@@ -22,4 +23,15 @@
 
 #geocoder > * {
     border-radius: 0rem;
+}
+
+.shadow {
+  border-right: 0.15rem solid $success;
+  border-bottom: 0.15rem solid $success;
+}
+
+
+.shadow-primary {
+  border-right: 0.15rem solid $primary;
+  border-bottom: 0.15rem solid $primary;
 }

@@ -4,18 +4,18 @@
     import {
         highlighted
     } from "$lib/stores";
+    import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
+    import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
     export let metacorp;
 </script>
 
 
-<header class="card-header is-shadowless">
-    <PanelTitle> {metacorp.name}</PanelTitle>
-</header>
-<div class="card-content">
+<CardHeader> {metacorp.name}</CardHeader>
+<CardContent>
     <div class="fixed-grid">
         <div class="grid">
             <div class="cell">
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-content">
                         <div class="has-text-weight-bold">Units Owned</div>
                         {#if metacorp.unit_count}
@@ -27,7 +27,7 @@
                 </div>
             </div>
             <div class="cell">
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-content">
                         <div class="has-text-weight-bold">Properties Owned</div>
                         {#if metacorp.prop_count}
@@ -39,7 +39,7 @@
                 </div>
             </div>
             <div class="cell">
-                <div class="card">
+                <div class="card shadow">
                     <div class="card-content">
                         <div class="has-text-weight-bold">Total Assessed Value</div>
                         {#if metacorp.val}
@@ -52,14 +52,15 @@
             </div>
         </div>
     </div>
-</div>
+</CardContent>
+<CardContent>
 <div class="card-content">
     <div class="title">Properties</div>
     <div class="fixed-grid has-1-cols has-2-cols-tablet">
         <div class="grid">
         {#each metacorp.sites.features.slice(0, 3) as site}
             <div class="cell">
-                <a class="card button is-fullwidth has-text-left is-justify-content-left" 
+                <a class="card button shadow is-fullwidth has-text-left is-justify-content-left" 
                 aria-label="Select Property {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off" href={`/site/${site.id}`}
                 on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
                     <!-- <div class="card"> -->
@@ -78,14 +79,15 @@
         See All {metacorp.sites.features.length} Properties &#8594
     </button>
     {/if}
-</div>
+</CardContent>
+<CardContent>
 <div class="card-content">
     <div class="title">Other Names</div>
-        <div class="card">
+        <div class="card shadow">
             <div class="card-content">
                 {#each metacorp.aliases as alias, index}
                     { index == metacorp.aliases.length-1 ? alias : `${alias}, `}
                 {/each}
             </div>
     </div>
-</div>
+</CardContent>

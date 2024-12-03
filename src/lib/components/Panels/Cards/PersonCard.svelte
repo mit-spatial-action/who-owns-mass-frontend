@@ -5,11 +5,11 @@
     const imageSrc = imageMap[`/src/lib/assets/${person.photo}`]?.default || '';
 </script>
 
-<div class="card is-fullheight is-flex is-flex-direction-column">
+<div class="card is-fullheight shadow is-flex is-flex-direction-column">
     <div class="card-content is-flex-grow-1">
         <div class="media">
             <div class="media-left">
-                <figure class="image is-96x96">
+                <figure class="image shadow is-96x96">
                     <img
                         src={imageSrc}
                         alt="Photo of {person.name}."
@@ -25,7 +25,7 @@
         <div class="content">
             <div class="tags">
                 {#each person.roles as role}
-                    <span class="tag">{role}</span>
+                    <span class="tag is-success is-light">{role}</span>
                 {/each}
             </div>
             <div class="block">
