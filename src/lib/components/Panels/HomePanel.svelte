@@ -1,6 +1,5 @@
 <script lang="ts">
 
-    import { slide } from 'svelte/transition';
     import SearchPanel from '$lib/components/Search/SearchPanel.svelte';
     import OrgLogo from '$lib/components/Panels/OrgLogo.svelte';
     import ErrorMessage from "$lib/components/Panels/ErrorMessage.svelte";
@@ -15,9 +14,8 @@
  
 </script>
 
-<div transition:slide={{duration:250, axis:"y"}}>
-<div class="card-content is-flex-grow-1">
-    <div class="title is-size-3 is-size-1-tablet has-text-centered">
+<div class="card-content">
+    <div class="title is-size-4 is-size-1-tablet has-text-centered">
         {title}
     </div>
     <!-- <div class="block has-text-centered">
@@ -32,8 +30,7 @@
         </div>
     {/if}
 </div>
-<hr/>
-<!-- <footer class="card-footer"> -->
+<footer class="card-footer mt-auto">
     <div class="level is-mobile pt-3">
         {#each siteConfig.org as org}
             <div class="level-item">
@@ -51,13 +48,7 @@
             </div>
         {/each}
     </div>
-    <div class="level has-text-centered">
-        <!-- <div class="level-item"> -->
-            Built by the MIT Spatial Action and Analysis Research Group.
-        <!-- </div> -->
-    </div>
-</div>
-<!-- </footer> -->
+</footer>
 
 <style>
     .level {

@@ -1,19 +1,21 @@
 {
-    "style": "mapbox://styles/mapbox/light-v11",
+    "style": "mapbox://styles/mit-spatial-action/cm48koxca01gg01rw95tsa29c",
     "maxBounds": [
-        -179, 19,
-        -67, 72
+        -73.507239199792,41.23908260581605,
+        -69.92871308883089,42.88675909238091
     ],
     "resultZoom": 17,
     "singleMarker": true,
     "projection": "globe",
     "init": {
+        "pitch": 45,
+        "bearing": -45,
         "lngLat": [
-            -70.89,
+            -71.59,
             42.34
         ],
         "zoom": [
-            9
+            7.5
         ],
         "zoomDur": 500
     }
