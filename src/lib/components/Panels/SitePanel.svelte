@@ -2,6 +2,7 @@
     import HL from "$lib/components/Panels/HL.svelte";
     import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
+    import IconCard from "$lib/components/Panels/Cards/IconCard.svelte";
     import ErrorMessage from "./ErrorMessage.svelte";
    export let site;
 
@@ -10,109 +11,101 @@
    const toggleActive = () => {
       priceInfoActive = !priceInfoActive;
     }
+    console.log(site);
 
 </script>
 
-<CardHeader>{site.address.addr}</CardHeader>
+<CardHeader color="primary">{site.address.addr}</CardHeader>
 
 <CardContent>
-    <div class="tags are-medium">
-        <div class="tag is-success is-light shadow">
+        
+    <div class="box p-2 is-shadowless">
+        <div class="tag is-medium is-primary is-light border-primary">
             {site.address.muni}
         </div>
-        <div class="tag is-success is-light shadow">
+        <div class="tag is-medium is-primary is-light border-primary">
             {site.address.postal}
         </div>
     </div>
-    <div class="box shadow">
-        <div class="title box has-background-success-light shadow is-shadowless">Owners</div>
+    <div class="fixed-grid has-2-cols">
         <div class="grid">
-            {#each site.owners as owner, index}
-                <div class="cell">
-                    <div class="card shadow is-shadowless">
-                        <div class="card-content">
-                            {owner.properties.name}
+            <div class="cell">
+                <IconCard title="Period" icon="calendar">
+                    {#if site.fy }July 1, {site.fy-1}--June 30, {site.fy}{:else}Unknown.{/if}
+                </IconCard>
+            </div>
+            <div class="cell">
+                <IconCard title="Units" icon="building">
+                    {#if site.units}{#if site.ooc}{site.units - 1}{:else}{site.units}{/if} Rental Units{:else}Unknown.{/if}
+                </IconCard>
+            </div>
+            <div class="cell">
+                <IconCard title="Last Sale" icon="hand-holding-dollar">
+                    {#if site.ls_price}${site.ls_price.toLocaleString()}{:else}Unknown{/if}{#if site.ls_price < 5000}
+                    <a class="icon" on:click={toggleActive}>
+                        <i class="fas fa-question-circle has-text-primary"></i>
+                    </a>
+                    {/if} on {#if site.ls_date}{new Date(site.ls_date).toLocaleDateString()}{:else}Unknown.{/if}
+                </IconCard>
+
+            <div class="cell">
+                {#if site.ooc}
+                <IconCard title="Owner-Occupied" icon="house"/>
+                {:else}
+                <IconCard title="Absentee Landlord" icon="people-arrows"/>
+                {/if}
+            </div>
+            </div>
+            <div class="cell">
+                <IconCard title="Valuation" icon="dollar-sign">
+                    {#if site.lnd_val > 0 && site.bld_val > 0}
+                        ${(site.lnd_val + site.bld_val).toLocaleString()}
+                    {:else if site.bld_val > 0}
+                        ${site.bld_val.toLocaleString()}
+                    {:else if site.lnd_val > 0}
+                        ${site.lnd_val.toLocaleString()}
+                    {:else}
+                        Unknown.
+                    {/if}
+                </IconCard>
+            </div>
+        </div>
+    </div>
+    {#if !priceInfoActive && site.ls_price}
+        <ErrorMessage errorState="quitClaimDeed" />
+    {:else if !priceInfoActive }
+        <ErrorMessage errorState="priceUnknown" />
+    {/if}
+    <!-- </div> -->
+        <div class="title">Owners</div>
+        <div class="fixed-grid has-2-cols">
+            <div class="grid">
+                {#each site.owners as owner, index}
+                    <div class="cell">
+                        <div class="card border-primary is-shadowless">
+                            <div class="card-content">
+                                <span class="icon-text">
+                                    <span class="icon has-text-primary">
+                                      <i class="fas fa-people-group"></i>
+                                    </span>
+                                    <span class="has-text-weight-bold">{owner.properties.name}</span>
+                                  </span>
+                            </div>
                         </div>
                     </div>
-                </div>
-            {/each}
+                {/each}
+            </div>
         </div>
         <div class="block">
             {#if site.metacorp.prop_count > 1}
-                    <p>This owner may own <HL>{site.metacorp.prop_count} properties</HL>, including <HL>{site.metacorp.unit_count} units</HL>.</p>
-                    <a class="button mt-5 shadow is-shadowless" data-sveltekit-preload-data="off" href={`/meta/${site.metacorp.id}`}>
+                    <p>This owner may own <span class="tag is-medium has-background-primary-light">{site.metacorp.prop_count} properties</span>, including <span class="tag is-medium has-background-primary-light">{site.metacorp.unit_count} units</span>.</p>
+                    <a class="button mt-5 border-primary is-shadowless" data-sveltekit-preload-data="off" href={`/meta/${site.metacorp.id}`}>
                         See Details &#8594
                     </a>
             {:else}
-                    <p>We couldn't find any additional properties held by this owner.</p>
+                <ErrorMessage errorState="noProperties" />
             {/if}
         </div>
-    </div>
-    <div class="box shadow">
-        <div class="title box has-background-success-light shadow is-shadowless">Property Details</div>
-        <div class="grid">
-            <div class="cell">
-                <div class="card shadow is-shadowless">
-                    <div class="card-content">
-                        <div class="has-text-weight-bold">Year</div>
-                        {#if site.fy}{site.fy}{:else}Unknown.{/if}
-                    </div>
-                </div>
-            </div>
-            <div class="cell">
-                <div class="card shadow is-shadowless">
-                    <div class="card-content">
-                        <div class="tag is-medium has-background-success-light">
-                            <div class="icon-text">
-                                <span class="icon has-text-success">
-                                <i class="fas fa-house"></i>
-                                </span>
-                                <span>Units</span>
-                            </div>
-                            </div>
-                            {#if site.units}{site.units}{:else}Unknown.{/if}
-                    </div>
-                </div>
-            </div>
-            <div class="cell">
-                <div class="card shadow is-shadowless">
-                    <div class="card-content">
-                        <div class="has-text-weight-bold">Last Sale Date</div>
-                        {#if site.ls_date}{new Date(site.ls_date).toLocaleDateString()}{:else}Unknown.{/if}
-                    </div>
-                </div>
-            </div>
-            <div class="cell">
-                <div class="card shadow is-shadowless">
-                    <div class="card-content">
-                        <div class="has-text-weight-bold">Last Sale Price</div>
-                        {#if site.ls_price}${site.ls_price.toLocaleString()}{:else}Unknown.{/if}
-                    </div>
-                </div>
-            </div>
-            {#if site.ls_price < 5000}
-                <div class="cell is-col-span-2">
-                    <div class="card shadow is-shadowless">
-                            <div class="card-content">
-                                <button class="has-text-weight-light"  on:click={toggleActive}>
-                                    <span class="icon-text">
-                                        <span class="icon">
-                                            <i class="fas fa-question-circle has-text-warning"></i>
-                                        </span>
-                                        <span>Why is this price {#if site.ls_price}so low?{:else}unknown?{/if}</span>
-                                    </span>
-                                </button>
-                            </div>
-                        {#if !priceInfoActive && site.ls_price}
-                            <ErrorMessage errorState="quitClaimDeed" />
-                        {:else if !priceInfoActive }
-                            <ErrorMessage errorState="priceUnknown" />
-                        {/if}
-                    </div> 
-                </div>
-            {/if}
-        </div>
-    </div>
 </CardContent>
 
 <style>

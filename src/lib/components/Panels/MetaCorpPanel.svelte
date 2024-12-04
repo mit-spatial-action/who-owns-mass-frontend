@@ -12,11 +12,11 @@
 
 <CardHeader> {metacorp.name}</CardHeader>
 <CardContent>
-    <div class="box shadow is-shadowless">
+    <div class="box border-success is-shadowless">
         <div class="fixed-grid">
             <div class="grid">
                 <div class="cell">
-                    <div class="card shadow">
+                    <div class="card border-success">
                         <div class="card-content">
                             <div class="has-text-weight-bold">Units Owned</div>
                             {#if metacorp.unit_count}
@@ -28,7 +28,7 @@
                     </div>
                 </div>
                 <div class="cell">
-                    <div class="card shadow">
+                    <div class="card border-success">
                         <div class="card-content">
                             <div class="has-text-weight-bold">Properties Owned</div>
                             {#if metacorp.prop_count}
@@ -40,7 +40,7 @@
                     </div>
                 </div>
                 <div class="cell">
-                    <div class="card shadow">
+                    <div class="card border-success">
                         <div class="card-content">
                             <div class="has-text-weight-bold">Total Assessed Value</div>
                             {#if metacorp.val}
@@ -54,13 +54,13 @@
             </div>
         </div>
     </div>
-    <div class="box shadow is-shadowless">
-        <div class="title box has-background-success-light shadow is-shadowless">Properties</div>
+    <div class="box border-success is-shadowless">
+        <div class="title box has-background-success-light border-success is-shadowless">Properties</div>
         <div class="fixed-grid">
             <div class="grid">
             {#each metacorp.sites.features.slice(0, 3) as site}
                 <div class="cell">
-                    <a class="card button shadow is-fullwidth has-text-left is-justify-content-left" 
+                    <a class="card button border-success is-fullwidth has-text-left is-justify-content-left" 
                     aria-label="Select Property {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off" href={`/site/${site.id}`}
                     on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
                         <!-- <div class="card"> -->
@@ -80,9 +80,9 @@
         </button>
         {/if}
     </div>
-    <div class="box shadow is-shadowless">
-        <div class="title box has-background-success-light shadow">Other Names</div>
-            <div class="card shadow">
+    <div class="box border-success is-shadowless">
+        <div class="title box has-background-success-light border-success">Other Names</div>
+            <div class="card border-success">
                 <div class="card-content">
                     {#each metacorp.aliases as alias, index}
                         { index == metacorp.aliases.length-1 ? alias : `${alias}, `}

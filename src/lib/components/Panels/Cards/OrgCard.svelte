@@ -5,7 +5,7 @@
     const imageSrc = imageMap[`/src/lib/assets/logos/${org.logo}`]?.default || '';
 </script>
 
-<div class="card is-fullheight shadow is-flex is-flex-direction-column">
+<div class="card is-fullheight border-success is-flex is-flex-direction-column">
     <div class="card-content">
         <div class="media">
             <div class="media-left">
@@ -17,7 +17,7 @@
                 </figure>
             </div>
             <div class="media-content">
-                <p class="title is-size-4 is-size-7-mobile has-background-success-light p-1 shadow">{org.name}</p>
+                <p class="title is-size-4 is-size-7-mobile has-background-success-light p-1 border-success">{org.name}</p>
             </div>
         </div>
         {#if org.description }

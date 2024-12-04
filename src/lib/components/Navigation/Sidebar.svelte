@@ -13,7 +13,7 @@
 <div id="sidebar" class="has-background-white p-3" transition:fly={{ x: -350, duration: 300 }}>
   <aside class="menu">
     <div class="buttons is-small">
-      <button class="button shadow is-responsive" on:click={makeInactive} aria-label="Close sidebar">
+      <button class="button border-success is-responsive" on:click={makeInactive} aria-label="Close sidebar">
         <span class="icon">
           <i class="fa-solid fa-x"></i>
         </span>
