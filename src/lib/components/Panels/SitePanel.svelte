@@ -5,7 +5,7 @@
     import ErrorMessage from "./ErrorMessage.svelte";
    export let site;
 
-   let priceInfoActive = false;
+   let priceInfoActive = true;
 
    const toggleActive = () => {
       priceInfoActive = !priceInfoActive;
@@ -99,7 +99,7 @@
                                         <span class="icon">
                                             <i class="fas fa-question-circle has-text-warning"></i>
                                         </span>
-                                        <span>Why is this price so low?</span>
+                                        <span>Why is this price {#if site.ls_price}so low?{:else}unknown?{/if}</span>
                                     </span>
                                 </button>
                             </div>
