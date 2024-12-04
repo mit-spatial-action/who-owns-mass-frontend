@@ -28,7 +28,7 @@
     }
 </script>
 
-<div class="panel is-primary shadow">
+<div class="panel is-primary shadow-primary">
     <div class="panel-heading is-size-7 is-size-6-tablet">Search for an Address or Owner</div>
     <div class="panel-tabs is-size-7 is-size-6-tablet">
         {#each searchModes as mode}

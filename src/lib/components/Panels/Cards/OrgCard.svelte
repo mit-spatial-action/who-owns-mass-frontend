@@ -17,7 +17,7 @@
                 </figure>
             </div>
             <div class="media-content">
-                <p class="title is-size-4 is-size-7-mobile">{org.name}</p>
+                <p class="title is-size-4 is-size-7-mobile has-background-success-light p-1 shadow">{org.name}</p>
             </div>
         </div>
         {#if org.description }

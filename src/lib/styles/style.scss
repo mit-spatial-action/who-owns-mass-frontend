@@ -26,12 +26,16 @@
 }
 
 .shadow {
+  border-top: 0.05rem dashed $success;
+  border-left: 0.05rem dashed $success;
   border-right: 0.15rem solid $success;
   border-bottom: 0.15rem solid $success;
 }
 
 
 .shadow-primary {
+  border-top: 0.05rem dashed $primary;
+  border-left: 0.05rem dashed $primary;
   border-right: 0.15rem solid $primary;
   border-bottom: 0.15rem solid $primary;
 }

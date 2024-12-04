@@ -10,16 +10,16 @@
         "featureNotReady": {
             "descShort": "This feature is coming soon!",
             "descLong": "We're working on getting this functionality up and running. Thank you for your patience.",
-            "color": "danger"
+            "color": "primary"
         }
     }
  </script>
  
  <article transition:slide={{duration:100, axis:'y'}} class="message is-{states[errorState].color}">
-    <div class="message-header  is-size-7 is-size-6-tablet">
+    <div class="message-header is-size-7 is-size-6-tablet">
         {states[errorState].descShort}
     </div>
-    <div class="message-body  is-size-7 is-size-6-tablet">
+    <div class="message-body is-size-7 is-size-6-tablet">
         {states[errorState].descLong}
     </div>
 </article>

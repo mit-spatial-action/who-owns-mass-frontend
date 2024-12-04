@@ -1,3 +1,10 @@
-<span class="shadow-primary has-text-black p-2">
+<span class="shadow-primary has-background-primary-light">
     <slot/>
 </span>
+
+<style>
+    span {
+        margin: -0.03rem;
+        padding: 0.03rem;
+    }
+</style>
