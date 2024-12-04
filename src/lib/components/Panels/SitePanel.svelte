@@ -4,6 +4,13 @@
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
     import ErrorMessage from "./ErrorMessage.svelte";
    export let site;
+
+   let priceInfoActive = false;
+
+   const toggleActive = () => {
+      priceInfoActive = !priceInfoActive;
+    }
+
 </script>
 
 <CardHeader>{site.address.addr}</CardHeader>
@@ -83,12 +90,22 @@
                     </div>
                 </div>
             </div>
+            {#if site.ls_price < 5000}
+                <div class="cell is-col-span-2">
+                    <div class="card shadow is-shadowless">
+                            <div class="card-content">
+                                <button class="has-text-weight-light"  on:click={toggleActive}>
+                                    <i class="fas fa-question-circle has-text-warning"></i>&nbsp Why is this price low or unknown</button>
+                            </div>
+                        {#if !priceInfoActive && site.ls_price}
+                            <ErrorMessage errorState="quitClaimDeed" />
+                        {:else if !priceInfoActive }
+                            <ErrorMessage errorState="priceUnknown" />
+                        {/if}
+                    </div> 
+                </div>
+            {/if}
         </div>
-        {#if site.ls_price < 5000}
-            <div class="card shadow is-shadowless">
-                <ErrorMessage errorState="quitClaimDeed"/>
-            </div> 
-        {/if}
     </div>
 </CardContent>
 

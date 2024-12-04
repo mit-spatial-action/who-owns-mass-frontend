@@ -15,8 +15,13 @@
             "quitClaimDeed": {
             "descShort": "This property is likely a quitclaim deed.",
             "descLong": "A quitclaim deed is a property transferred between owners or family members for a negligible sale price (i.e. less than $5000)",
-            "color": "warning" // Please feel free to change color
-        }
+            "color": "warning"
+        }, 
+            "priceUnknown": {
+            "descShort": "We do not know the price of this property.",
+            "descLong": "This information is missing in the MA tax assessors database.",
+            "color": "warning" 
+            }
     }
  </script>
  
