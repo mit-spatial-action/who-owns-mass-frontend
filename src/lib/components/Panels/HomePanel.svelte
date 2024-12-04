@@ -18,7 +18,7 @@
 </script>
 
 <div class="card-content">
-    <div class="hero is-success is-medium mb-5 shadow">
+    <div class="hero is-success is-medium mb-5 border-success">
         <div class="hero-body hero-image" style="background-image: url({imageSrc})">
             <div class="title is-4 is-hidden-tablet has-text-white has-text-centered">
                 <div class="hero-title">{title}</div>

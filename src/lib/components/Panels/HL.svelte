@@ -1,4 +1,4 @@
-<span class="shadow-primary has-background-primary-light">
+<span class="border-primary has-background-primary-light">
     <slot/>
 </span>
 
