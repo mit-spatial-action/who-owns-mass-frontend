@@ -95,7 +95,13 @@
                     <div class="card shadow is-shadowless">
                             <div class="card-content">
                                 <button class="has-text-weight-light"  on:click={toggleActive}>
-                                    <i class="fas fa-question-circle has-text-warning"></i>&nbsp Why is this price low or unknown</button>
+                                    <span class="icon-text">
+                                        <span class="icon">
+                                            <i class="fas fa-question-circle has-text-warning"></i>
+                                        </span>
+                                        <span>Why is this price so low?</span>
+                                    </span>
+                                </button>
                             </div>
                         {#if !priceInfoActive && site.ls_price}
                             <ErrorMessage errorState="quitClaimDeed" />
