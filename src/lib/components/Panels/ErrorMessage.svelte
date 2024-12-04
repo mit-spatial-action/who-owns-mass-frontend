@@ -11,6 +11,11 @@
             "descShort": "This feature is coming soon!",
             "descLong": "We're working on getting this functionality up and running. Thank you for your patience.",
             "color": "primary"
+        },
+            "quitClaimDeed": {
+            "descShort": "This property is likely a quitclaim deed.",
+            "descLong": "A quitclaim deed is a property transferred between owners or family members for a negligible sale price (i.e. less than $5000)",
+            "color": "warning" // Please feel free to change color
         }
     }
  </script>

@@ -2,7 +2,8 @@
     import HL from "$lib/components/Panels/HL.svelte";
     import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
-    export let site;
+    import ErrorMessage from "./ErrorMessage.svelte";
+   export let site;
 </script>
 
 <CardHeader>{site.address.addr}</CardHeader>
@@ -83,6 +84,11 @@
                 </div>
             </div>
         </div>
+        {#if site.ls_price < 5000}
+            <div class="card shadow is-shadowless">
+                <ErrorMessage errorState="quitClaimDeed"/>
+            </div> 
+        {/if}
     </div>
 </CardContent>
 
