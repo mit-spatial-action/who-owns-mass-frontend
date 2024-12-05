@@ -48,7 +48,7 @@
         </div>
     </div>
     <div class="title">Properties</div>
-    <div class="fixed-grid">
+    <div class="fixed-grid has-1-cols">
         <div class="grid">
         {#each metacorp.sites.features.slice(0, 4) as site}
             <div class="cell">

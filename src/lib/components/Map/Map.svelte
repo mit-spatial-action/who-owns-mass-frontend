@@ -3,6 +3,8 @@
     import { siteNav, mapbox } from "$lib/scripts/utils";
     import type { FeatureCollection, Feature } from "geojson";
     import styles from '$lib/config/styles.json';
+    import { MapboxOverlay } from '@deck.gl/mapbox';
+    import { ArcLayer } from '@deck.gl/layers';
     
     import bbox from "@turf/bbox";
     /* Helper functions */  
@@ -45,6 +47,16 @@
     export let resultZoom = mapConfig.resultZoom;
 
     let map:Map;
+
+    const hexToRgb = (hex) => {
+        var result = /^#?([a-f\d]{2})([a-f\d]{2})([a-f\d]{2})$/i.exec(hex);
+        return result ? [
+            parseInt(result[1], 16),
+            parseInt(result[2], 16),
+            parseInt(result[3], 16)
+     ] : null;
+    }
+
 
     const flyToLngLat = (map:Map, lngLat:LngLat, zoom:number = resultZoom) => {
         if (!map) return undefined;
@@ -343,17 +355,45 @@
         }
     }
     
+    const renderArcLayer = (map, geojson) => {
+        let data = geojson.features;
+        console.log(data);
+        const deckOverlay = new MapboxOverlay({
+            interleaved: true,
+            layers: [
+            new ArcLayer({
+                id: 'deckgl-arc',
+                data: data,
+                getSourcePosition: d => {
+                    return d.properties.owners[0].geometry && d.geometry ? d.geometry.coordinates : null
+                },
+                getTargetPosition: d => { 
+                    return d.properties.owners[0].geometry && d.geometry ? d.properties.owners[0].geometry.coordinates : null
+                },
+                getSourceColor: hexToRgb(styles.primary),
+                getTargetColor: hexToRgb(styles.success),
+                getWidth: 2,
+                getHeight: 1
+                // 
+            })
+            ]
+        });
+        console.log("hello");
+
+        map.addControl(deckOverlay);
+    }
+   
+    
     loadState.set(true);
     $: $mapLoaded && $gcResult ? flyToQuery(map, $gcResult) : null;
     $: $mapLoaded && $metacorp ? renderGeoJSONLayer(map, $metacorp.sites) : null;
+    $: $mapLoaded && $metacorp ? renderArcLayer(map, $metacorp.sites) : null;
     $: $mapLoaded && $site ? renderGeoJSONLayer(map, $site) : null;
     $: $mapLoaded && $highlighted ? highlightHovered(map, $highlighted, "selectedMarkers") : null;
 
     // Clear selected markers when "Return to Map" button is clicked
     $: $mapLoaded && !$site && !$metacorp ? clearIntervals(intervals.circles) : null;
     $: $mapLoaded && !$site && !$metacorp && map.getLayer("selectedMarkers") ? clearLayers(map, ["selectedMarkers", "selectedCircles"]) : null;
-
-    // $: toggleLayerVisibility($homeState, "hexes");
 
     onMount(() => {
         mobile = Device.isPhone;

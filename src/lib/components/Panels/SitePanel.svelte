@@ -76,7 +76,7 @@
         <ErrorMessage errorState="priceUnknown" />
     {/if}
     <div class="title">Owners</div>
-    <div class="fixed-grid has-2-cols">
+    <div class="fixed-grid has-1-cols">
         <div class="grid">
             {#each site.owners as owner, index}
                 <div class="cell">
@@ -87,7 +87,11 @@
                                     <i class="fas fa-people-group"></i>
                                 </span>
                                 <span class="has-text-weight-bold">{owner.properties.name}</span>
+                                {#if owner.properties.address }
+                                <span>
+                                    {owner.properties.address.addr}, {owner.properties.address.muni}, {owner.properties.address.state} {owner.properties.address.postal}
                                 </span>
+                                {/if}
                         </div>
                     </div>
                 </div>
