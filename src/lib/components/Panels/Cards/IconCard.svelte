@@ -3,7 +3,7 @@
     export let icon;
 </script>
 
-<div class="box p-2 is-shadowless">
+<div class="box p-2 is-shadowless border-primary">
 <div class="icon-text">
     <span class="icon has-text-primary">
         <i class="fas fa-{icon}"></i>
@@ -14,3 +14,9 @@
     <slot/>
 </div>
 </div>
+
+<style>
+    .box {
+        border-radius: 0;
+    }
+</style>

@@ -394,7 +394,7 @@
                         resultZoom,
                         8
                     ],
-                    "circle-color": styles.success,
+                    "circle-color": styles.primary,
                     "circle-stroke-color": "white",
                     "circle-stroke-width": [
                         'interpolate',

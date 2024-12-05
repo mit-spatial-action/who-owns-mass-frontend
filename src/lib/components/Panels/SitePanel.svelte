@@ -18,8 +18,7 @@
 <CardHeader color="primary">{site.address.addr}</CardHeader>
 
 <CardContent>
-        
-    <div class="box p-2 is-shadowless">
+    <div class="box p-0 is-shadowless">
         <div class="tag is-medium is-primary is-light border-primary">
             {site.address.muni}
         </div>
@@ -76,36 +75,35 @@
     {:else if !priceInfoActive }
         <ErrorMessage errorState="priceUnknown" />
     {/if}
-    <!-- </div> -->
-        <div class="title">Owners</div>
-        <div class="fixed-grid has-2-cols">
-            <div class="grid">
-                {#each site.owners as owner, index}
-                    <div class="cell">
-                        <div class="card border-primary is-shadowless">
-                            <div class="card-content">
-                                <span class="icon-text">
-                                    <span class="icon has-text-primary">
-                                      <i class="fas fa-people-group"></i>
-                                    </span>
-                                    <span class="has-text-weight-bold">{owner.properties.name}</span>
-                                  </span>
-                            </div>
+    <div class="title">Owners</div>
+    <div class="fixed-grid has-2-cols">
+        <div class="grid">
+            {#each site.owners as owner, index}
+                <div class="cell">
+                    <div class="card border-primary is-shadowless">
+                        <div class="card-content">
+                            <span class="icon-text">
+                                <span class="icon has-text-primary">
+                                    <i class="fas fa-people-group"></i>
+                                </span>
+                                <span class="has-text-weight-bold">{owner.properties.name}</span>
+                                </span>
                         </div>
                     </div>
-                {/each}
-            </div>
+                </div>
+            {/each}
         </div>
-        <div class="block">
-            {#if site.metacorp.prop_count > 1}
-                    <p>This owner may own <span class="tag is-medium has-background-primary-light">{site.metacorp.prop_count} properties</span>, including <span class="tag is-medium has-background-primary-light">{site.metacorp.unit_count} units</span>.</p>
-                    <a class="button mt-5 border-primary is-shadowless" data-sveltekit-preload-data="off" href={`/meta/${site.metacorp.id}`}>
-                        See Details &#8594
-                    </a>
-            {:else}
-                <ErrorMessage errorState="noProperties" />
-            {/if}
-        </div>
+    </div>
+    <div class="block">
+        {#if site.metacorp.prop_count > 1}
+                <p>This owner may own <span class="tag is-medium has-background-primary-light">{site.metacorp.prop_count} properties</span>, including <span class="tag is-medium has-background-primary-light">{site.metacorp.unit_count} units</span>.</p>
+                <a class="button mt-5 border-primary is-shadowless" data-sveltekit-preload-data="off" href={`/meta/${site.metacorp.id}`}>
+                    See Details &#8594
+                </a>
+        {:else}
+            <ErrorMessage errorState="noProperties" />
+        {/if}
+    </div>
 </CardContent>
 
 <style>
