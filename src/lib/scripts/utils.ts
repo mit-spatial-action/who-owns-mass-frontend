@@ -14,6 +14,7 @@ export const siteNav = async (id: number) => {
 export const getFromApi = async (
     loadFetch: Function, 
     apiUrl: string, 
+    apiToken: string,
     endpoint: string, 
     id: string | number, 
     format="json"
@@ -24,6 +25,7 @@ export const getFromApi = async (
             method: "GET",
             headers: {
                 "Content-Type": "application/json",
+                "Authorization": `Token ${apiToken}`
             },
         })
         .then((response: Response) => {
