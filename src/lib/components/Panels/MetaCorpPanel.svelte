@@ -7,7 +7,17 @@
     import IconCard from "$lib/components/Panels/Cards/IconCard.svelte";
     import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
+    import Modal from "../Modal.svelte";
     export let metacorp;
+
+    let modalOpen = false;
+    function openModal() {
+        modalOpen = true;
+    }
+
+    function closeModal() {
+        modalOpen = false;
+    }
 </script>
 
 
@@ -68,11 +78,36 @@
     </div>
     {#if metacorp.sites.features.length > 4}
     <div class="block buttons is-right">
-        <button class="button border-primary" data-sveltekit-preload-data="off" aria-label="See all Properties">
+        <button class="button border-primary" data-sveltekit-preload-data="off" aria-label="See all Properties"  on:click={openModal}>
             See All {metacorp.sites.features.length} Properties &#8594
         </button>
     </div>
     {/if}
+
+    {#if modalOpen}
+    <Modal closeBtn={true} background={"has-background-dark"}>
+        <div class="title">Properties</div>
+            <div class="fixed-grid">
+                <div class="grid">
+                {#each metacorp.sites.features as site}
+                    <div class="cell">
+                        <div class="card border-primary is-shadowless" 
+                        aria-label="Select {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off"
+                        on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
+                            <div class="card-content">
+                                <a href={`/site/${site.id}`} class="has-text-dark">
+                                <div class="has-text-weight-bold">{site.properties.address.addr}</div>
+                                <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}{#if site.properties.address.state}{`${site.properties.address.state} `} {/if}{#if site.properties.address.postal}{site.properties.address.postal}{/if}</div>
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                {/each}
+                </div>
+            </div>
+    </Modal> 
+    {/if}
+
     <div class="title">Other Names</div>
         <div class="card border-primary">
             <div class="card-content">
