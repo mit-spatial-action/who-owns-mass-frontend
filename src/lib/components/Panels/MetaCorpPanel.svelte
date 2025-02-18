@@ -85,7 +85,7 @@
     {/if}
 
     {#if modalOpen}
-    <Modal closeBtn={true} background={"has-background-dark"}>
+    <Modal closeBtn={true} background={"has-background-dark opacity-50"}>
         <div class="title">Properties</div>
             <div class="fixed-grid">
                 <div class="grid">

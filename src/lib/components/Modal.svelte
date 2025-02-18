@@ -2,7 +2,7 @@
     // import { createEventDispatcher } from 'svelte';
     import { fade } from 'svelte/transition';
     export let closeBtn:Boolean = true;
-    export let background = "has-background-body-background-color"; // Default background
+    export let background = "has-background-light"; // Default background
 
     let isVisible = true;
     const destroySelf = () => {
@@ -22,12 +22,10 @@
 </div>
 {/if}
 
-<!--
+
 <style lang="scss">
     @use 'src/lib/styles/vars.scss' as *;
     .modal-background {
-        background-color: $body-background-color;
+        opacity: 0.6;
     }
 </style>
-
--->

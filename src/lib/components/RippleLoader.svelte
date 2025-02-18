@@ -14,7 +14,7 @@
 
 </script>
 
-<Modal closeBtn={false}>
+<Modal closeBtn={false} background={"has-background-light"}>
     <div class="has-text-centered">
         <div transition:fly={{ 
             y: flyInProps.distance, 
