@@ -10,7 +10,7 @@
 <div transition:slide={{duration:250, axis:'y'}}>
     <CardHeader>
         Who We Are
-        </CardHeader>
+        </CardHeader >
         <CardContent>
             <div class="fixed-grid has-1-cols has-2-cols-tablet">
                 <div class="grid">
@@ -19,7 +19,8 @@
                 {/each}
                 </div>
             </div>
-            <div class="title">People</div>
+            <br/>
+            <div class="title has-text-success">People</div>
             <div class="fixed-grid has-1-cols has-2-cols-tablet">
                 <div class="grid">
                 {#each siteConfig.authors as person}
@@ -27,7 +28,8 @@
                 {/each}
                 </div>
             </div>
-            <div class="title">Partners</div>
+            <br/>
+            <div class="title has-text-success">Partners</div>
             <div class="fixed-grid has-1-cols has-2-cols-tablet">
                 <div class="grid">
                 {#each siteConfig.partners as org}
@@ -35,7 +37,8 @@
                 {/each}
                 </div>
             </div>
-            <div class="title">Funders</div>
+            <br/>
+            <div class="title has-text-success">Funders</div>
             <div class="fixed-grid has-1-cols has-2-cols-tablet">
                 <div class="grid">
                 {#each siteConfig.funders as org}

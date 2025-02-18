@@ -8,8 +8,3 @@
      </div>
 </header>
 
-<style>
-    .card-header{
-        padding: 1.5rem;
-    }
-</style>

@@ -21,7 +21,8 @@
                 {/each}
                 </div>
             </div>
-            <div class="title">Data Sources</div>
+            <br/>
+            <div class="title has-text-success">Data Sources</div>
             <div class="fixed-grid has-1-cols has-2-cols-tablet">
                 <div class="grid">
                 {#each siteConfig.authors as person}
@@ -29,7 +30,8 @@
                 {/each}
                 </div>
             </div>
-            <div class="title">Processing Steps</div>
+            <br/>
+            <div class="title has-text-success">Processing Steps</div>
             <div class="fixed-grid has-1-cols has-2-cols-tablet">
                 <div class="grid">
                 {#each siteConfig.partners as org}
@@ -37,7 +39,8 @@
                 {/each}
                 </div>
             </div>
-            <div class="title">Strengths and Limitations</div>
+            <br/>
+            <div class="title has-text-success">Strengths and Limitations</div>
             <div class="fixed-grid has-1-cols has-2-cols-tablet">
                 <div class="grid">
                 {#each siteConfig.funders as org}
@@ -46,6 +49,6 @@
                 </div>
             </div>
 
-            <div class="title">FAQs</div>     
+            <div class="title has-text-success">FAQs</div>     
         </CardContent>
 </div>

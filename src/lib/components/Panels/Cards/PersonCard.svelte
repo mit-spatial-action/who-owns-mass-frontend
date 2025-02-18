@@ -17,7 +17,7 @@
                 </figure>
             </div>
             <div class="media-content">
-                <p class="title is-size-4 is-size-6-mobile has-background-success-light p-1 border-success">{person.name}
+                <p class="title is-size-4 is-size-6-mobile p-1 border-success">{person.name}
                     {person.creds.join(', ')}
                 </p>
                 <div class="tags">
