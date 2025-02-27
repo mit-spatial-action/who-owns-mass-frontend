@@ -15,9 +15,11 @@
         modalOpen = true;
     }
 
-    function closeModal() {
+    function handleModalClose() {
         modalOpen = false;
     }
+
+
 </script>
 
 
@@ -85,9 +87,9 @@
     {/if}
 
     {#if modalOpen}
-    <Modal closeBtn={true} background={"has-background-dark opacity-50"}>
-        <div class="title">Properties</div>
-            <div class="fixed-grid">
+    <Modal bind:open={modalOpen} closeBtn={true} background={"has-background-dark opacity-50"}>
+        <div class="title has-text-white">Properties</div>
+            <div class="fixed-grid has-1-cols">
                 <div class="grid">
                 {#each metacorp.sites.features as site}
                     <div class="cell">
