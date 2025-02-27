@@ -90,7 +90,12 @@
     <Modal bind:open={modalOpen} closeBtn={true} background={"has-background-dark opacity-50 "}>
         <div class="modal-card">
         <header class="modal-card-head">
-            <p class="modal-card-title">Properties</p>
+                <div class="tabs">
+                    <ul>
+                      <li class="is-active"><a class="modal-card-title">Properties</a></li>
+                      <li><a class="modal-card-title">Owners</a></li>
+                    </ul>
+                  </div>
         </header>
         <section class="modal-card-body">
             <div class="fixed-grid has-1-cols">
