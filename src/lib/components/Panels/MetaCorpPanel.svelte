@@ -105,7 +105,7 @@
                         <div class="card border-primary is-shadowless" 
                         aria-label="Select {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off"
                         on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
-                            <div class="card-content">
+                            <div class="card-content has-background-light">
                                 <a href={`/site/${site.id}`} class="has-text-dark">
                                 <div class="has-text-weight-bold">{site.properties.address.addr}</div>
                                 <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}{#if site.properties.address.state}{`${site.properties.address.state} `} {/if}{#if site.properties.address.postal}{site.properties.address.postal}{/if}</div>
