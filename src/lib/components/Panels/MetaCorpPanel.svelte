@@ -11,9 +11,13 @@
     export let metacorp;
 
     let modalOpen = false;
+   
+    function togglePanel(){
+
+    }
+
     function openModal() {
         modalOpen = true;
-        console.log(sortMetacorpProperties());
     }
 
     function handleModalClose() {
@@ -37,6 +41,7 @@
     }
 
     const groupedMetaCorpData = sortMetacorpProperties();
+    console.log(groupedMetaCorpData);
 
 </script>
 
@@ -110,17 +115,24 @@
         <header class="modal-card-head">
                 <div class="tabs">
                     <ul>
-                      <li class="is-active"><a class="modal-card-title">Properties</a></li>
-                      <li><a class="modal-card-title">Owners</a></li>
+                      <li class="is-active"><a>Properties</a></li>
+                      <li><a>Owners</a></li>
                     </ul>
                   </div>
         </header>
         <section class="modal-card-body">
-            <div class="panel is-link">
-                <p class="panel-heading">Boston</p>
+
+            {#each Object.entries(groupedMetaCorpData) as [town, property]}
+            <div class="panel is-link is-clickable">
+                <p class="panel-heading is-flex is-justify-content-space-between">{town}
+                    <span class="icon">
+                        <i class="fas fa-plus"></i>
+                    </span>
+                </p>
+                
             <div class="fixed-grid has-1-cols">
                 <div class="grid">
-                {#each metacorp.sites.features as site}
+                {#each property as site}
                     <div class="cell">
                         <div class="card border-primary is-shadowless" 
                         aria-label="Select {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off"
@@ -139,6 +151,7 @@
                 </div>
             </div>
             </div>
+            {/each}
             </section>
             </div>
     </Modal> 
