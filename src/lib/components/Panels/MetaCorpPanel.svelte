@@ -87,8 +87,12 @@
     {/if}
 
     {#if modalOpen}
-    <Modal bind:open={modalOpen} closeBtn={true} background={"has-background-dark opacity-50"}>
-        <div class="title has-text-white">Properties</div>
+    <Modal bind:open={modalOpen} closeBtn={true} background={"has-background-dark opacity-50 "}>
+        <div class="modal-card">
+        <header class="modal-card-head">
+            <p class="modal-card-title">Properties</p>
+        </header>
+        <section class="modal-card-body">
             <div class="fixed-grid has-1-cols">
                 <div class="grid">
                 {#each metacorp.sites.features as site}
@@ -106,6 +110,8 @@
                     </div>
                 {/each}
                 </div>
+            </div>
+            </section>
             </div>
     </Modal> 
     {/if}

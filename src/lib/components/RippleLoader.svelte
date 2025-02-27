@@ -15,19 +15,21 @@
 </script>
 
 <Modal closeBtn={false} background={"has-background-light"}>
-    <div class="has-text-centered">
-        <div transition:fly={{ 
-            y: flyInProps.distance, 
-            duration: flyInProps.duration 
-            }} class="rippler">
-            {#each steps as step}
-                <div class="ripple-wave" style="
-                --duration: {duration}; 
-                --border-width: {borderWidth};
-                animation-delay: -{ step * duration / denom}s;">
-                </div>
-            {/each}
-            <div class="circle-core"></div>
+    <div class="modal-content">
+        <div class="has-text-centered">
+            <div transition:fly={{ 
+                y: flyInProps.distance, 
+                duration: flyInProps.duration 
+                }} class="rippler">
+                {#each steps as step}
+                    <div class="ripple-wave" style="
+                    --duration: {duration}; 
+                    --border-width: {borderWidth};
+                    animation-delay: -{ step * duration / denom}s;">
+                    </div>
+                {/each}
+                <div class="circle-core"></div>
+            </div>
         </div>
     </div>
 </Modal>
