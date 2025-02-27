@@ -13,12 +13,30 @@
     let modalOpen = false;
     function openModal() {
         modalOpen = true;
+        console.log(sortMetacorpProperties());
     }
 
     function handleModalClose() {
         modalOpen = false;
     }
 
+    function sortMetacorpProperties() {
+        const sortedProperties = [...metacorp.sites.features].sort((a,b) => 
+            a.properties.address.muni === b.properties.address.muni ? 
+            a.properties.address.addr.localeCompare(b.properties.address.addr) : 
+            a.properties.address.muni.localeCompare(b.properties.address.muni)
+        );
+
+        const groupedData = sortedProperties.reduce((acc, item) => {
+            if (!acc[item.properties.address.muni]) acc[item.properties.address.muni] = [];
+            acc[item.properties.address.muni].push(item);
+            return acc;
+        }, {});
+
+      return(groupedData);
+    }
+
+    const groupedMetaCorpData = sortMetacorpProperties();
 
 </script>
 
@@ -98,6 +116,8 @@
                   </div>
         </header>
         <section class="modal-card-body">
+            <div class="panel is-link">
+                <p class="panel-heading">Boston</p>
             <div class="fixed-grid has-1-cols">
                 <div class="grid">
                 {#each metacorp.sites.features as site}
@@ -108,13 +128,16 @@
                             <div class="card-content has-background-light">
                                 <a href={`/site/${site.id}`} class="has-text-dark">
                                 <div class="has-text-weight-bold">{site.properties.address.addr}</div>
-                                <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}{#if site.properties.address.state}{`${site.properties.address.state} `} {/if}{#if site.properties.address.postal}{site.properties.address.postal}{/if}</div>
+                                <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}
+                                    {#if site.properties.address.state}{`${site.properties.address.state} `}{/if}
+                                    {#if site.properties.address.postal}{site.properties.address.postal}{/if}</div>
                                 </a>
                             </div>
                         </div>
                     </div>
                 {/each}
                 </div>
+            </div>
             </div>
             </section>
             </div>
