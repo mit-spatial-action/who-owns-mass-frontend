@@ -12,16 +12,22 @@
 
     let modalOpen = false;
    
-    function togglePanel(){
-
-    }
-
     function openModal() {
         modalOpen = true;
     }
 
     function handleModalClose() {
         modalOpen = false;
+    }
+
+    let openPanels = []; // Array to track open modal panels
+
+    function togglePanel(index) {
+        if (openPanels.includes(index)) {
+            openPanels = openPanels.filter(i => i !== index); // Close panel
+        } else {
+            openPanels = [...openPanels, index]; // Open panel
+        }
     }
 
     function sortMetacorpProperties() {
@@ -122,34 +128,35 @@
         </header>
         <section class="modal-card-body">
 
-            {#each Object.entries(groupedMetaCorpData) as [town, property]}
+            {#each Object.entries(groupedMetaCorpData) as [town, property], index}
             <div class="panel is-link is-clickable">
-                <p class="panel-heading is-flex is-justify-content-space-between">{town}
+                <p class="panel-heading is-flex is-justify-content-space-between" on:click={() => togglePanel(index)}>{town}
                     <span class="icon">
-                        <i class="fas fa-plus"></i>
+                        <i class="fas" class:fa-plus={!openPanels.includes(index)} class:fa-minus={openPanels.includes(index)}></i>
                     </span>
                 </p>
-                
-            <div class="fixed-grid has-1-cols">
-                <div class="grid">
-                {#each property as site}
-                    <div class="cell">
-                        <div class="card border-primary is-shadowless" 
-                        aria-label="Select {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off"
-                        on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
-                            <div class="card-content has-background-light">
-                                <a href={`/site/${site.id}`} class="has-text-dark">
-                                <div class="has-text-weight-bold">{site.properties.address.addr}</div>
-                                <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}
-                                    {#if site.properties.address.state}{`${site.properties.address.state} `}{/if}
-                                    {#if site.properties.address.postal}{site.properties.address.postal}{/if}</div>
-                                </a>
+            {#if openPanels.includes(index)}
+                <div class="fixed-grid has-1-cols">
+                    <div class="grid">
+                    {#each property as site}
+                        <div class="cell">
+                            <div class="card border-primary is-shadowless" 
+                            aria-label="Select {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off"
+                            on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
+                                <div class="card-content has-background-light">
+                                    <a href={`/site/${site.id}`} class="has-text-dark">
+                                    <div class="has-text-weight-bold">{site.properties.address.addr}</div>
+                                    <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}
+                                        {#if site.properties.address.state}{`${site.properties.address.state} `}{/if}
+                                        {#if site.properties.address.postal}{site.properties.address.postal}{/if}</div>
+                                    </a>
+                                </div>
                             </div>
                         </div>
+                    {/each}
                     </div>
-                {/each}
                 </div>
-            </div>
+            {/if}
             </div>
             {/each}
             </section>
