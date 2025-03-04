@@ -8,7 +8,7 @@
     import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
     import Modal from "../Modal.svelte";
-    import { fade } from "svelte/transition";
+    import { slide } from "svelte/transition";
 
     export let metacorp;
 
@@ -38,7 +38,9 @@
 
         const sortedProperties = [...metacorp.sites.features].sort((a,b) => 
             a.properties.address.muni === b.properties.address.muni ? 
-            a.properties.address.addr.localeCompare(b.properties.address.addr) : 
+                a.properties.address.body === b.properties.address.body ? 
+                    a.properties.address.start.localeCompare(b.properties.address.start) : 
+                a.properties.address.body.localeCompare(b.properties.address.body) : 
             a.properties.address.muni.localeCompare(b.properties.address.muni)
         );
 
@@ -155,20 +157,20 @@
         </header>
         <section class="modal-card-body">
 
-            {#each Object.entries(groupedMetaCorpData) as [town, property], index}
+            {#each Object.entries(groupedMetaCorpData) as [town, sites], index}
             <div class="panel is-link is-clickable">
                 <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
                 <!-- svelte-ignore a11y_click_events_have_key_events -->
                 <p class="panel-heading is-flex is-justify-content-space-between" on:click={() => togglePanel(index)}>
-                    {town + " (" + property.length + ")"}
+                    {town + " (" + sites.length + ")"}
                     <span class="icon">
                         <i class="fas" class:fa-plus={!openPanels.includes(index)} class:fa-minus={openPanels.includes(index)}></i>
                     </span>
                 </p>
             {#if openPanels.includes(index)}
-                <div class="fixed-grid has-1-cols" transition:fade>
+                <div class="fixed-grid has-1-cols" transition:slide>
                     <div class="grid">
-                    {#each property as site}
+                    {#each sites as site}
                         <div class="cell">
                             <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
                             <!-- svelte-ignore a11y_no_static_element_interactions -->
