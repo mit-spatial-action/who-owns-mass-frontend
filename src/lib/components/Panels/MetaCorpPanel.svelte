@@ -8,6 +8,8 @@
     import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
     import Modal from "../Modal.svelte";
+    import { fade } from "svelte/transition";
+
     export let metacorp;
 
     let modalOpen = false;
@@ -31,6 +33,9 @@
     }
 
     function sortMetacorpProperties() {
+
+        console.log(metacorp.sites.features);
+
         const sortedProperties = [...metacorp.sites.features].sort((a,b) => 
             a.properties.address.muni === b.properties.address.muni ? 
             a.properties.address.addr.localeCompare(b.properties.address.addr) : 
@@ -42,12 +47,32 @@
             acc[item.properties.address.muni].push(item);
             return acc;
         }, {});
-
+    
+        console.log(groupedData);
       return(groupedData);
     }
 
+    function sortMetacorpOwners() {
+
+        console.log(metacorp.sites.features);
+
+        const sortedProperties = [...metacorp.sites.features].sort((a,b) => 
+            a.properties.address.muni === b.properties.address.muni ? 
+            a.properties.address.addr.localeCompare(b.properties.address.addr) : 
+            a.properties.address.muni.localeCompare(b.properties.address.muni)
+        );
+
+        const groupedOwnerData = sortedProperties.reduce((acc, item) => {
+            if (!acc[item.properties.owners[0].properties.name]) acc[item.properties.owners[0].properties.name] = [];
+            acc[item.properties.owners[0].properties.name].push(item);
+            return acc;
+        }, {});
+
+        return(groupedOwnerData);
+        }
+
     const groupedMetaCorpData = sortMetacorpProperties();
-    console.log(groupedMetaCorpData);
+    const groupedOwnerCorpData = sortMetacorpOwners();
 
 </script>
 
@@ -93,6 +118,8 @@
         <div class="grid">
         {#each metacorp.sites.features.slice(0, 4) as site}
             <div class="cell">
+                <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+                <!-- svelte-ignore a11y_no_static_element_interactions -->
                 <div class="card border-primary is-shadowless" 
                 aria-label="Select {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off"
                 on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
@@ -130,16 +157,21 @@
 
             {#each Object.entries(groupedMetaCorpData) as [town, property], index}
             <div class="panel is-link is-clickable">
-                <p class="panel-heading is-flex is-justify-content-space-between" on:click={() => togglePanel(index)}>{town}
+                <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
+                <!-- svelte-ignore a11y_click_events_have_key_events -->
+                <p class="panel-heading is-flex is-justify-content-space-between" on:click={() => togglePanel(index)}>
+                    {town + " (" + property.length + ")"}
                     <span class="icon">
                         <i class="fas" class:fa-plus={!openPanels.includes(index)} class:fa-minus={openPanels.includes(index)}></i>
                     </span>
                 </p>
             {#if openPanels.includes(index)}
-                <div class="fixed-grid has-1-cols">
+                <div class="fixed-grid has-1-cols" transition:fade>
                     <div class="grid">
                     {#each property as site}
                         <div class="cell">
+                            <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+                            <!-- svelte-ignore a11y_no_static_element_interactions -->
                             <div class="card border-primary is-shadowless" 
                             aria-label="Select {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off"
                             on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
