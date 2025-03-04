@@ -72,7 +72,6 @@
 
         return(groupedOwnerData);
         }
-
     const groupedMetaCorpData = sortMetacorpProperties();
     const groupedOwnerCorpData = sortMetacorpOwners();
 
@@ -148,10 +147,10 @@
     <Modal bind:open={modalOpen} closeBtn={true} background={"has-background-dark opacity-50 "}>
         <div class="modal-card">
         <header class="modal-card-head">
-                <div class="tabs">
+                <div class="tabs is-large">
                     <ul>
-                      <li class="is-active"><a>Properties</a></li>
-                      <li><a>Owners</a></li>
+                      <li><a>Properties</a></li>
+                      <li class="is-active"><a>Owners</a></li>
                     </ul>
                   </div>
         </header>
@@ -178,11 +177,29 @@
                             aria-label="Select {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off"
                             on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
                                 <div class="card-content has-background-light">
-                                    <a href={`/site/${site.id}`} class="has-text-dark">
-                                    <div class="has-text-weight-bold">{site.properties.address.addr}</div>
-                                    <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}
-                                        {#if site.properties.address.state}{`${site.properties.address.state} `}{/if}
-                                        {#if site.properties.address.postal}{site.properties.address.postal}{/if}</div>
+                                    <a href={`/site/${site.id}`} class="has-text-dark is-flex is-justify-content-space-between">
+                                        <div>
+                                            <div class="has-text-weight-bold">{site.properties.address.addr}</div>
+                                            <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}
+                                                {#if site.properties.address.state}{`${site.properties.address.state} `}{/if}
+                                                {#if site.properties.address.postal}{site.properties.address.postal}{/if}
+                                            </div>
+                                        </div>
+                                        <div>
+                                            {#if site.properties.ls_date}{`Last Sale Date: ${(site.properties.ls_date)}`}<br/>{/if}
+                                            
+                                            {#if site.properties.ls_price}{`Last Sale Price: ${(site.properties.ls_price).toLocaleString('en-US', {
+                                                style: 'currency',
+                                                currency: 'USD',
+                                                maximumFractionDigits: 0,
+                                              })}`}<br/>{/if}
+                                            
+                                            {#if site.properties.bld_val}{`Estimated Valuation: ${(site.properties.bld_val + site.properties.lnd_val).toLocaleString('en-US', {
+                                                style: 'currency',
+                                                currency: 'USD',
+                                                maximumFractionDigits: 0,
+                                              })} (FY ${site.properties.fy})`}{/if}
+                                        </div>
                                     </a>
                                 </div>
                             </div>
