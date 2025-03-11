@@ -13,8 +13,6 @@ function togglePanel(index) {
     }
 }
 </script>
-
-
 <div class="modal-card">
     <header class="modal-card-head">
             <div class="tabs is-large">
@@ -56,7 +54,7 @@ function togglePanel(index) {
                                         </div>
                                     </div>
                                     <div>
-                                        <IconText title="Last Sale: " icon="hand-holding-dollar">
+                                        <IconText icon="hand-holding-dollar">
                                             {#if site.properties.ls_price}
                                                 ${(site.properties.ls_price).toLocaleString()} 
                                             {:else}
@@ -66,7 +64,7 @@ function togglePanel(index) {
                                                 on {new Date(site.properties.ls_date).toLocaleDateString()}
                                             {/if}
                                         </IconText>
-                                        <IconText title="Valuation: " icon="dollar-sign">
+                                        <IconText icon="dollar-sign">
                                             {#if site.properties.lnd_val > 0 && site.properties.bld_val > 0}
                                                 ${(site.properties.lnd_val + site.properties.bld_val).toLocaleString()}
                                             {:else if site.properties.bld_val > 0}
