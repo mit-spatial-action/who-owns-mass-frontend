@@ -7,9 +7,8 @@
     import IconCard from "$lib/components/Panels/Cards/IconCard.svelte";
     import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
-    import IconText from "$lib/components/Panels/Cards/IconText.svelte"
-    import Modal from "../Modal.svelte";
-    import { slide } from "svelte/transition";
+    import Modal from "./Modals/Modal.svelte";
+    import MetaCorpModal from "./Modals/MetaCorpModal.svelte";
 
     export let metacorp;
 
@@ -21,16 +20,6 @@
 
     function handleModalClose() {
         modalOpen = false;
-    }
-
-    let openPanels = []; // Array to track open modal panels
-
-    function togglePanel(index) {
-        if (openPanels.includes(index)) {
-            openPanels = openPanels.filter(i => i !== index); // Close panel
-        } else {
-            openPanels = [...openPanels, index]; // Open panel
-        }
     }
 
     function sortMetacorpProperties() {
@@ -146,84 +135,7 @@
 
     {#if modalOpen}
     <Modal bind:open={modalOpen} closeBtn={true} background={"has-background-dark opacity-50 "}>
-        <div class="modal-card">
-        <header class="modal-card-head">
-                <div class="tabs is-large">
-                    <ul>
-                      <li><a>Properties</a></li>
-                      <li class="is-active"><a>Owners</a></li>
-                    </ul>
-                  </div>
-        </header>
-        <section class="modal-card-body">
-
-            {#each Object.entries(groupedMetaCorpData) as [town, sites], index}
-            <div class="panel is-link is-clickable">
-                <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-                <!-- svelte-ignore a11y_click_events_have_key_events -->
-                <p class="panel-heading is-flex is-justify-content-space-between" on:click={() => togglePanel(index)}>
-                    {town + " (" + sites.length + ")"}
-                    <span class="icon">
-                        <i class="fas" class:fa-plus={!openPanels.includes(index)} class:fa-minus={openPanels.includes(index)}></i>
-                    </span>
-                </p>
-            {#if openPanels.includes(index)}
-                <div class="fixed-grid has-1-cols" transition:slide>
-                    <div class="grid">
-                    {#each sites as site}
-                        <div class="cell">
-                            <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-                            <!-- svelte-ignore a11y_no_static_element_interactions -->
-                            <div class="card border-primary is-shadowless" 
-                            aria-label="Select {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off"
-                            on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
-                                <div class="card-content has-background-light">
-                                    <a href={`/site/${site.id}`} class="has-text-dark is-flex is-justify-content-space-between">
-                                        <div>
-                                            <div class="has-text-weight-bold">{site.properties.address.addr}</div>
-                                            <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}
-                                                {#if site.properties.address.state}{`${site.properties.address.state} `}{/if}
-                                                {#if site.properties.address.postal}{site.properties.address.postal}{/if}
-                                            </div>
-                                        </div>
-                                        <div>
-                                            <IconText title="Last Sale: " icon="hand-holding-dollar">
-                                                {#if site.properties.ls_price}
-                                                    ${(site.properties.ls_price).toLocaleString()} 
-                                                {:else}
-                                                    Unknown
-                                                {/if} 
-                                                {#if site.properties.ls_date}
-                                                    on {new Date(site.properties.ls_date).toLocaleDateString()}
-                                                {/if}
-                                            </IconText>
-                                            <IconText title="Valuation: " icon="dollar-sign">
-                                                {#if site.properties.lnd_val > 0 && site.properties.bld_val > 0}
-                                                    ${(site.properties.lnd_val + site.properties.bld_val).toLocaleString()}
-                                                {:else if site.properties.bld_val > 0}
-                                                    ${site.properties.bld_val.toLocaleString()}
-                                                {:else if site.properties.lnd_val > 0}
-                                                    ${site.properties.lnd_val.toLocaleString()}
-                                                {:else}
-                                                    Unknown.
-                                                {/if}
-                                                {#if site.properties.fy}
-                                                    (FY {site.properties.fy})
-                                                {/if}
-                                            </IconText>
-                                        </div>
-                                    </a>
-                                </div>
-                            </div>
-                        </div>
-                    {/each}
-                    </div>
-                </div>
-            {/if}
-            </div>
-            {/each}
-            </section>
-            </div>
+        <MetaCorpModal sortedData={groupedMetaCorpData} />
     </Modal> 
     {/if}
 

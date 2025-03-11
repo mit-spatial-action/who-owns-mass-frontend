@@ -5,7 +5,7 @@
 </script>
 
 <div class="box p-2 is-shadowless border-primary">
-    <IconText title={title}, icon={icon}/>
+    <IconText title={title} icon={icon}/>
 <div class="block">
     <slot/>
 </div>

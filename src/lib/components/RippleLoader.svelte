@@ -1,6 +1,6 @@
 <script>
     import { fly } from 'svelte/transition';
-    import Modal from "$lib/components/Modal.svelte";
+    import Modal from "$lib/components/Panels/Modals/Modal.svelte";
 
     export let duration = 1.2;
     export let borderWidth = 4;
