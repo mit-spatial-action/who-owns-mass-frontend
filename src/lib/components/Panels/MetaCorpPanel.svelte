@@ -7,6 +7,7 @@
     import IconCard from "$lib/components/Panels/Cards/IconCard.svelte";
     import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
+    import IconText from "$lib/components/Panels/Cards/IconText.svelte"
     import Modal from "../Modal.svelte";
     import { slide } from "svelte/transition";
 
@@ -186,19 +187,30 @@
                                             </div>
                                         </div>
                                         <div>
-                                            {#if site.properties.ls_date}{`Last Sale Date: ${(site.properties.ls_date)}`}<br/>{/if}
-                                            
-                                            {#if site.properties.ls_price}{`Last Sale Price: ${(site.properties.ls_price).toLocaleString('en-US', {
-                                                style: 'currency',
-                                                currency: 'USD',
-                                                maximumFractionDigits: 0,
-                                              })}`}<br/>{/if}
-                                            
-                                            {#if site.properties.bld_val}{`Estimated Valuation: ${(site.properties.bld_val + site.properties.lnd_val).toLocaleString('en-US', {
-                                                style: 'currency',
-                                                currency: 'USD',
-                                                maximumFractionDigits: 0,
-                                              })} (FY ${site.properties.fy})`}{/if}
+                                            <IconText title="Last Sale: " icon="hand-holding-dollar">
+                                                {#if site.properties.ls_price}
+                                                    ${(site.properties.ls_price).toLocaleString()} 
+                                                {:else}
+                                                    Unknown
+                                                {/if} 
+                                                {#if site.properties.ls_date}
+                                                    on {new Date(site.properties.ls_date).toLocaleDateString()}
+                                                {/if}
+                                            </IconText>
+                                            <IconText title="Valuation: " icon="dollar-sign">
+                                                {#if site.properties.lnd_val > 0 && site.properties.bld_val > 0}
+                                                    ${(site.properties.lnd_val + site.properties.bld_val).toLocaleString()}
+                                                {:else if site.properties.bld_val > 0}
+                                                    ${site.properties.bld_val.toLocaleString()}
+                                                {:else if site.properties.lnd_val > 0}
+                                                    ${site.properties.lnd_val.toLocaleString()}
+                                                {:else}
+                                                    Unknown.
+                                                {/if}
+                                                {#if site.properties.fy}
+                                                    (FY {site.properties.fy})
+                                                {/if}
+                                            </IconText>
                                         </div>
                                     </a>
                                 </div>
