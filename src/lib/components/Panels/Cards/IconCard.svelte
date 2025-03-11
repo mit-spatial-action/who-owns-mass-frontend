@@ -1,15 +1,11 @@
 <script>
     export let title;
     export let icon;
+    import IconText from "$lib/components/Panels/Cards/IconText.svelte"
 </script>
 
 <div class="box p-2 is-shadowless border-primary">
-<div class="icon-text">
-    <span class="icon has-text-primary">
-        <i class="fas fa-{icon}"></i>
-    </span>
-    <span class="has-text-weight-bold">{title}</span>
-</div>
+    <IconText title={title}, icon={icon}/>
 <div class="block">
     <slot/>
 </div>
