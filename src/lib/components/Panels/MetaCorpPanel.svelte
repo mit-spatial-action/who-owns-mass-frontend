@@ -50,7 +50,9 @@
 
         const sortedProperties = [...metacorp.sites.features].sort((a,b) => 
             a.properties.address.muni === b.properties.address.muni ? 
-            a.properties.address.addr.localeCompare(b.properties.address.addr) : 
+                a.properties.address.body === b.properties.address.body ? 
+                    a.properties.address.start.localeCompare(b.properties.address.start) : 
+                a.properties.address.body.localeCompare(b.properties.address.body) : 
             a.properties.address.muni.localeCompare(b.properties.address.muni)
         );
 
