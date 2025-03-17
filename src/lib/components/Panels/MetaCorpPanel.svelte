@@ -26,13 +26,27 @@
 
         console.log(metacorp.sites.features);
 
-        const sortedProperties = [...metacorp.sites.features].sort((a,b) => 
-            a.properties.address.muni === b.properties.address.muni ? 
-                a.properties.address.body === b.properties.address.body ? 
-                    a.properties.address.start.localeCompare(b.properties.address.start) : 
-                a.properties.address.body.localeCompare(b.properties.address.body) : 
-            a.properties.address.muni.localeCompare(b.properties.address.muni)
-        );
+        const sortedProperties = [...metacorp.sites.features].sort((a, b) => {
+    // Check if all necessary fields are present
+            if (
+                a.properties.address.muni && b.properties.address.muni &&
+                a.properties.address.body && b.properties.address.body &&
+                a.properties.address.start && b.properties.address.start
+            ) {
+                // First compare "muni"
+                const muniCompare = a.properties.address.muni.localeCompare(b.properties.address.muni);
+                if (muniCompare !== 0) return muniCompare;
+
+                // If "muni" is the same, compare "body"
+                const bodyCompare = a.properties.address.body.localeCompare(b.properties.address.body);
+                if (bodyCompare !== 0) return bodyCompare;
+
+                // If both "muni" and "body" are the same, compare "start"
+                return a.properties.address.start.localeCompare(b.properties.address.start);
+            }
+            // Return 0 if no matching properties, or default fallback logic
+            return 0;
+});
 
         const groupedData = sortedProperties.reduce((acc, item) => {
             if (!acc[item.properties.address.muni]) acc[item.properties.address.muni] = [];
@@ -48,13 +62,28 @@
 
         console.log(metacorp.sites.features);
 
-        const sortedProperties = [...metacorp.sites.features].sort((a,b) => 
-            a.properties.address.muni === b.properties.address.muni ? 
-                a.properties.address.body === b.properties.address.body ? 
-                    a.properties.address.start.localeCompare(b.properties.address.start) : 
-                a.properties.address.body.localeCompare(b.properties.address.body) : 
-            a.properties.address.muni.localeCompare(b.properties.address.muni)
-        );
+        const sortedProperties = [...metacorp.sites.features].sort((a, b) => {
+    // Check if all necessary fields are present
+    if (
+        a.properties.address.muni && b.properties.address.muni &&
+        a.properties.address.body && b.properties.address.body &&
+        a.properties.address.start && b.properties.address.start
+    ) {
+        // First compare "muni"
+        const muniCompare = a.properties.address.muni.localeCompare(b.properties.address.muni);
+        if (muniCompare !== 0) return muniCompare;
+
+        // If "muni" is the same, compare "body"
+        const bodyCompare = a.properties.address.body.localeCompare(b.properties.address.body);
+        if (bodyCompare !== 0) return bodyCompare;
+
+        // If both "muni" and "body" are the same, compare "start"
+        return a.properties.address.start.localeCompare(b.properties.address.start);
+    }
+
+    // Return 0 if no matching properties, or default fallback logic
+    return 0;
+});
 
         const groupedOwnerData = sortedProperties.reduce((acc, item) => {
             if (!acc[item.properties.owners[0].properties.name]) acc[item.properties.owners[0].properties.name] = [];
