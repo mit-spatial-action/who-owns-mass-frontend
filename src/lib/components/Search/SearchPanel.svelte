@@ -1,5 +1,6 @@
 <script>
     import GeocoderSearch from "$lib/components/Search/GeocoderSearch.svelte";
+    import OwnerSearch from "$lib/components/Search/OwnerSearch.svelte";
     import Searchbar from "$lib/components/Search/Searchbar.svelte";
     import Suggestions from "$lib/components/Search/Suggestions.svelte";
     import ErrorMessage from "$lib/components/Panels/ErrorMessage.svelte";
@@ -46,7 +47,8 @@
                 <Searchbar/>
                 <GeocoderSearch bind:suggestions />
             {:else}
-                <ErrorMessage errorState="featureNotReady"/>
+                <Searchbar/>
+                <OwnerSearch bind:suggestions />
             {/if}
             <Suggestions bind:suggestions/>
         </div>

@@ -34,6 +34,8 @@
             </div>
         </CardContent>
         <div class="title has-text-success">FAQs</div>
+        <CardContent>
             <p>Q: {methodConfig.FAQs.Question}</p>
             <p>A: {methodConfig.FAQs.Answer}</p>
+        </CardContent>
 </div>
