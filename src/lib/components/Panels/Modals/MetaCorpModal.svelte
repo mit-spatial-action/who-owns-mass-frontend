@@ -1,11 +1,12 @@
 <script lang="ts">
     export let townGroups;
     export let ownerGroups;
+    export let activeTab: string | null = "properties";
+
     import IconText from "$lib/components/Panels/Cards/IconText.svelte"
     import { slide } from "svelte/transition";
     import { highlighted } from "$lib/stores";
     let openPanels = []; // Array to track open modal panels
-    let activeTab = "properties";
 
 function togglePanel(index) {
     if (openPanels.includes(index)) {

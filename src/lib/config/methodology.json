@@ -1,26 +1,10 @@
 {
-    "partners": [
-    {
-        "logo": "hns.png",
-        "name": "Healthy Neighborhoods Study",
-        "url": "https://hns.mit.edu/"
-    },
-    {
-        "logo": "mapc.png",
-        "name": "Metropolitan Area Planning Council",
-        "url": "https://www.mapc.org/"
-    }
-],
-
-"org": [
-        {
-            "logo": "saarg.png",
-            "name": "Spatial Analysis & Action Research Group",
-            "url": "https://mit-spatial-action.github.io/",
-            "socials": [
-                "https://github.com/mit-spatial-action/"
-            ],
-            "description": "The Spatial Analysis and Action Research Group, housed in MIT's Department of Urban Studies and Planning, uses spatial data science and mapping tools to support place-based movements for social justice in the northeastern United States. Our current research projects focus primarily on consolidation in the rental market and housing insecurity in Massachusetts."
-        }
-    ]
+    "description": "Here is a placeholder text paragraph describing our methodology. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
+    "readme": "Please visit documentation in our data processing repository for more details:", 
+    "dataSources": "Here is a brief placeholder text paragraph describing our data sources. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", 
+    "FAQs": {
+        "Question": "How can I build a similar app for my city or state?",
+        "Answer": "Contact SAARG."  
+    }, 
+    "directoryURL": "https://github.com/mit-spatial-action/who-owns-mass-processing"
 }

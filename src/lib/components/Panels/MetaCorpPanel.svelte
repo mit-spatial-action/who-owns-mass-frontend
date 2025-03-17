@@ -13,9 +13,13 @@
     export let metacorp;
 
     let modalOpen = false;
+    let activeTab = "properties";
    
-    function openModal() {
+    const openModal = (modalType) => {
+        modalOpen = modalOpen ? false : modalOpen; // Resets modalOpen variable 
+
         modalOpen = true;
+        activeTab = modalType;
     }
 
     function handleModalClose() {
@@ -25,6 +29,7 @@
     function sortMetacorpProperties() {
 
         console.log(metacorp.sites.features);
+        console.log(metacorp.aliases);
 
         const sortedProperties = [...metacorp.sites.features].sort((a, b) => {
             // Check if all necessary fields are present
@@ -158,7 +163,7 @@
     </div>
     {#if metacorp.sites.features.length > 4}
     <div class="block buttons is-right">
-        <button class="button border-primary" data-sveltekit-preload-data="off" aria-label="See all Properties"  on:click={openModal}>
+        <button class="button border-primary" data-sveltekit-preload-data="off" aria-label="See all Properties"  on:click={openModal("properties")}>
             See All {metacorp.sites.features.length} Properties &#8594
         </button>
     </div>
@@ -166,33 +171,35 @@
 
     {#if modalOpen}
     <Modal bind:open={modalOpen} closeBtn={true} background={"has-background-dark opacity-50 "}>
-        <MetaCorpModal townGroups={groupedMetaCorpData} ownerGroups={groupedOwnerCorpData} />
+        <MetaCorpModal townGroups={groupedMetaCorpData} ownerGroups={groupedOwnerCorpData} activeTab={activeTab}/>
     </Modal> 
     {/if}
 
-    <div class="title">Other Names</div>
-    <div class="fixed-grid">
-        <div class="grid">
-                {#each metacorp.aliases.slice(1, 7) as alias, index}
-                <div class="cell">
-                    <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-                    <!-- svelte-ignore a11y_no_static_element_interactions -->
-                    <div class="card border-primary is-shadowless" 
-                    aria-label="Select {alias}" tabindex="0" data-sveltekit-preload-data="off">
-                        <div class="card-content">
-                            <div class="has-text-weight-bold">{alias}</div>
+    {#if metacorp.aliases.length > 1}
+        <div class="title">Other Names</div>
+        <div class="fixed-grid">
+            <div class="grid">
+                    {#each metacorp.aliases.slice(0, 6) as alias, index}
+                    <div class="cell">
+                        <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
+                        <!-- svelte-ignore a11y_no_static_element_interactions -->
+                        <div class="card border-primary is-shadowless" 
+                        aria-label="Select {alias}" tabindex="0" data-sveltekit-preload-data="off">
+                            <div class="card-content">
+                                <div class="has-text-weight-bold">{alias}</div>
+                            </div>
                         </div>
                     </div>
+                    {/each}
                 </div>
-                {/each}
+        </div>
+        {#if metacorp.aliases.length > 4}
+            <div class="block buttons is-right">
+                <button class="button border-primary" data-sveltekit-preload-data="off" aria-label="See all Properties"  on:click={openModal("owners")}>
+                    See All {metacorp.aliases.length - 1} Associated Companies &#8594
+                </button>
             </div>
-    </div>
-    {#if metacorp.sites.features.length > 4}
-    <div class="block buttons is-right">
-        <button class="button border-primary" data-sveltekit-preload-data="off" aria-label="See all Properties"  on:click={openModal}>
-            See All {metacorp.aliases.length} Associated Companies &#8594
-        </button>
-    </div>
+        {/if}
     {/if}
 </CardContent>
 

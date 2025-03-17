@@ -8,7 +8,6 @@
     export let site;
     import landUseCodes from "$lib/config/landuse.json";
 
-
    let priceInfoActive = true;
 
    const toggleActive = () => {
