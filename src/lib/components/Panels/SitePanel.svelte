@@ -35,7 +35,7 @@
             </div>
             <div class="cell">
                 <IconCard title="Units" icon="building">
-                    {#if site.units}{#if site.ooc}{site.units - 1}{:else}{site.units}{/if} Rental Units{:else}Unknown.{/if}
+                    {#if site.units}{#if site.ooc}{site.units - 1}{:else}{Math.round(site.units)}{/if} Rental Units{:else}Unknown.{/if}
                 </IconCard>
             </div>
             <div class="cell">
