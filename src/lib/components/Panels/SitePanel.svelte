@@ -26,6 +26,9 @@
             {site.address.postal}
         </div>
     </div>
+    {#if site.fy < 2024}
+        <ErrorMessage errorState="outdatedInfo" />
+    {/if}
     <div class="fixed-grid has-2-cols">
         <div class="grid">
             <div class="cell">
@@ -97,7 +100,7 @@
     </div>
     <div class="block">
         {#if site.metacorp.prop_count > 1}
-                <p>This owner may own <span class="tag is-medium has-background-primary-light">{site.metacorp.prop_count} properties</span>, including <span class="tag is-medium has-background-primary-light">{site.metacorp.unit_count} units</span>.</p>
+                <p>This owner may own <span class="tag is-medium has-background-primary-light">{site.metacorp.prop_count} properties</span>, including <span class="tag is-medium has-background-primary-light">{Math.round(site.metacorp.unit_count)} units</span>.</p>
                 <a class="button mt-5 border-primary is-shadowless" data-sveltekit-preload-data="off" href={`/meta/${site.metacorp.id}`}>
                     See Details &#8594
                 </a>
