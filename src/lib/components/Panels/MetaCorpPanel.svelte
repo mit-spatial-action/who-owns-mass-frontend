@@ -135,7 +135,7 @@
 
     {#if modalOpen}
     <Modal bind:open={modalOpen} closeBtn={true} background={"has-background-dark opacity-50 "}>
-        <MetaCorpModal sortedData={groupedMetaCorpData} />
+        <MetaCorpModal townGroups={groupedMetaCorpData} ownerGroups={groupedOwnerCorpData} />
     </Modal> 
     {/if}
 

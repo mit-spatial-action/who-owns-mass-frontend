@@ -1,9 +1,11 @@
 <script lang="ts">
-    export let sortedData;
+    export let townGroups;
+    export let ownerGroups;
     import IconText from "$lib/components/Panels/Cards/IconText.svelte"
     import { slide } from "svelte/transition";
     import { highlighted } from "$lib/stores";
     let openPanels = []; // Array to track open modal panels
+    let activeTab = "properties";
 
 function togglePanel(index) {
     if (openPanels.includes(index)) {
@@ -12,18 +14,23 @@ function togglePanel(index) {
         openPanels = [...openPanels, index]; // Open panel
     }
 }
+
+$: sortedData = activeTab === "properties"
+    ? townGroups : ownerGroups;
+
 </script>
 <div class="modal-card">
     <header class="modal-card-head">
-            <div class="tabs is-large">
+            <div class="tabs is-large is-boxed">
                 <ul>
-                  <li><a>Properties</a></li>
-                  <li class="is-active"><a>Owners</a></li>
+                  <li class:is-active={activeTab === "properties"}>
+                    <a on:click={() => activeTab = "properties"}>Properties</a></li>
+                  <li class:is-active={activeTab === "owners"}>
+                    <a on:click={() => activeTab = "owners"}>Owners</a></li>
                 </ul>
               </div>
     </header>
     <section class="modal-card-body">
-
         {#each Object.entries(sortedData) as [town, sites], index}
         <div class="panel is-link is-clickable">
             <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
