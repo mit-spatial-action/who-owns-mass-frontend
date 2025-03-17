@@ -1,0 +1,19 @@
+{
+    "101": "Residential - Single Family",
+    "102": "Residential - Condominium",
+    "103": "Residential - Mobile Home", 
+    "104": "Residential - Two-Family", 
+    "105": "Residential - Three-Family", 
+    "106": "Residential - Accessory Land with Improvement", 
+    "109": "Residantial - Multiple Houses on One Parcel", 
+    "111": "Apartments - Four to Eight Units", 
+    "112": "Apartments - More than Eight Units", 
+    "114": "Apartments - Affordable Housing Units", 
+    "121": "Group Quarters - Rooming or Boarding Houses", 
+    "122": "Group Quarters - Fraternity or Sorority Houses", 
+    "123": "Group Quarters - Residence Halls or Dorms", 
+    "124": "Group Quarters - Convents or Monasteries", 
+    "125": "Group Quarters - Other Congregate Living", 
+    "013": "Mixed Use - Residential/Commercial", 
+    "031": "Mixed Use - Commercial/Residential"
+}

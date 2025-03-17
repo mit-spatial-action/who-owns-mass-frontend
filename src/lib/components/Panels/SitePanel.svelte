@@ -1,10 +1,13 @@
 <script lang="ts">
     import HL from "$lib/components/Panels/HL.svelte";
+    import { onMount } from "svelte";
     import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
     import IconCard from "$lib/components/Panels/Cards/IconCard.svelte";
     import ErrorMessage from "./ErrorMessage.svelte";
-   export let site;
+    export let site;
+    import landUseCodes from "$lib/config/landuse.json";
+
 
    let priceInfoActive = true;
 
@@ -12,6 +15,7 @@
       priceInfoActive = !priceInfoActive;
     }
     console.log(site);
+
 
 </script>
 
@@ -26,9 +30,6 @@
             {site.address.postal}
         </div>
     </div>
-    {#if site.fy < 2024}
-        <ErrorMessage errorState="outdatedInfo" />
-    {/if}
     <div class="fixed-grid has-2-cols">
         <div class="grid">
             <div class="cell">
@@ -49,14 +50,6 @@
                     </a>
                     {/if} on {#if site.ls_date}{new Date(site.ls_date).toLocaleDateString()}{:else}Unknown.{/if}
                 </IconCard>
-
-            <div class="cell">
-                {#if site.ooc}
-                <IconCard title="Owner-Occupied" icon="house"/>
-                {:else}
-                <IconCard title="Absentee Landlord" icon="people-arrows"/>
-                {/if}
-            </div>
             </div>
             <div class="cell">
                 <IconCard title="Valuation" icon="dollar-sign">
@@ -72,12 +65,31 @@
                     in FY {site.fy}
                 </IconCard>
             </div>
+            <div class="cell">
+                <IconCard title="Land Use" icon="map">
+                    {#if site.luc}
+                        {landUseCodes[site.luc] || "Unknown"}
+                    {:else}
+                        Unknown 
+                    {/if}
+                </IconCard>
+            </div>
+            <div class="cell">
+                {#if site.ooc}
+                <IconCard title="Owner-Occupied" icon="house"/>
+                {:else}
+                <IconCard title="Absentee Landlord" icon="people-arrows"/>
+                {/if}
+            </div>
         </div>
     </div>
     {#if !priceInfoActive && site.ls_price}
         <ErrorMessage errorState="quitClaimDeed" />
     {:else if !priceInfoActive }
         <ErrorMessage errorState="priceUnknown" />
+    {/if}
+    {#if site.fy < 2024}
+        <ErrorMessage errorState="outdatedInfo" />
     {/if}
     <div class="title">Owners</div>
     <div class="fixed-grid has-2-cols">
