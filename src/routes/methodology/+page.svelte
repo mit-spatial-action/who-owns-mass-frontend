@@ -17,23 +17,39 @@
         </CardHeader>
 
         <CardContent>
-            <div>
+            <div class="block">
                 {methodConfig.description}
             </div>
-            <br/>
-                {methodConfig.readme}
-            <div class="card-footer-item is-outlined">
-                <SocialIcon socialUrl={directoryURL}/>
-            </div>
+            <button class="button is-success">
+            <SocialIcon socialUrl={methodConfig.docsURL} color="has-text-white"/>
+            </button>
             
         </CardContent>
-        <div class="title has-text-success">Data Sources</div>
         <CardContent>
-            <div>
-                {methodConfig.dataSources}
-            </div>
+            <div class="title has-text-success">Data Sources</div>
+            {#each methodConfig.dataSources as source}
+                <div class="block">
+                <p>
+                    <a href={source.url}>{source.name}</a> ({source.vintage}). 
+                    {#each source.orgs as org, index}<a href="{org.url}">{org.name}</a>{index == source.orgs.length-1 ? '' : ', '}{/each}
+                </p>
+                <p>
+                    {source.description}
+                </p>
+                </div>
+            {/each}
         </CardContent>
-        <div class="title has-text-success">FAQs</div>
-            <p>Q: {methodConfig.FAQs.Question}</p>
-            <p>A: {methodConfig.FAQs.Answer}</p>
+        <CardContent>
+        <div class="title has-text-success">FAQ</div>
+            {#each methodConfig.FAQ as faq}
+            <div class="block">
+            <p>Q: {faq.Q}</p>
+            <p>A: {faq.A}</p>
+            </div>
+            <div class="block">
+            <p>Q: {faq.Q}</p>
+            <p>A: {faq.A}</p>
+            </div>
+            {/each}
+        </CardContent>
 </div>
