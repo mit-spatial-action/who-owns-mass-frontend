@@ -29,7 +29,7 @@
         }, 
             "outdatedInfo": {
             "descShort": null,
-            "descLong": "This information is more than a year out-of-date.",
+            "descLong": "This information is more than one year out-of-date. You should confirm current ownership.",
             "color": "primary" 
         }
     }
