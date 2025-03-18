@@ -1,10 +1,8 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte';
 
-    let ownerSearch;
     export let suggestions = [];
 
-    // Need to revise based on owner API output
     const buildResults = (results) => {
         results = results.map((r) => {
             return {
