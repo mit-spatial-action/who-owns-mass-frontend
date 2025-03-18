@@ -26,6 +26,11 @@
             "descShort": null,
             "descLong": "We couldn't find any additional properties held by this owner.",
             "color": "primary" 
+        }, 
+            "outdatedInfo": {
+            "descShort": null,
+            "descLong": "This information is more than one year out-of-date. You should confirm current ownership.",
+            "color": "primary" 
         }
     }
  </script>

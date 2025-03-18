@@ -1,0 +1,19 @@
+{
+    "101": "Single-Family",
+    "102": "Condominium",
+    "103": "Mobile Home", 
+    "104": "Two-Family", 
+    "105": "Three-Family", 
+    "106": "Accessory Land", 
+    "109": "Multiple Houses", 
+    "111": "4--8 Units", 
+    "112": "8+ Units", 
+    "114": "Apartments - Affordable Housing Units", 
+    "121": "Rooming/Boarding Houses", 
+    "122": "Fraternity/Sorority Houses", 
+    "123": "Residence Halls/Dorms", 
+    "124": "Convents/Monasteries", 
+    "125": "Congregate Living", 
+    "013": "Mixed Use", 
+    "031": "Mixed Use"
+}

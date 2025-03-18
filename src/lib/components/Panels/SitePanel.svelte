@@ -1,10 +1,12 @@
 <script lang="ts">
     import HL from "$lib/components/Panels/HL.svelte";
+    import { onMount } from "svelte";
     import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
     import IconCard from "$lib/components/Panels/Cards/IconCard.svelte";
     import ErrorMessage from "./ErrorMessage.svelte";
-   export let site;
+    export let site;
+    import landUseCodes from "$lib/config/landuse.json";
 
    let priceInfoActive = true;
 
@@ -12,6 +14,7 @@
       priceInfoActive = !priceInfoActive;
     }
     console.log(site);
+
 
 </script>
 
@@ -35,7 +38,7 @@
             </div>
             <div class="cell">
                 <IconCard title="Units" icon="building">
-                    {#if site.units}{#if site.ooc}{site.units - 1}{:else}{site.units}{/if} Rental Units{:else}Unknown.{/if}
+                    {#if site.units}{#if site.ooc}{site.units - 1}{:else}{Math.round(site.units)}{/if} Rental Units{:else}Unknown.{/if}
                 </IconCard>
             </div>
             <div class="cell">
@@ -46,14 +49,6 @@
                     </a>
                     {/if} on {#if site.ls_date}{new Date(site.ls_date).toLocaleDateString()}{:else}Unknown.{/if}
                 </IconCard>
-
-            <div class="cell">
-                {#if site.ooc}
-                <IconCard title="Owner-Occupied" icon="house"/>
-                {:else}
-                <IconCard title="Absentee Landlord" icon="people-arrows"/>
-                {/if}
-            </div>
             </div>
             <div class="cell">
                 <IconCard title="Valuation" icon="dollar-sign">
@@ -66,7 +61,24 @@
                     {:else}
                         Unknown.
                     {/if}
+                    in FY {site.fy}
                 </IconCard>
+            </div>
+            <div class="cell">
+                <IconCard title="Type" icon="map">
+                    {#if site.luc}
+                        {landUseCodes[site.luc] || "Unknown"}
+                    {:else}
+                        Unknown 
+                    {/if}
+                </IconCard>
+            </div>
+            <div class="cell">
+                {#if site.ooc}
+                <IconCard title="Owner-Occupied" icon="house"/>
+                {:else}
+                <IconCard title="Absentee Landlord" icon="people-arrows"/>
+                {/if}
             </div>
         </div>
     </div>
@@ -74,6 +86,9 @@
         <ErrorMessage errorState="quitClaimDeed" />
     {:else if !priceInfoActive }
         <ErrorMessage errorState="priceUnknown" />
+    {/if}
+    {#if site.fy < 2024}
+        <ErrorMessage errorState="outdatedInfo" />
     {/if}
     <div class="title">Owners</div>
     <div class="fixed-grid has-2-cols">
@@ -96,7 +111,7 @@
     </div>
     <div class="block">
         {#if site.metacorp.prop_count > 1}
-                <p>This owner may own <span class="tag is-medium has-background-primary-light">{site.metacorp.prop_count} properties</span>, including <span class="tag is-medium has-background-primary-light">{site.metacorp.unit_count} units</span>.</p>
+                <p>This owner may own <span class="tag is-medium has-background-primary-light">{site.metacorp.prop_count} properties</span>, including <span class="tag is-medium has-background-primary-light">{Math.round(site.metacorp.unit_count)} units</span>.</p>
                 <a class="button mt-5 border-primary is-shadowless" data-sveltekit-preload-data="off" href={`/meta/${site.metacorp.id}`}>
                     See Details &#8594
                 </a>

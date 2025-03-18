@@ -1,6 +1,6 @@
 <script>
     import { fly } from 'svelte/transition';
-    import Modal from "$lib/components/Modal.svelte";
+    import Modal from "$lib/components/Panels/Modals/Modal.svelte";
 
     export let duration = 1.2;
     export let borderWidth = 4;
@@ -14,20 +14,22 @@
 
 </script>
 
-<Modal closeBtn={false}>
-    <div class="has-text-centered">
-        <div transition:fly={{ 
-            y: flyInProps.distance, 
-            duration: flyInProps.duration 
-            }} class="rippler">
-            {#each steps as step}
-                <div class="ripple-wave" style="
-                --duration: {duration}; 
-                --border-width: {borderWidth};
-                animation-delay: -{ step * duration / denom}s;">
-                </div>
-            {/each}
-            <div class="circle-core"></div>
+<Modal closeBtn={false} background={"has-background-light"}>
+    <div class="modal-content">
+        <div class="has-text-centered">
+            <div transition:fly={{ 
+                y: flyInProps.distance, 
+                duration: flyInProps.duration 
+                }} class="rippler">
+                {#each steps as step}
+                    <div class="ripple-wave" style="
+                    --duration: {duration}; 
+                    --border-width: {borderWidth};
+                    animation-delay: -{ step * duration / denom}s;">
+                    </div>
+                {/each}
+                <div class="circle-core"></div>
+            </div>
         </div>
     </div>
 </Modal>
