@@ -8,8 +8,8 @@
     const buildResults = (results) => {
         results = results.map((r) => {
             return {
-                text: `${r.properties.name}`, 
-                metacorp: `${r.properties.metacorp}`,
+                text: `${r.name}`, 
+                metacorp: `${r.metacorp}`,
             }
         })
         return results
@@ -30,18 +30,14 @@
                     try {
                         const response = await fetch(`/queries/suggestions?query=${encodeURIComponent(query)}`);
                         const results = await response.json();
-                        console.log("RESULTS");
-                        console.log(results);
-                       suggestions = buildResults(results.suggestions.results.features);
-                       console.log(suggestions);
-                       //suggestions = [];
+                       suggestions = buildResults(results.suggestions.results);
                     } catch (error) {
                         console.error("API Error:", error);
                     }
                 } else {
                     suggestions = [];
                 }
-            }, 300); 
+            }, 200); 
         });
      }
     });

@@ -22,12 +22,9 @@ export const getFromApi = async (
     ) => {
     loadState.set(true);
     let queryUrl: string = "";
-    console.log(endpoint);
-    console.log(id);
 
     if(endpoint=="owners"){
         queryUrl= `https://api.who-owns-mass.org/${endpoint}?search=${id}`; // only works when hardcoded - not recognizing the /api redirect. 
-        console.log(queryUrl);
     } else {
         queryUrl = `${apiUrl}/${endpoint}/${id}/?format=${format}`;
     }
