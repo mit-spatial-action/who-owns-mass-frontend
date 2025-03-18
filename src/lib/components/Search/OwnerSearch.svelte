@@ -1,8 +1,5 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte';
-    import { getFromApi } from "$lib/scripts/utils";
-    import { API_TOKEN } from '$env/static/private';
-
 
     let ownerSearch;
     export let suggestions = [];
@@ -11,8 +8,8 @@
     const buildResults = (results) => {
         results = results.map((r) => {
             return {
-                text: `${r.address} ${r.text}`, 
-                location: `${r.context.filter(c => c.id.split('.').shift() === 'place')[0].text}, MA`,
+                text: `${r.properties.name}`, 
+                metacorp: `${r.properties.metacorp}`,
             }
         })
         return results
@@ -29,13 +26,15 @@
             
             timeout = setTimeout(async () => {
                 const query = searchInput.value.trim(); 
-                
                 if (query.length > 0) {
                     try {
-                        const results = await getFromApi(fetch, '/api', API_TOKEN, 'owners', query); //How to get API token for search?
+                        const response = await fetch(`/queries/suggestions?query=${encodeURIComponent(query)}`);
+                        const results = await response.json();
+                        console.log("RESULTS");
                         console.log(results);
-                       //suggestions = buildResults(results.features);
-                       suggestions = [];
+                       suggestions = buildResults(results.suggestions.results.features);
+                       console.log(suggestions);
+                       //suggestions = [];
                     } catch (error) {
                         console.error("API Error:", error);
                     }
@@ -47,10 +46,5 @@
      }
     });
 
-    onDestroy(()=>{
-        if (geocoder && geocoder.parentNode ) {
-            geocoder.onRemove();
-        }
-    });
     
 </script>

@@ -1,6 +1,7 @@
 import mapbox from 'mapbox-gl';
 import { goto } from '$app/navigation';
 import { loadState } from "$lib/stores";
+//import { API_TOKEN } from '$env/static/private';
 
 export { mapbox };
 
@@ -20,7 +21,17 @@ export const getFromApi = async (
     format="json"
     ) => {
     loadState.set(true);
-    let queryUrl: string = `${apiUrl}/${endpoint}/${id}/?format=${format}`;
+    let queryUrl: string = "";
+    console.log(endpoint);
+    console.log(id);
+
+    if(endpoint=="owners"){
+        queryUrl= `https://api.who-owns-mass.org/${endpoint}?search=${id}`; // only works when hardcoded - not recognizing the /api redirect. 
+        console.log(queryUrl);
+    } else {
+        queryUrl = `${apiUrl}/${endpoint}/${id}/?format=${format}`;
+    }
+
     return await loadFetch(queryUrl, {
             method: "GET",
             headers: {

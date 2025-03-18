@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { gcResult } from "$lib/stores";
+    import { goto } from "$app/navigation";
+    import { gcResult, metacorp} from "$lib/stores";
 
     import { slide } from 'svelte/transition';
     export let suggestions = [];
@@ -7,10 +8,14 @@
     const handleClick = (suggestion) => {
         (document.getElementById('searchbar') as HTMLInputElement).value = suggestion.text
         suggestions = [];
-        gcResult.set({
-            lngLat: suggestion.lngLat,
-            address: suggestion.address
-        })
+        if(suggestion.lngLat){
+            gcResult.set({
+                lngLat: suggestion.lngLat,
+                address: suggestion.address
+            }) 
+        } else if (suggestion.metacorp){
+            goto(`/meta/${suggestion.metacorp}`);
+        }
     }
 </script>
 
@@ -26,7 +31,11 @@
                 <i class="fa-solid fa-address-book"></i>
             </span>
             <span>
-                {suggestion.text}, {suggestion.location}
+                {#if suggestion.location }
+                     {suggestion.text}, {suggestion.location}
+                {:else}
+                     {suggestion.text}
+                {/if}
             </span>
         </button>
     {/each}

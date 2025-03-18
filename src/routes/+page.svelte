@@ -13,7 +13,6 @@
 
 </script>
 
-
 <HomePanel
     title={siteConfig.title}
     subtitle={siteConfig.description}/>
