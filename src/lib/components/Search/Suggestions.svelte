@@ -1,5 +1,6 @@
 <script lang="ts">
-    import { gcResult } from "$lib/stores";
+    import { goto } from "$app/navigation";
+    import { gcResult, metacorp} from "$lib/stores";
 
     import { slide } from 'svelte/transition';
     export let suggestions = [];
@@ -7,34 +8,41 @@
     const handleClick = (suggestion) => {
         (document.getElementById('searchbar') as HTMLInputElement).value = suggestion.text
         suggestions = [];
-        gcResult.set({
-            lngLat: suggestion.lngLat,
-            address: suggestion.address
-        })
+        if(suggestion.lngLat){
+            gcResult.set({
+                lngLat: suggestion.lngLat,
+                address: suggestion.address
+            }) 
+        } else if (suggestion.metacorp){
+            goto(`/meta/${suggestion.metacorp}`);
+        }
     }
 </script>
 
-<div>
-<div 
-    id="suggestions-list" 
-    class="card has-background-white"
-    >
+<div class="menu">
+    <ul class="menu-list">
     {#each suggestions as suggestion }
-        <button transition:slide={{duration:250, axis:'y'}} class="suggestion px-2 button is-fullwidth is-small is-justify-content-flex-start"
+        <li>
+        <button transition:slide={{duration:250, axis:'y'}} class="button px-2 py-1 is-small is-responsive"
         on:click={() => handleClick(suggestion)}>
             <span class="icon">
                 <i class="fa-solid fa-address-book"></i>
             </span>
             <span>
-                {suggestion.text}, {suggestion.location}
+                {#if suggestion.location }
+                     {suggestion.text}, {suggestion.location}
+                {:else}
+                     {suggestion.text}
+                {/if}
             </span>
         </button>
+        </li>
     {/each}
-</div>
+    </ul>
 </div>
 
 <style>
-    .suggestion {
+    .menu {
         overflow: hidden;
     }
 </style>

@@ -4,7 +4,7 @@
     import { onMount, onDestroy } from 'svelte';
     import { mapbox } from '$lib/scripts/utils';
     
-    import { PUBLIC_MAPBOX_TOKEN } from '$env/static/public';
+    import { PUBLIC_MAPBOX_TOKEN } from '$env/static/public'; // How to access from client side?
 
     let geocoder;
     export let suggestions = [];
