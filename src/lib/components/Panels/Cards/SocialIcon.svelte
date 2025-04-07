@@ -2,6 +2,7 @@
     export let socialUrl;
     let icon;
     let name;
+    export let color;
     let set = "brands";
     if (socialUrl.includes("github.com")) {
         icon = "github"
@@ -19,7 +20,7 @@
     }
 </script>
 
-<a href="{socialUrl}">
+<a href="{socialUrl}" class="{color}">
 <span class="icon-text">
     <span class="icon">
         <i class="fa-{set} fa-{icon}"></i>

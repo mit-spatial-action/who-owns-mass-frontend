@@ -65,7 +65,7 @@
                 </IconCard>
             </div>
             <div class="cell">
-                <IconCard title="Land Use" icon="map">
+                <IconCard title="Type" icon="map">
                     {#if site.luc}
                         {landUseCodes[site.luc] || "Unknown"}
                     {:else}

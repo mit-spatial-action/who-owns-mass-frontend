@@ -1,10 +1,24 @@
 {
     "description": "Here is a placeholder text paragraph describing our methodology. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.",
-    "readme": "Please visit documentation in our data processing repository for more details:", 
-    "dataSources": "Here is a brief placeholder text paragraph describing our data sources. Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.", 
-    "FAQs": {
-        "Question": "How can I build a similar app for my city or state?",
-        "Answer": "Contact SAARG."  
-    }, 
-    "directoryURL": "https://github.com/mit-spatial-action/who-owns-mass-processing"
+    "docsURL": "https://github.com/mit-spatial-action/who-owns-mass-processing",
+    "dataSources": [
+        {
+            "name": "Placeholder Name",
+            "vintage": 2024,
+            "orgs": [{
+                "name": "Orgname",
+                "url": "#"
+            },
+            {
+                "name": "Orgname",
+                "url": "#"
+            }],
+            "description": "Placeholder description",
+            "url": "#"
+        }
+    ],
+    "FAQ": [{
+        "Q": "How can I build a similar app for my city or state?",
+        "A": "Contact SAARG."  
+    }]
 }
