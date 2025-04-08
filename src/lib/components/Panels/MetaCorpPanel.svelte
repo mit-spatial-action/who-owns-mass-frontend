@@ -9,6 +9,7 @@
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
     import Modal from "./Modals/Modal.svelte";
     import MetaCorpModal from "./Modals/MetaCorpModal.svelte";
+    import OwnerTags from "./OwnerTags.svelte";
 
     export let metacorp;
 
@@ -27,9 +28,6 @@
     }
 
     function sortMetacorpProperties() {
-
-        console.log(metacorp.sites.features);
-        console.log(metacorp.aliases);
 
         const sortedProperties = [...metacorp.sites.features].sort((a, b) => {
             // Check if all necessary fields are present
@@ -59,13 +57,10 @@
             return acc;
         }, {});
     
-        console.log(groupedData);
       return(groupedData);
     }
 
     function sortMetacorpOwners() {
-
-        console.log(metacorp.sites.features);
 
         const sortedProperties = [...metacorp.sites.features].sort((a, b) => {
             // Check if all necessary fields are present
@@ -100,12 +95,15 @@
         }
     const groupedMetaCorpData = sortMetacorpProperties();
     const groupedOwnerCorpData = sortMetacorpOwners();
-
+    
+    console.log(metacorp);
 </script>
 
 
 <CardHeader color="primary">{metacorp.name}</CardHeader>
-
+<div class="mt-2">
+    <OwnerTags trust={false} company_name={metacorp.name}/>
+</div>
 <CardContent>
     <div class="box p-0 is-shadowless">
         <div class="fixed-grid">
