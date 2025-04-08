@@ -440,6 +440,9 @@
             popup.setLngLat(coordinates).setHTML(popupHTML).addTo(map);
         })
 
+        map.getCanvasContainer().addEventListener('mouseleave', () => {
+            popup.remove();
+        });
 
         map.once("idle", () => {
             mapLoaded.set(true);
