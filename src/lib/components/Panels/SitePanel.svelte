@@ -7,19 +7,18 @@
     import ErrorMessage from "./ErrorMessage.svelte";
     export let site;
     import landUseCodes from "$lib/config/landuse.json";
+    import OwnerTags from "./OwnerTags.svelte";
 
    let priceInfoActive = true;
 
    const toggleActive = () => {
       priceInfoActive = !priceInfoActive;
     }
+
     console.log(site);
-
-
 </script>
 
 <CardHeader color="primary">{site.address.addr}</CardHeader>
-
 <CardContent>
     <div class="box p-0 is-shadowless">
         <div class="tag is-medium is-primary is-light border-primary">
@@ -28,6 +27,8 @@
         <div class="tag is-medium is-primary is-light border-primary">
             {site.address.postal}
         </div>
+        <OwnerTags company_name={site.owners[0].properties.name} trust={site.owners[0].properties.trust} />
+
     </div>
     <div class="fixed-grid has-2-cols">
         <div class="grid">

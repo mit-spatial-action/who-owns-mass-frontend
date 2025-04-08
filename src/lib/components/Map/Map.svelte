@@ -70,7 +70,6 @@
                 let selected = features.filter(
                     feature => feature.properties.addr.toUpperCase() === gcResult.address.toUpperCase())
                 if (selected.length > 0) {
-                    console.log("siteNav: " + selected[0].properties.site_id);
                     await siteNav(selected[0].properties.site_id);
                 } else {
                     errorState.set("addressNotFound");

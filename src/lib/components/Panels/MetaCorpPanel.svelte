@@ -28,9 +28,6 @@
 
     function sortMetacorpProperties() {
 
-        console.log(metacorp.sites.features);
-        console.log(metacorp.aliases);
-
         const sortedProperties = [...metacorp.sites.features].sort((a, b) => {
             // Check if all necessary fields are present
             if (
@@ -59,13 +56,10 @@
             return acc;
         }, {});
     
-        console.log(groupedData);
       return(groupedData);
     }
 
     function sortMetacorpOwners() {
-
-        console.log(metacorp.sites.features);
 
         const sortedProperties = [...metacorp.sites.features].sort((a, b) => {
             // Check if all necessary fields are present
@@ -100,7 +94,8 @@
         }
     const groupedMetaCorpData = sortMetacorpProperties();
     const groupedOwnerCorpData = sortMetacorpOwners();
-
+    
+    console.log(metacorp);
 </script>
 
 
