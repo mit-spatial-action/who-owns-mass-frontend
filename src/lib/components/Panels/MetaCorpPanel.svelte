@@ -9,6 +9,7 @@
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
     import Modal from "./Modals/Modal.svelte";
     import MetaCorpModal from "./Modals/MetaCorpModal.svelte";
+    import OwnerTags from "./OwnerTags.svelte";
 
     export let metacorp;
 
@@ -100,7 +101,9 @@
 
 
 <CardHeader color="primary">{metacorp.name}</CardHeader>
-
+<div class="mt-2">
+    <OwnerTags trust={false} company_name={metacorp.name}/>
+</div>
 <CardContent>
     <div class="box p-0 is-shadowless">
         <div class="fixed-grid">
