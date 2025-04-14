@@ -354,11 +354,10 @@
             )
         }
     }
-    
-    const renderArcLayer = (map, geojson) => {
+
+    const createArcs = (geojson) => {
         let data = geojson.features;
-        console.log(data);
-        const deckOverlay = new MapboxOverlay({
+        return new MapboxOverlay({
             interleaved: true,
             layers: [
             new ArcLayer({
@@ -378,9 +377,12 @@
             })
             ]
         });
-        console.log("hello");
-
-        map.addControl(deckOverlay);
+    }
+    
+    const renderArcLayer = (map, geojson) => {
+        let arcs = createArcs(geojson);
+        map.removeControl(arcs);
+        map.addControl(arcs);
     }
    
     
