@@ -19,6 +19,7 @@
 
     let suggestions = $state([]);
     let loading = $state(false);
+    let noresult = $state(false);
     const initActive = searchModes[0];
     let hover = $state(initActive);
     let active = $state(initActive);
@@ -51,7 +52,7 @@
             <GeocoderSearch bind:suggestions />
         {:else}
             <Searchbar mode={active.displayName} color={active.color}/>
-            <OwnerSearch bind:suggestions bind:loading={loading}/>
+            <OwnerSearch bind:suggestions bind:loading={loading} bind:noresult={noresult}/>
         {/if}
     </div>
     <div class="panel-block">
@@ -59,6 +60,10 @@
                 <button class="button is-loading is-fullwidth is-static" disabled>
                     Loading
                 </button>
+        {:else if noresult} 
+            <button class="button is-fullwidth is-static" disabled>
+                No result found
+            </button>
         {:else}
             <Suggestions bind:suggestions/>
         {/if}
