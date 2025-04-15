@@ -29,7 +29,7 @@
 
                     noresult=false;
 
-                    if (query.length > 0) {
+                    if (query.length > 1) {
                         loading = true;
                         try {
                             const response = await fetch(`/queries/suggestions?query=${encodeURIComponent(query)}`);
@@ -48,7 +48,7 @@
                         noresult=false
                         suggestions = [];
                     }
-                }, 200); 
+                }, 350); 
             });
         }
     });
