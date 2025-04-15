@@ -24,7 +24,7 @@
             
             timeout = setTimeout(async () => {
                 const query = searchInput.value.trim(); 
-                if (query.length > 0) {
+                if (query.length > 1) {
                     try {
                         const response = await fetch(`/queries/suggestions?query=${encodeURIComponent(query)}`);
                         const results = await response.json();
@@ -35,7 +35,7 @@
                 } else {
                     suggestions = [];
                 }
-            }, 400); 
+            }, 350); 
         });
      }
     });
