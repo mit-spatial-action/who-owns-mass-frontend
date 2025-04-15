@@ -49,7 +49,7 @@
     <div class="panel-block is-flex is-justify-content-center">
         {#if active.id==="address"}
             <Searchbar mode={active.displayName} color={active.color}/>
-            <GeocoderSearch bind:suggestions />
+            <GeocoderSearch bind:suggestions bind:loading={loading} bind:noresult={noresult}/>
         {:else}
             <Searchbar mode={active.displayName} color={active.color}/>
             <OwnerSearch bind:suggestions bind:loading={loading} bind:noresult={noresult}/>

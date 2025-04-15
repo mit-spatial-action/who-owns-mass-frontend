@@ -43,7 +43,6 @@
                         loading = false;
                     }
                 } else {
-                    console.log("no result: " + noresult)
                     suggestions = [];
                 }
             }, 200); 

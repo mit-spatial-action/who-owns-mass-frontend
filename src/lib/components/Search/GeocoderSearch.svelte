@@ -8,6 +8,9 @@
 
     let geocoder;
     export let suggestions = [];
+    
+    export let noresult=false;
+    export let loading=false;
 
     const buildResults = (results) => {
         results = results.map((r) => {
@@ -54,8 +57,15 @@
             clearTimeout(timeout);
             timeout = setTimeout(() => {
                 const query = (e.target as HTMLInputElement).value;
+                noresult=false;
+
                 if (query.length > 0) {
-                    geocoder.query(query);
+                    loading=true;
+                    try{
+                        geocoder.query(query);
+                    } finally {
+                        loading = false;
+                    }
                 } else {
                     suggestions = [];
                 };
@@ -64,6 +74,9 @@
 
         geocoder.on('results', (e) => {
             suggestions = buildResults(e.features);
+            if(suggestions.length == 0){
+                noresult = true;
+            }
         });
     });
 
