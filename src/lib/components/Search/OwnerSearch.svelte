@@ -22,32 +22,35 @@
 
         if (searchInput) {
             searchInput.addEventListener('input', (e) => {
-            clearTimeout(timeout);
+                clearTimeout(timeout);
 
-            timeout = setTimeout(async () => {
-                const query = searchInput.value.trim(); 
-                noresult=false;
+                timeout = setTimeout(async () => {
+                    const query = searchInput.value.trim(); 
 
-                if (query.length > 0) {
-                    loading = true;
-                    try {
-                        const response = await fetch(`/queries/suggestions?query=${encodeURIComponent(query)}`);
-                        const results = await response.json();
-                       suggestions = buildResults(results.suggestions.results);
-                        if(suggestions.length == 0){
-                            noresult = true;
+                    noresult=false;
+
+                    if (query.length > 0) {
+                        loading = true;
+                        try {
+                            const response = await fetch(`/queries/suggestions?query=${encodeURIComponent(query)}`);
+                            const results = await response.json();
+                        suggestions = buildResults(results.suggestions.results);
+                            if(suggestions.length == 0){
+                                noresult = true;
+                            }
+                        } catch (error) {
+                            console.error("API Error:", error);
+                        } finally {
+                            loading = false;
                         }
-                    } catch (error) {
-                        console.error("API Error:", error);
-                    } finally {
-                        loading = false;
+                    } else {
+                        loading=false;
+                        noresult=false
+                        suggestions = [];
                     }
-                } else {
-                    suggestions = [];
-                }
-            }, 200); 
-        });
-     }
+                }, 200); 
+            });
+        }
     });
 
     
