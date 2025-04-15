@@ -3,6 +3,8 @@
 
     export let suggestions = [];
 
+    export let loading = false;
+
     const buildResults = (results) => {
         results = results.map((r) => {
             return {
@@ -25,12 +27,16 @@
             timeout = setTimeout(async () => {
                 const query = searchInput.value.trim(); 
                 if (query.length > 0) {
+                    loading = true;
+
                     try {
                         const response = await fetch(`/queries/suggestions?query=${encodeURIComponent(query)}`);
                         const results = await response.json();
                        suggestions = buildResults(results.suggestions.results);
                     } catch (error) {
                         console.error("API Error:", error);
+                    } finally {
+                        loading = false;
                     }
                 } else {
                     suggestions = [];
