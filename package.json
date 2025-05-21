@@ -38,7 +38,7 @@
 		"dotenv": "^16.5.0",
 		"install": "^0.13.0",
 		"mapbox-gl": "^3.11.0",
-		"npm": "^11.3.0",
+		"npm": "^11.4.0",
 		"svelte-device-info": "^1.0.6",
 		"svelte-routing": "^2.13.0",
 		"turf": "^3.0.14"
