@@ -1,6 +1,6 @@
 <script lang="ts">
     import siteConfig from '$lib/config/site.json';
-    import "$lib/styles/style.css";
+    import "$lib/styles.scss";
     import InfoPanel from "$lib/components/Panels/InfoPanel.svelte";
     import RippleLoader from "$lib/components/RippleLoader.svelte";
     import MapPanel from "$lib/components/Panels/MapPanel.svelte";

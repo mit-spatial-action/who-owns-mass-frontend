@@ -5,13 +5,6 @@ export default ({ mode }) => {
 	process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
 	return defineConfig({
 		plugins: [sveltekit()],
-		css: {
-			preprocessorOptions: {
-				scss: {
-					prependData: `@import '$lib/styles/vars.scss';`
-				}
-			}
-		},
 		optimizeDeps: {
 		  include: ['mapbox-gl'],
 		},

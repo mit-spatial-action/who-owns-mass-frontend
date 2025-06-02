@@ -10,8 +10,6 @@ node_modules
 .npmrc
 vite.config.js.timestamp-*
 vite.config.ts.timestamp-*
-src/lib/styles/style.css
 # Local Netlify folder
 .netlify
 tsconfig.tsbuildinfo
-vars.scss

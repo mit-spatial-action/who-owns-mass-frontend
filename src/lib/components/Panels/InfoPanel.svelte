@@ -11,13 +11,13 @@
 </div>
 
 <style lang="scss">
-    @use 'src/lib/styles/vars.scss' as *;
+    @use "../../styles";
     #infopanel {
         z-index: 2;
         overflow: auto;
-        border: 0.4rem solid $success;
+        border: 0.4rem solid styles.$success;
         height: 100vh !important;
-        scrollbar-color: $success #fff;
+        scrollbar-color: styles.$success #fff;
         scrollbar-width: thin;
     }
 </style>

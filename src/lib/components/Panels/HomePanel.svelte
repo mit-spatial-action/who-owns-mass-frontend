@@ -61,7 +61,6 @@
 </footer>
 
 <style lang="scss">
-    @use 'src/lib/styles/vars.scss' as *;
     .level {
         width: 100%;
     }
@@ -70,8 +69,5 @@
         filter: grayscale(1);
         mix-blend-mode: hard-light;
         padding: 6rem 1rem !important;
-    }
-    .hero-title {
-        text-shadow: 0.2rem 0.2rem 0px $primary;
     }
 </style>

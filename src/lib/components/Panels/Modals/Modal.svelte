@@ -24,7 +24,6 @@
 
 
 <style lang="scss">
-    @use 'src/lib/styles/vars.scss' as *;
     .modal-background {
         opacity: 0.68;
     }
