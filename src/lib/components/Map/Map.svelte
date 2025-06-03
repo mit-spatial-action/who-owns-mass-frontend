@@ -2,7 +2,8 @@
     import { onDestroy, onMount } from "svelte";
     import { siteNav, mapbox } from "$lib/scripts/utils";
     import type { FeatureCollection, Feature } from "geojson";
-    import styles from '$lib/config/styles.json';
+    import { primary } from '$lib/styles/_variables';
+    
     
     import bbox from "@turf/bbox";
     /* Helper functions */  
@@ -291,8 +292,8 @@
         geojson:FeatureCollection|Feature) => {
         if (!map) return undefined;
         if(Object.keys(geojson).length > 1) {
-            await addCircles(map, geojson, "selectedCircles", styles.primary);
-            await addMarkers(map, geojson, "selectedMarkers", styles.primary);
+            await addCircles(map, geojson, "selectedCircles", primary);
+            await addMarkers(map, geojson, "selectedMarkers", primary);
             let jsonBbox = bbox(geojson);
             map.fitBounds(jsonBbox, {
                 padding: 50,
@@ -352,7 +353,6 @@
     // $: toggleLayerVisibility($homeState, "hexes");
 
     onMount(() => {
-        mobile = Device.isPhone;
         let mapOptions:MapOptions = {
             container: "map",
             style: style,
@@ -390,7 +390,7 @@
                         resultZoom,
                         8
                     ],
-                    "circle-color": styles.primary,
+                    "circle-color": primary,
                     "circle-stroke-color": "white",
                     "circle-stroke-width": [
                         'interpolate',
