@@ -17,12 +17,9 @@
 </script>
 
 <div class="card-content">
-    <div class="hero is-success is-medium mb-5 border-success">
+    <div class="hero is-medium mb-5">
         <div class="hero-body hero-image" style="background-image: url({imageSrc})">
-            <div class="title is-4 is-hidden-tablet has-text-white has-text-centered">
-                <div class="hero-title">{title}</div>
-            </div>
-            <div class="title is-2 is-hidden-mobile has-text-white has-text-centered">
+            <div class="title is-size-4-touch is-2 has-text-centered">
                 <div class="hero-title">{title}</div>
             </div>
         </div>
@@ -63,7 +60,5 @@
     .hero-image {
         background-size: cover;
         filter: grayscale(1);
-        mix-blend-mode: hard-light;
-        padding: 6rem 1rem !important;
     }
 </style>

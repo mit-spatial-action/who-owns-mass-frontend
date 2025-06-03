@@ -10,41 +10,41 @@
 <div transition:slide={{duration:250, axis:'y'}}>
     <CardHeader>
         Who We Are
-        </CardHeader >
-        <CardContent>
-            <div class="fixed-grid has-1-cols has-2-cols-tablet">
-                <div class="grid">
-                {#each siteConfig.org as org}
-                    <OrgCard {org} />
-                {/each}
-                </div>
+    </CardHeader>
+    <CardContent>
+        <div class="fixed-grid has-1-cols has-2-cols-tablet">
+            <div class="grid">
+            {#each siteConfig.org as org}
+                <OrgCard {org} />
+            {/each}
             </div>
-            <br/>
-            <div class="title has-text-success">People</div>
-            <div class="fixed-grid has-1-cols has-2-cols-tablet">
-                <div class="grid">
-                {#each siteConfig.authors as person}
-                    <PersonCard {person} />
-                {/each}
-                </div>
+        </div>
+        <br/>
+        <div class="title">People</div>
+        <div class="fixed-grid has-1-cols has-2-cols-tablet">
+            <div class="grid">
+            {#each siteConfig.authors as person}
+                <PersonCard {person} />
+            {/each}
             </div>
-            <br/>
-            <div class="title has-text-success">Partners</div>
-            <div class="fixed-grid has-1-cols has-2-cols-tablet">
-                <div class="grid">
-                {#each siteConfig.partners as org}
-                    <OrgCard {org} />
-                {/each}
-                </div>
+        </div>
+        <br/>
+        <div class="title">Partners</div>
+        <div class="fixed-grid has-1-cols has-2-cols-tablet">
+            <div class="grid">
+            {#each siteConfig.partners as org}
+                <OrgCard {org} />
+            {/each}
             </div>
-            <br/>
-            <div class="title has-text-success">Funders</div>
-            <div class="fixed-grid has-1-cols has-2-cols-tablet">
-                <div class="grid">
-                {#each siteConfig.funders as org}
-                    <OrgCard {org} />
-                {/each}
-                </div>
+        </div>
+        <br/>
+        <div class="title">Funders</div>
+        <div class="fixed-grid has-1-cols has-2-cols-tablet">
+            <div class="grid">
+            {#each siteConfig.funders as org}
+                <OrgCard {org} />
+            {/each}
             </div>
-        </CardContent>
+        </div>
+    </CardContent>
 </div>

@@ -16,7 +16,7 @@
         {#if $loadState}
             <RippleLoader />
         {/if}
-        <div id="panels" class="columns has-background-light">
+        <div id="panels" class="columns">
             <InfoPanel>
                 <slot />
             </InfoPanel>

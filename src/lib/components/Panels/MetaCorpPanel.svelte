@@ -1,15 +1,14 @@
 <script lang="ts">
-    import HL from "$lib/components/Panels/HL.svelte";
-    import PanelTitle from "$lib/components/Panels/PanelTitle.svelte";
-    import {
-        highlighted
-    } from "$lib/stores";
     import IconCard from "$lib/components/Panels/Cards/IconCard.svelte";
     import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
     import Modal from "./Modals/Modal.svelte";
     import MetaCorpModal from "./Modals/MetaCorpModal.svelte";
     import OwnerTags from "./OwnerTags.svelte";
+
+    import {
+        highlighted
+    } from "$lib/stores";
 
     export let metacorp;
 
@@ -147,9 +146,9 @@
                 <!-- svelte-ignore a11y_no_static_element_interactions -->
                 <div class="card border-primary is-shadowless" 
                 aria-label="Select {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off"
-                on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
+                onmouseover={() => highlighted.set(site.id)} onfocus={() => highlighted.set(site.id)} onmouseleave={() => highlighted.set(null)}>
                     <div class="card-content">
-                        <a href={`/site/${site.id}`} class="has-text-dark">
+                        <a href={`/site/${site.id}`}>
                         <div class="has-text-weight-bold">{site.properties.address.addr}</div>
                         <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}{#if site.properties.address.state}{`${site.properties.address.state} `} {/if}{#if site.properties.address.postal}{site.properties.address.postal}{/if}</div>
                         </a>
@@ -161,14 +160,14 @@
     </div>
     {#if metacorp.sites.features.length > 4}
     <div class="block buttons is-right">
-        <button class="button border-primary" data-sveltekit-preload-data="off" aria-label="See all Properties"  on:click={openModal("properties")}>
+        <button class="button border-primary" data-sveltekit-preload-data="off" aria-label="See all Properties"  onclick={openModal("properties")}>
             See All {metacorp.sites.features.length} Properties &#8594
         </button>
     </div>
     {/if}
 
     {#if modalOpen}
-    <Modal bind:open={modalOpen} closeBtn={true} background={"has-background-dark opacity-50 "}>
+    <Modal bind:open={modalOpen} closeBtn={true}>
         <MetaCorpModal townGroups={groupedMetaCorpData} ownerGroups={groupedOwnerCorpData} activeTab={activeTab}/>
     </Modal> 
     {/if}
@@ -193,7 +192,7 @@
         </div>
         {#if metacorp.aliases.length > 4}
             <div class="block buttons is-right">
-                <button class="button border-primary" data-sveltekit-preload-data="off" aria-label="See all Properties"  on:click={openModal("owners")}>
+                <button class="button border-primary" data-sveltekit-preload-data="off" aria-label="See all Properties"  onclick={openModal("owners")}>
                     See All {metacorp.aliases.length - 1} Associated Companies &#8594
                 </button>
             </div>
