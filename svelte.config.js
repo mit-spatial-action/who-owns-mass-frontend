@@ -1,6 +1,5 @@
 import adapter from '@sveltejs/adapter-netlify';
-import { sveltePreprocess } from 'svelte-preprocess';
-import { vitePreprocess } from '@sveltejs/vite-plugin-svelte'
+import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
 import path from 'path';
 
@@ -19,7 +18,6 @@ const config = {
 	},
 	preprocess: [
 		mdsvex(),
-		sveltePreprocess(),
 		vitePreprocess()
 	]
 };
