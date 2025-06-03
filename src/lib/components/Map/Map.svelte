@@ -6,8 +6,6 @@
     
     
     import bbox from "@turf/bbox";
-    /* Helper functions */  
-    // import { drawNetwork, drawNetworkPoints }  from "$lib/components/Map/helper-functions/DrawNetwork.js";
     import type { MapOptions, LngLat, LngLatBoundsLike, Map } from 'mapbox-gl';
     import mapConfig from "$lib/config/map.json";
     import "mapbox-gl/dist/mapbox-gl.css";
@@ -30,7 +28,6 @@
         "markers": []
     };
 
-    export let style = mapConfig.style;
     export let projection = mapConfig.projection;
     export let initLngLat = new mapbox.LngLat(
         mapConfig.init.lngLat[0],
@@ -308,6 +305,53 @@
         };
     }
 
+    const addAllLayers = async (map:Map) => {
+        map.addSource("sites", {
+            type: "vector",
+            url: "mapbox://mit-spatial-action.who-owns-mass-sites",
+        });
+
+        map.addLayer({
+            id: "sites",
+            source: "sites",
+            // maxzoom: resultZoom,
+            "source-layer": "geographies",
+            type: "circle",
+            paint: {
+                "circle-pitch-alignment": "map",
+                "circle-radius": [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    resultZoom - 4,
+                    0,
+                    resultZoom,
+                    8
+                ],
+                "circle-color": primary,
+                "circle-stroke-color": "white",
+                "circle-stroke-width": [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    resultZoom - 4,
+                    0,
+                    resultZoom,
+                    1.5
+                ],
+                "circle-opacity": [
+                    'interpolate',
+                    ['linear'],
+                    ['zoom'],
+                    resultZoom - 4,
+                    0,
+                    resultZoom,
+                    0.7
+                ]
+            },
+        });
+    }
+
     // Function to toggle the layer visibility
     const toggleLayerVisibility = (
         map:Map, 
@@ -370,57 +414,6 @@
         };
 
         map = new mapbox.Map(mapOptions)
-        
-        isDark.addEventListener('change', (e) => {
-            map.setStyle(styleSwitch(e.matches))
-        });
-
-        map.on("load", async () => {
-            map.addSource("sites", {
-                type: "vector",
-                url: "mapbox://mit-spatial-action.who-owns-mass-sites",
-            });
-
-            map.addLayer({
-                id: "sites",
-                source: "sites",
-                // maxzoom: resultZoom,
-                "source-layer": "geographies",
-                type: "circle",
-                paint: {
-                    "circle-pitch-alignment": "map",
-                    "circle-radius": [
-                        'interpolate',
-                        ['linear'],
-                        ['zoom'],
-                        resultZoom - 4,
-                        0,
-                        resultZoom,
-                        8
-                    ],
-                    "circle-color": primary,
-                    "circle-stroke-color": "white",
-                    "circle-stroke-width": [
-                        'interpolate',
-                        ['linear'],
-                        ['zoom'],
-                        resultZoom - 4,
-                        0,
-                        resultZoom,
-                        1.5
-                    ],
-                    "circle-opacity": [
-                        'interpolate',
-                        ['linear'],
-                        ['zoom'],
-                        resultZoom - 4,
-                        0,
-                        resultZoom,
-                        0.7
-                    ]
-                },
-            });
-        });
 
         const popup = new mapbox.Popup({
             closeButton: true,
@@ -457,6 +450,8 @@
 
         map.on("style.load", () => {
 
+            addAllLayers(map);
+
             map.on("click", "sites", async (e) => {
                 var feature = e.features[0];
                 await siteNav(feature.properties.site_id)
@@ -482,6 +477,10 @@
                     essential: true,
                 });
             }
+        
+            isDark.addEventListener('change', (e) => {
+                map.setStyle(styleSwitch(e.matches))
+            });
         });
     });
 
