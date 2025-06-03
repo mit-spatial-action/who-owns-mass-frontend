@@ -45,9 +45,9 @@
             <div class="cell">
                 <IconCard title="Last Sale" icon="hand-holding-dollar">
                     {#if site.ls_price}${site.ls_price.toLocaleString()}{:else}Unknown{/if}{#if site.ls_price < 5000}
-                    <a class="icon" on:click={toggleActive}>
+                    <button class="icon" aria-label="Why such a low price?" on:click={toggleActive} on:keydown={toggleActive}>
                         <i class="fas fa-question-circle has-text-primary"></i>
-                    </a>
+                    </button>
                     {/if} on {#if site.ls_date}{new Date(site.ls_date).toLocaleDateString()}{:else}Unknown.{/if}
                 </IconCard>
             </div>
