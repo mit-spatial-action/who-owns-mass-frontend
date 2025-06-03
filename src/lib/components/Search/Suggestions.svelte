@@ -24,7 +24,7 @@
     {#each suggestions as suggestion }
         <li>
         <button transition:slide={{duration:250, axis:'y'}} class="button px-2 py-1 is-small is-responsive"
-        on:click={() => handleClick(suggestion)}>
+        onclick={() => handleClick(suggestion)}>
             <span class="icon">
                 <i class="fa-solid fa-address-book"></i>
             </span>

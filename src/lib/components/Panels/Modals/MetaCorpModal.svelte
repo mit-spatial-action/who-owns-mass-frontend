@@ -76,8 +76,8 @@ $: sortedData = activeTab === "properties"
                         onmouseover={() => highlighted.set(site.id)} 
                         onfocus={() => highlighted.set(site.id)}
                         onmouseleave={() => highlighted.set(null)}>
-                        <div class="card-content has-background-light">
-                            <a href={`/site/${site.id}`} class="has-text-dark is-flex is-justify-content-space-between">
+                        <div class="card-content">
+                            <a href={`/site/${site.id}`} class="is-flex is-justify-content-space-between">
                                 <div>
                                     <div class="has-text-weight-bold">{site.properties.address.addr}</div>
                                     <div>{#if site.properties.address.muni}{`${site.properties.address.muni}, `}{/if}

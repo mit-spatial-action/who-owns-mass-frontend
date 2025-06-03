@@ -14,7 +14,7 @@
 
 </script>
 
-<Modal closeBtn={false} background={"has-background-light"}>
+<Modal closeBtn={false}>
     <div class="modal-content">
         <div class="has-text-centered">
             <div transition:fly={{ 

@@ -20,7 +20,7 @@
 
 <div class="level is-mobile is-small buttons">
   <div class="level-left">
-    <button class="button level-item is-responsive border-success" on:click={makeActive} aria-label="Expand sidebar.">
+    <button class="button level-item is-responsive border-success" onclick={makeActive} aria-label="Expand sidebar.">
       <span class="icon">
         <i class="fa-solid fa-bars"></i>
       </span>
@@ -28,7 +28,7 @@
   </div>
   {#if currentPage.url.pathname !== "/"}
   <div class="level-right">
-    <button class="button level-item is-responsive border-success" on:click={goHome}>
+    <button class="button level-item is-responsive border-success" onclick={goHome}>
       <span class="icon">
         <i class="fa-solid fa-arrow-left"></i>
       </span>

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import HL from "$lib/components/Panels/HL.svelte";
     import { onMount } from "svelte";
     import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
@@ -21,10 +20,10 @@
 <CardHeader color="primary">{site.address.addr}</CardHeader>
 <CardContent>
     <div class="box p-0 is-shadowless">
-        <div class="tag is-medium is-primary is-light border-primary">
+        <div class="tag is-medium">
             {site.address.muni}
         </div>
-        <div class="tag is-medium is-primary is-light border-primary">
+        <div class="tag is-medium">
             {site.address.postal}
         </div>
         <OwnerTags company_name={site.owners[0].properties.name} trust={site.owners[0].properties.trust} />
@@ -45,8 +44,8 @@
             <div class="cell">
                 <IconCard title="Last Sale" icon="hand-holding-dollar">
                     {#if site.ls_price}${site.ls_price.toLocaleString()}{:else}Unknown{/if}{#if site.ls_price < 5000}
-                    <button class="icon" aria-label="Why such a low price?" on:click={toggleActive} on:keydown={toggleActive}>
-                        <i class="fas fa-question-circle has-text-primary"></i>
+                    <button class="icon" aria-label="Why such a low price?" onclick={toggleActive} onkeydown={toggleActive}>
+                        <i class="fas fa-question-circle"></i>
                     </button>
                     {/if} on {#if site.ls_date}{new Date(site.ls_date).toLocaleDateString()}{:else}Unknown.{/if}
                 </IconCard>
@@ -96,10 +95,10 @@
         <div class="grid">
             {#each site.owners as owner, index}
                 <div class="cell">
-                    <div class="card border-primary is-shadowless">
+                    <div class="card is-shadowless">
                         <div class="card-content">
                             <span class="icon-text">
-                                <span class="icon has-text-primary">
+                                <span class="icon">
                                     <i class="fas fa-people-group"></i>
                                 </span>
                                 <span class="has-text-weight-bold">{owner.properties.name}</span>
@@ -112,7 +111,7 @@
     </div>
     <div class="block">
         {#if site.metacorp.prop_count > 1}
-                <p>This owner may own <span class="tag is-medium has-background-primary-light">{site.metacorp.prop_count} properties</span>, including <span class="tag is-medium has-background-primary-light">{Math.round(site.metacorp.unit_count)} units</span>.</p>
+                <p>This owner may own <span class="tag is-medium">{site.metacorp.prop_count} properties</span>, including <span class="tag is-medium">{Math.round(site.metacorp.unit_count)} units</span>.</p>
                 <a class="button mt-5 border-primary is-shadowless" data-sveltekit-preload-data="off" href={`/meta/${site.metacorp.id}`}>
                     See Details &#8594
                 </a>

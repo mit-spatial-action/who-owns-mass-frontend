@@ -1,9 +1,5 @@
-<script>
-    export let color = "success";
-</script>
-
 <header class="card-header is-shadowless">
-    <div class="card-header-title title border-{color} has-text-weight-bold has-background-{color}-light">
+    <div class="card-header-title title has-text-weight-bold">
         <slot></slot>
      </div>
 </header>
