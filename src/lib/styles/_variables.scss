@@ -1,0 +1,20 @@
+
+$primary: #FF5F05;
+$success: #177E8A;
+$link: #177E8A;
+$danger: #d63088;
+$body-background-color: rgba(255, 255, 255, 0.6);
+$sidebar: #F1F0F0;
+$border: #343434;
+$radius: 0rem;
+
+:export {
+  primary: $primary;
+  success: $success;
+  link: $link;
+  danger: $danger;
+  body-background-color: $body-background-color;
+  sidebar: $sidebar;
+  border: $border;
+  radius: $radius;
+}

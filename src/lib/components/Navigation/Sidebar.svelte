@@ -29,14 +29,14 @@
 </div>
 
 <style lang="scss">
-  @use "../../styles";
+  @use "../../styles/variables";
   #sidebar {
     height: 100%;
     position: fixed;
     z-index: 100;
     top: 0;
     left: 0px;
-    border: 0.4rem solid styles.$success;
+    border: 0.4rem solid variables.$success;
     box-shadow: var(--bulma-shadow);
   }
 </style>
