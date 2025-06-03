@@ -8,7 +8,6 @@
     /** @type {import('./$types').PageData} */
 
     export let title: string = "Title";
-    export let subtitle: string = "Longer description";
 
     const imageMap = import.meta.glob('$lib/assets/*.{png,jpg,jpeg}', { eager: true });
     const imageSrc = imageMap['/src/lib/assets/homes_photo.png']?.default || '';
@@ -26,9 +25,6 @@
             <div class="title is-2 is-hidden-mobile has-text-white has-text-centered">
                 <div class="hero-title">{title}</div>
             </div>
-            <!-- <div class="block has-text-centered">
-                {subtitle}
-            </div> -->
         </div>
     </div>
     <div class="block">
@@ -61,7 +57,6 @@
 </footer>
 
 <style lang="scss">
-    @use 'src/lib/styles/vars.scss' as *;
     .level {
         width: 100%;
     }
@@ -70,8 +65,5 @@
         filter: grayscale(1);
         mix-blend-mode: hard-light;
         padding: 6rem 1rem !important;
-    }
-    .hero-title {
-        text-shadow: 0.2rem 0.2rem 0px $primary;
     }
 </style>

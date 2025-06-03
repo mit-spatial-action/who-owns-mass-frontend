@@ -1,4 +1,4 @@
-@use 'vars.scss' as *;
+@use "_variables" as *;
 
 @use "bulma/sass" with (
   $family-primary: '"Manrope Variable", sans-serif',
@@ -25,17 +25,17 @@
     border-radius: 0rem;
 }
 
-.border-success {
-  border-top: 0.05rem dashed $success;
-  border-left: 0.05rem dashed $success;
-  border-right: 0.15rem solid $success;
-  border-bottom: 0.15rem solid $success;
-}
+// .border-success {
+//   border-top: 0.05rem dashed $success;
+//   border-left: 0.05rem dashed $success;
+//   border-right: 0.15rem solid $success;
+//   border-bottom: 0.15rem solid $success;
+// }
 
 
-.border-primary {
-  border-top: 0.05rem dashed $primary;
-  border-left: 0.05rem dashed $primary;
-  border-right: 0.15rem solid $primary;
-  border-bottom: 0.15rem solid $primary;
-}
+// .border-primary {
+//   border-top: 0.05rem dashed $primary;
+//   border-left: 0.05rem dashed $primary;
+//   border-right: 0.15rem solid $primary;
+//   border-bottom: 0.15rem solid $primary;
+// }

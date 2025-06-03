@@ -12,9 +12,7 @@
 </div>
 
 <style lang="scss">
-    @use 'src/lib/styles/vars.scss' as *;
     #mappanel {
         z-index: 0;
-        // border: 0.125rem solid black;
     }
 </style>

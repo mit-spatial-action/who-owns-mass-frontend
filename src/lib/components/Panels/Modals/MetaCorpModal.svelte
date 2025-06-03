@@ -24,33 +24,58 @@ $: sortedData = activeTab === "properties"
     <div class="box">
         <div class="tabs is-boxed">
             <ul>
-            <li class:is-active={activeTab === "properties"}>
-                <a on:click={() => activeTab = "properties"}>Properties</a></li>
-            <li class:is-active={activeTab === "owners"}>
-                <a on:click={() => activeTab = "owners"}>Owners</a></li>
+                <li class:is-active={activeTab === "properties"}>
+                    <!-- svelte-ignore a11y_invalid_attribute -->
+                    <span 
+                        role="button" 
+                        href="#" 
+                        tabindex=0 onclick={() => activeTab = "properties"} 
+                        onkeydown={() => activeTab = "properties"}>
+                        Properties
+                    </span>
+                </li>
+                <li class:is-active={activeTab === "owners"}>
+                    <!-- svelte-ignore a11y_invalid_attribute -->
+                    <a 
+                        role="button" 
+                        href="#" 
+                        tabindex=0 
+                        onclick={() => activeTab = "owners"} 
+                        onkeydown={() => activeTab = "owners"}>
+                        Owners
+                    </a>
+                </li>
             </ul>
         </div>
 
     {#each Object.entries(sortedData) as [town, sites], index}
     <div class="panel is-link is-clickable">
-        <!-- svelte-ignore a11y_no_noninteractive_element_interactions -->
-        <!-- svelte-ignore a11y_click_events_have_key_events -->
-        <p class="has-background-success p-2 has-text-white is-flex is-justify-content-space-between" on:click={() => togglePanel(index)}>
+        <span
+            role="button"
+            tabindex=0
+            class="has-background-success p-2 has-text-white is-flex is-justify-content-space-between" 
+            onclick={() => togglePanel(index)}
+            onkeydown={() => togglePanel(index)}
+            >
             {town + " (" + sites.length + ")"}
             <span class="icon">
                 <i class="fas" class:fa-plus={!openPanels.includes(index)} class:fa-minus={openPanels.includes(index)}></i>
             </span>
-        </p>
+        </span>
         {#if openPanels.includes(index)}
         <div class="fixed-grid has-1-cols" transition:slide>
             <div class="grid">
             {#each sites as site}
                 <div class="cell">
-                    <!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-                    <!-- svelte-ignore a11y_no_static_element_interactions -->
-                    <div class="card border-primary is-shadowless" 
-                    aria-label="Select {site.properties.address}" tabindex="0" data-sveltekit-preload-data="off"
-                    on:mouseover={() => highlighted.set(site.id)} on:focus={() => highlighted.set(site.id)} on:mouseleave={() => highlighted.set(null)}>
+                    <div 
+                        class="card border-primary is-shadowless" 
+                        role="button"
+                        tabindex=0
+                        aria-label="Select {site.properties.address}"
+                        data-sveltekit-preload-data="off"
+                        onmouseover={() => highlighted.set(site.id)} 
+                        onfocus={() => highlighted.set(site.id)}
+                        onmouseleave={() => highlighted.set(null)}>
                         <div class="card-content has-background-light">
                             <a href={`/site/${site.id}`} class="has-text-dark is-flex is-justify-content-space-between">
                                 <div>
