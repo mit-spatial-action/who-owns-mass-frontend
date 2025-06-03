@@ -11,7 +11,6 @@
     import mapConfig from "$lib/config/map.json";
     import "mapbox-gl/dist/mapbox-gl.css";
 
-    import Device from "svelte-device-info";
     import {
         site,
         metacorp,
@@ -25,8 +24,6 @@
 
     export let mapboxToken: string;
     mapbox.accessToken = mapboxToken;
-
-    let mobile:boolean = false;
 
     let intervals = {
         "circles": [],
