@@ -38,16 +38,18 @@
     <div class="panel-heading is-size-7 is-size-6-tablet">Search for an Address or Owner</div>
     <div class="panel-tabs is-size-7 is-size-6-tablet">
         {#each searchModes as mode}
+            <!-- svelte-ignore a11y_invalid_attribute -->
             <a 
-            role="button"
-            href="#"
-            tabindex=0
-            class:is-active={mode.id === hover.id} 
-            onmouseenter={() => setHover(mode)}
-            onmouseleave={() => setHover(active)}
-            onclick ={() => setActive(mode)}
-            onkeydown ={() => setActive(mode)}
-            >{mode.displayName}</a>
+                role="button"
+                href="#"
+                tabindex=0
+                class:is-active={mode.id === hover.id} 
+                onmouseenter={() => setHover(mode)}
+                onmouseleave={() => setHover(active)}
+                onclick ={() => setActive(mode)}
+                onkeydown ={() => setActive(mode)}>
+                {mode.displayName}
+            </a>
         {/each}
     </div>
     <div class="panel-block is-flex is-justify-content-center">

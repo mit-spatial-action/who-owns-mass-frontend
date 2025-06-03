@@ -25,15 +25,17 @@ $: sortedData = activeTab === "properties"
         <div class="tabs is-boxed">
             <ul>
                 <li class:is-active={activeTab === "properties"}>
-                    <a 
+                    <!-- svelte-ignore a11y_invalid_attribute -->
+                    <span 
                         role="button" 
                         href="#" 
                         tabindex=0 onclick={() => activeTab = "properties"} 
                         onkeydown={() => activeTab = "properties"}>
                         Properties
-                    </a>
+                    </span>
                 </li>
                 <li class:is-active={activeTab === "owners"}>
+                    <!-- svelte-ignore a11y_invalid_attribute -->
                     <a 
                         role="button" 
                         href="#" 
