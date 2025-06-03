@@ -39,10 +39,14 @@
     <div class="panel-tabs is-size-7 is-size-6-tablet">
         {#each searchModes as mode}
             <a 
+            role="button"
+            href="#"
+            tabindex=0
             class:is-active={mode.id === hover.id} 
             onmouseenter={() => setHover(mode)}
             onmouseleave={() => setHover(active)}
             onclick ={() => setActive(mode)}
+            onkeydown ={() => setActive(mode)}
             >{mode.displayName}</a>
         {/each}
     </div>
