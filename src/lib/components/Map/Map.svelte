@@ -16,7 +16,6 @@
         site,
         metacorp,
         loadState,
-        homeState,
         errorState,
         gcResult,
         mapLoaded,
@@ -108,6 +107,10 @@
                 highlighted.set(null);
             })
         }
+    }
+
+    const styleSwitch = (dark:Boolean) => {
+        return dark ? mapConfig.style.dark : mapConfig.style.light;
     }
 
     const clearLayers = async (map:Map, layerIds:string[]) => {
@@ -350,12 +353,13 @@
     $: $mapLoaded && !$site && !$metacorp ? clearIntervals(intervals.circles) : null;
     $: $mapLoaded && !$site && !$metacorp && map.getLayer("selectedMarkers") ? clearLayers(map, ["selectedMarkers", "selectedCircles"]) : null;
 
-    // $: toggleLayerVisibility($homeState, "hexes");
-
     onMount(() => {
+
+        const isDark = window.matchMedia('(prefers-color-scheme: dark)');
+        
         let mapOptions:MapOptions = {
             container: "map",
-            style: style,
+            style: styleSwitch(isDark.matches),
             center: initLngLat,
             zoom: initZoom.length === 2 ? initZoom[0] : initZoom,
             bearing: mapConfig.init.bearing,
@@ -366,6 +370,10 @@
         };
 
         map = new mapbox.Map(mapOptions)
+        
+        isDark.addEventListener('change', (e) => {
+            map.setStyle(styleSwitch(e.matches))
+        });
 
         map.on("load", async () => {
             map.addSource("sites", {
