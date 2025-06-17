@@ -1,6 +1,8 @@
 # Who Owns Massachusetts Frontend
 
+<!-- badges: start -->
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![Project Status: WIP – Initial development is in progress, but there has not yet been a stable, usable release suitable for the public.](https://www.repostatus.org/badges/latest/wip.svg)](https://www.repostatus.org/#wip) [![Netlify Status](https://api.netlify.com/api/v1/badges/2c1b6580-ad37-4653-806f-b085e9e85e09/deploy-status)](https://app.netlify.com/sites/who-owns-mass-frontend/deploys) [![DOI](https://zenodo.org/badge/758640877.svg)](https://zenodo.org/badge/latestdoi/758640877) 
+<!-- badges: end -->
 
 ![Screenshot of the Who Owns Massachusetts Interface](static/who-owns-mass-frontend.png)
 
