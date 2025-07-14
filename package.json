@@ -28,6 +28,6 @@
 		"svelte": "^5.35.7",
 		"svelte-routing": "^2.13.0",
 		"typescript": "^5.8.3",
-		"vite": "^6.3.5"
+		"vite": "^7.0.4"
 	}
 }
