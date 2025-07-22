@@ -1,8 +1,5 @@
 {
-    "style": {
-        "light": "mapbox://styles/mit-spatial-action/cm48koxca01gg01rw95tsa29c",
-        "dark": "mapbox://styles/mit-spatial-action/cmbgu6vvt006z01sdg1xnh4vi"
-    },
+    "style": "mapbox://styles/mit-spatial-action/cm48koxca01gg01rw95tsa29c",
     "maxBounds": [
         -73.507239199792,41.23908260581605,
         -69.92871308883089,42.88675909238091

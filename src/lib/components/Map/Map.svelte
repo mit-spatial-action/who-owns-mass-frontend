@@ -38,6 +38,7 @@
     export let initZoomDur = mapConfig.init.zoomDur;
     export let resultZoom = mapConfig.resultZoom;
 
+    let container;
     let map:Map;
 
     const flyToLngLat = (map:Map, lngLat:LngLat, zoom:number = resultZoom) => {
@@ -106,8 +107,8 @@
         }
     }
 
-    const styleSwitch = (dark:Boolean) => {
-        return dark ? mapConfig.style.dark : mapConfig.style.light;
+    const nightLight = (dark:Boolean) => {
+        return dark ? "night" : "day";
     }
 
     const clearLayers = async (map:Map, layerIds:string[]) => {
@@ -398,12 +399,9 @@
     $: $mapLoaded && !$site && !$metacorp && map.getLayer("selectedMarkers") ? clearLayers(map, ["selectedMarkers", "selectedCircles"]) : null;
 
     onMount(() => {
-
-        const isDark = window.matchMedia('(prefers-color-scheme: dark)');
-        
         let mapOptions:MapOptions = {
-            container: "map",
-            style: styleSwitch(isDark.matches),
+            container: container,
+            style: mapConfig.style,
             center: initLngLat,
             zoom: initZoom.length === 2 ? initZoom[0] : initZoom,
             bearing: mapConfig.init.bearing,
@@ -449,7 +447,12 @@
         });
 
         map.on("style.load", () => {
-
+            let isDark = window.matchMedia('(prefers-color-scheme: dark)');
+            map.setConfigProperty('basemap', 'lightPreset', nightLight(isDark.matches));
+            isDark.addEventListener('change', (e) => {
+                map.setConfigProperty('basemap', 'lightPreset', nightLight(e.matches))
+            });
+            
             addAllLayers(map);
 
             map.on("click", "sites", async (e) => {
@@ -477,10 +480,6 @@
                     essential: true,
                 });
             }
-        
-            isDark.addEventListener('change', (e) => {
-                map.setStyle(styleSwitch(e.matches))
-            });
         });
     });
 
@@ -491,7 +490,7 @@
 
 </script>
 
-<div id="map"></div>
+<div id="map" bind:this={container}></div>
 
 <style>
     #map {
