@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
     import SocialIcon from "$lib/components/Panels/Cards/SocialIcon.svelte";
-    export let org;
+  let { org } = $props();
     const imageMap = import.meta.glob('$lib/assets/logos/*.{png,jpg,jpeg}', { eager: true });
     const imageSrc = imageMap[`/src/lib/assets/logos/${org.logo}`]?.default || '';
 </script>
@@ -20,7 +20,7 @@
                 <p class="title is-size-4 is-size-7-mobile p-1">{org.name}</p>
             </div>
         </div>
-        {#if org.description }
+        {#if org.description}
         <div class="content">
             {org.description}
         </div>

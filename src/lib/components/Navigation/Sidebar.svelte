@@ -1,9 +1,8 @@
 <script lang="ts">
-  export let menuItems;
   import { fly } from 'svelte/transition';
   import siteConfig from "$lib/config/site.json";
 
-  export let active;
+  let { menuItems, active = $bindable() } = $props();
 
   const makeInactive = () => {
     active = false;

@@ -1,6 +1,10 @@
 <script lang="ts">
     import { slide } from 'svelte/transition';
-    export let errorState: string;
+    interface Props {
+        errorState: string;
+    }
+
+    let { errorState }: Props = $props();
     const states = {
         "addressNotFound": {
             "descShort": "We couldn't find this address!",

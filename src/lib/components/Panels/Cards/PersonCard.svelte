@@ -1,6 +1,6 @@
-<script>
+<script lang="ts">
     import SocialIcon from "$lib/components/Panels/Cards/SocialIcon.svelte";
-    export let person;
+  let { person } = $props();
     const imageMap = import.meta.glob('$lib/assets/*.{png,jpg,jpeg}', { eager: true });
     const imageSrc = imageMap[`/src/lib/assets/${person.photo}`]?.default || '';
 </script>

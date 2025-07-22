@@ -1,9 +1,8 @@
-<script>
-    export let socialUrl;
-    let icon;
-    let name;
-    export let color;
-    let set = "brands";
+<script lang="ts">
+    let icon = $state();
+    let name = $state();
+    let { socialUrl, color } = $props();
+    let set = $state("brands");
     if (socialUrl.includes("github.com")) {
         icon = "github"
         name = "Github"

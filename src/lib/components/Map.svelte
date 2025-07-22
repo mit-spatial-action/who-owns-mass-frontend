@@ -1,4 +1,6 @@
 <script lang="ts">
+    import { run } from 'svelte/legacy';
+
     import { onDestroy, onMount } from "svelte";
     import { siteNav, mapbox } from "$lib/scripts/utils";
     import type { FeatureCollection, Feature } from "geojson";
@@ -20,23 +22,35 @@
         highlighted
     } from "$lib/stores";
 
-    export let mapboxToken: string;
-    mapbox.accessToken = mapboxToken;
-
     let intervals = {
         "circles": [],
         "markers": []
     };
 
-    export let projection = mapConfig.projection;
-    export let initLngLat = new mapbox.LngLat(
+    interface Props {
+        mapboxToken: string;
+        projection?: any;
+        initLngLat?: any;
+        maxBounds?: LngLatBoundsLike;
+        initZoom?: any;
+        initZoomDur?: any;
+        resultZoom?: any;
+    }
+
+    let {
+        mapboxToken,
+        projection = mapConfig.projection,
+        initLngLat = new mapbox.LngLat(
         mapConfig.init.lngLat[0],
         mapConfig.init.lngLat[1]
-    );
-    export let maxBounds:LngLatBoundsLike = new mapbox.LngLatBounds(mapConfig.maxBounds);
-    export let initZoom = mapConfig.init.zoom;
-    export let initZoomDur = mapConfig.init.zoomDur;
-    export let resultZoom = mapConfig.resultZoom;
+    ),
+        maxBounds = new mapbox.LngLatBounds(mapConfig.maxBounds),
+        initZoom = mapConfig.init.zoom,
+        initZoomDur = mapConfig.init.zoomDur,
+        resultZoom = mapConfig.resultZoom
+    }: Props = $props();
+
+    mapbox.accessToken = mapboxToken;
 
     let container;
     let map:Map;
@@ -389,14 +403,26 @@
     }
     
     loadState.set(true);
-    $: $mapLoaded && $gcResult ? flyToQuery(map, $gcResult) : null;
-    $: $mapLoaded && $metacorp ? renderGeoJSONLayer(map, $metacorp.sites) : null;
-    $: $mapLoaded && $site ? renderGeoJSONLayer(map, $site) : null;
-    $: $mapLoaded && $highlighted ? highlightHovered(map, $highlighted, "selectedMarkers") : null;
+    run(() => {
+        $mapLoaded && $gcResult ? flyToQuery(map, $gcResult) : null;
+    });
+    run(() => {
+        $mapLoaded && $metacorp ? renderGeoJSONLayer(map, $metacorp.sites) : null;
+    });
+    run(() => {
+        $mapLoaded && $site ? renderGeoJSONLayer(map, $site) : null;
+    });
+    run(() => {
+        $mapLoaded && $highlighted ? highlightHovered(map, $highlighted, "selectedMarkers") : null;
+    });
 
     // Clear selected markers when "Return to Map" button is clicked
-    $: $mapLoaded && !$site && !$metacorp ? clearIntervals(intervals.circles) : null;
-    $: $mapLoaded && !$site && !$metacorp && map.getLayer("selectedMarkers") ? clearLayers(map, ["selectedMarkers", "selectedCircles"]) : null;
+    run(() => {
+        $mapLoaded && !$site && !$metacorp ? clearIntervals(intervals.circles) : null;
+    });
+    run(() => {
+        $mapLoaded && !$site && !$metacorp && map.getLayer("selectedMarkers") ? clearLayers(map, ["selectedMarkers", "selectedCircles"]) : null;
+    });
 
     onMount(() => {
         let mapOptions:MapOptions = {

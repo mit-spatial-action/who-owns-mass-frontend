@@ -1,9 +1,14 @@
 <script lang="ts">
     import { fade } from 'svelte/transition';
-    export let closeBtn:Boolean = true;
-    export let open;
+    interface Props {
+        closeBtn?: Boolean;
+        open: any;
+        children?: import('svelte').Snippet;
+    }
 
-    let isVisible = true;
+    let { closeBtn = true, open = $bindable(), children }: Props = $props();
+
+    let isVisible = $state(true);
     const destroySelf = () => {
         isVisible = false;
         open = false;
@@ -14,7 +19,7 @@
 {#if isVisible}
 <div class="modal is-active" transition:fade={{duration: 400}}>
     <div class="modal-background onclick={() => open = false}"></div>
-      <slot/>
+      {@render children?.()}
     {#if closeBtn}
         <button class="modal-close is-large" aria-label="Close modal" onclick={destroySelf}></button>
     {/if}

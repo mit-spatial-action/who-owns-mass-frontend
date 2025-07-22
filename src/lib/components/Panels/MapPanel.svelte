@@ -1,10 +1,10 @@
 <script lang="ts">
-    import Map from "$lib/components/Map/Map.svelte";
+    import Map from "$lib/components/Map.svelte";
     import { PUBLIC_MAPBOX_TOKEN } from '$env/static/public';
 </script>
 
 <div id="mappanel" class="column">
-    {#if PUBLIC_MAPBOX_TOKEN }
+    {#if PUBLIC_MAPBOX_TOKEN}
     <Map 
         mapboxToken={PUBLIC_MAPBOX_TOKEN}
         />

@@ -4,11 +4,11 @@
     import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
     import IconCard from "$lib/components/Panels/Cards/IconCard.svelte";
     import ErrorMessage from "./ErrorMessage.svelte";
-    export let site;
     import landUseCodes from "$lib/config/landuse.json";
     import OwnerTags from "./OwnerTags.svelte";
+   let { site } = $props();
 
-   let priceInfoActive = true;
+   let priceInfoActive = $state(true);
 
    const toggleActive = () => {
       priceInfoActive = !priceInfoActive;
@@ -33,7 +33,7 @@
         <div class="grid">
             <div class="cell">
                 <IconCard title="Period" icon="calendar">
-                    {#if site.fy }July 1, {site.fy-1}--June 30, {site.fy}{:else}Unknown.{/if}
+                    {#if site.fy}July 1, {site.fy-1}--June 30, {site.fy}{:else}Unknown.{/if}
                 </IconCard>
             </div>
             <div class="cell">
@@ -84,7 +84,7 @@
     </div>
     {#if !priceInfoActive && site.ls_price}
         <ErrorMessage errorState="quitClaimDeed" />
-    {:else if !priceInfoActive }
+    {:else if !priceInfoActive}
         <ErrorMessage errorState="priceUnknown" />
     {/if}
     {#if site.fy < 2024}

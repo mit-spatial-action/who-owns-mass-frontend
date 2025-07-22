@@ -1,9 +1,13 @@
 <script lang="ts">
     import { onMount, onDestroy } from 'svelte';
 
-    export let suggestions = [];
-    export let loading = false;
-    export let noresult = false;
+    interface Props {
+        suggestions?: any;
+        loading?: boolean;
+        noresult?: boolean;
+    }
+
+    let { suggestions = $bindable([]), loading = $bindable(false), noresult = $bindable(false) }: Props = $props();
 
     const buildResults = (results) => {
         results = results.map((r) => {

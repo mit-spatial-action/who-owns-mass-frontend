@@ -1,13 +1,12 @@
-<script>
-    export let title;
-    export let icon;
+<script lang="ts">
     import IconText from "$lib/components/Panels/Cards/IconText.svelte"
+    let { title, icon, children } = $props();
 </script>
 
 <div class="box p-2 is-shadowless border-primary">
     <IconText title={title} icon={icon}/>
 <div class="block">
-    <slot/>
+    {@render children?.()}
 </div>
 </div>
 

@@ -3,7 +3,7 @@
     import { gcResult, metacorp} from "$lib/stores";
 
     import { slide } from 'svelte/transition';
-    export let suggestions = [];
+    let { suggestions = $bindable([]) } = $props();
 
     const handleClick = (suggestion) => {
         (document.getElementById('searchbar') as HTMLInputElement).value = suggestion.text
@@ -29,7 +29,7 @@
                 <i class="fa-solid fa-address-book"></i>
             </span>
             <span>
-                {#if suggestion.location }
+                {#if suggestion.location}
                      {suggestion.text}, {suggestion.location}
                 {:else}
                      {suggestion.text}

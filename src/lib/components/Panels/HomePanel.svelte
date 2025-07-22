@@ -5,14 +5,19 @@
     import ErrorMessage from "$lib/components/Panels/ErrorMessage.svelte";
     import siteConfig from "$lib/config/site.json";
     
-    /** @type {import('./$types').PageData} */
+    
 
-    export let title: string = "Title";
 
     const imageMap = import.meta.glob('$lib/assets/*.{png,jpg,jpeg}', { eager: true });
     const imageSrc = imageMap['/src/lib/assets/homes_photo.png']?.default || '';
 
     import { errorState } from "$lib/stores";
+    interface Props {
+        /** @type {import('./$types').PageData} */
+        title?: string;
+    }
+
+    let { title = "Title" }: Props = $props();
  
 </script>
 
@@ -27,7 +32,7 @@
     <div class="block">
         <SearchPanel/>
     </div>
-    {#if $errorState }
+    {#if $errorState}
         <div class="block is-flex has-content-centered is-justify-content-center">
             <ErrorMessage errorState={$errorState} />
         </div>

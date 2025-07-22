@@ -1,6 +1,5 @@
-<script>
-    export let mode;
-    export let color;
+<script lang="ts">
+    let { mode, color } = $props();
 </script>
 
 <p id="searchbar" class="control has-icons-left">

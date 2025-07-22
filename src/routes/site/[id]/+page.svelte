@@ -1,9 +1,11 @@
 <script lang="ts">
+	import type { PageProps } from './$types';
 	import SitePanel from "$lib/components/Panels/SitePanel.svelte";
 	import { site, metacorp, homeState } from "$lib/stores";
     import { slide } from 'svelte/transition';
-  	/** @type {{ data: import('./$types').PageData }} */
-	let { data } = $props();
+
+	let { data }: PageProps = $props();
+	
 	$effect(() => {
 		if (data.siteData) {
 			site.set(data.siteData);

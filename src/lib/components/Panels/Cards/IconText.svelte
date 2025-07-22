@@ -1,6 +1,5 @@
-<script>
-    export let title;
-    export let icon;
+<script lang="ts">
+    let { title, icon, children } = $props();
 </script>
 
 <div class="icon-text">
@@ -8,5 +7,5 @@
         <i class="fas fa-{icon}"></i>
     </span>
     <span class="has-text-weight-bold">{title}</span>
-    <slot/>
+    {@render children?.()}
 </div>

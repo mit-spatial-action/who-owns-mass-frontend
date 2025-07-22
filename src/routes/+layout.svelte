@@ -1,15 +1,18 @@
 <script lang="ts">
+
+	import type { LayoutProps } from './$types';
     import siteConfig from "$lib/config/site.json";
     import "$lib/styles/styles.scss";
     import InfoPanel from "$lib/components/Panels/InfoPanel.svelte";
     import RippleLoader from "$lib/components/RippleLoader.svelte";
     import MapPanel from "$lib/components/Panels/MapPanel.svelte";
 
-    import { loadState, site } from "$lib/stores";
+    import { loadState } from "$lib/stores";
 
     import "@fontsource-variable/manrope";
 
     import { page } from "$app/state";
+    let { children }: LayoutProps = $props();
 </script>
 
 <svelte:head>
@@ -27,7 +30,7 @@
         {/if}
         <div id="panels" class="columns">
             <InfoPanel>
-                <slot />
+                {@render children()}
             </InfoPanel>
             <MapPanel />
         </div>

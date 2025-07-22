@@ -10,10 +10,10 @@
         highlighted
     } from "$lib/stores";
 
-    export let metacorp;
+   let { metacorp } = $props();
 
-    let modalOpen = false;
-    let activeTab = "properties";
+    let modalOpen = $state(false);
+    let activeTab = $state("properties");
    
     const openModal = (modalType) => {
         modalOpen = modalOpen ? false : modalOpen; // Resets modalOpen variable 

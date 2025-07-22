@@ -2,9 +2,13 @@
     import { page } from '$app/stores';
     import { goto } from '$app/navigation';
 
-    export let active = false;
+  interface Props {
+    active?: boolean;
+  }
 
-    let currentPage;
+  let { active = $bindable(false) }: Props = $props();
+
+    let currentPage = $state();
 
     page.subscribe(value => {
         currentPage = value;

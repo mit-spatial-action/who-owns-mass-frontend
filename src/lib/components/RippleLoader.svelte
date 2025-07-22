@@ -1,15 +1,24 @@
-<script>
+<script lang="ts">
     import { fly } from 'svelte/transition';
     import Modal from "$lib/components/Panels/Modals/Modal.svelte";
 
-    export let duration = 1.2;
-    export let borderWidth = 4;
     
-    export let flyInProps = {
+    interface Props {
+        duration?: number;
+        borderWidth?: number;
+        flyInProps?: any;
+        denom?: number;
+    }
+
+    let {
+        duration = 1.2,
+        borderWidth = 4,
+        flyInProps = {
         "duration": 500,
         "distance": 150
-    };
-	export let denom = 4; 
+    },
+        denom = 4
+    }: Props = $props();
     const steps = Array.from(Array(denom - 1), (_, i) => i + 1)
 
 </script>

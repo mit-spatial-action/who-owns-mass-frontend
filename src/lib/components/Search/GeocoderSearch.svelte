@@ -7,10 +7,14 @@
     import { PUBLIC_MAPBOX_TOKEN } from '$env/static/public'; // How to access from client side?
 
     let geocoder;
-    export let suggestions = [];
     
-    export let noresult=false;
-    export let loading=false;
+    interface Props {
+        suggestions?: any;
+        noresult?: boolean;
+        loading?: boolean;
+    }
+
+    let { suggestions = $bindable([]), noresult = $bindable(false), loading = $bindable(false) }: Props = $props();
 
     const buildResults = (results) => {
         results = results.map((r) => {

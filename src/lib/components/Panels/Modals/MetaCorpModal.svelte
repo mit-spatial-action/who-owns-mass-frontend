@@ -1,12 +1,16 @@
 <script lang="ts">
-    export let townGroups;
-    export let ownerGroups;
-    export let activeTab: string | null = "properties";
 
     import IconText from "$lib/components/Panels/Cards/IconText.svelte"
     import { slide } from "svelte/transition";
     import { highlighted } from "$lib/stores";
-    let openPanels = []; // Array to track open modal panels
+    interface Props {
+        townGroups: any;
+        ownerGroups: any;
+        activeTab?: string | null;
+    }
+
+    let { townGroups, ownerGroups, activeTab = $bindable("properties") }: Props = $props();
+    let openPanels = $state([]); // Array to track open modal panels
 
 function togglePanel(index) {
     if (openPanels.includes(index)) {
@@ -16,8 +20,8 @@ function togglePanel(index) {
     }
 }
 
-$: sortedData = activeTab === "properties"
-    ? townGroups : ownerGroups;
+let sortedData = $derived(activeTab === "properties"
+    ? townGroups : ownerGroups);
 
 </script>
 <div class="modal-content">
