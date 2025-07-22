@@ -17,8 +17,6 @@ try {
   const contents = await readFileSync('build/_redirects', 'utf8');
   const newContents = redirectsContent + contents;
   await writeFileSync('build/_redirects', newContents)
-  console.log("Redirects file generated with API URL:", apiUrl);
 } catch (error) {
-  console.error("Failed to write redirects file:", error);
   process.exit(1);
 }
