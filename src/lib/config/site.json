@@ -92,8 +92,7 @@
     ],
     "pages": [
         {"Home": "/"},
-        {"Who We Are": "/who-we-are"},
-        {"Our Methodology": "/methodology"}
+        {"Who We Are": "/who-we-are"}
     ],
     "keywords": [
         "evictions",

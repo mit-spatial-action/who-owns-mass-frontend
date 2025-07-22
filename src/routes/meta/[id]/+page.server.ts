@@ -6,6 +6,10 @@ export const load: PageLoad = async ({ params, fetch }) => {
     const { id } = params;
     const metaCorpData = await getFromApi(fetch, '/api', API_TOKEN, 'metacorps', id);
     return { 
-        metaCorpData 
+        metaCorpData,
+        seo: {
+			title: metaCorpData.name,
+			description: `We found up to ${metaCorpData.unit_count} units and ${metaCorpData.prop_count} properties owned by ${metaCorpData.name}`
+		}
     }
 };
