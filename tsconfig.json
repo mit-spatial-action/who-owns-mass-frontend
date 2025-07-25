@@ -6,6 +6,7 @@
       "resolveJsonModule": true,
       "moduleResolution": "node",
       "esModuleInterop": true,
+      "allowImportingTsExtensions": true,
       "types": [
         "@sveltejs/kit", 
         "svelte"
@@ -13,7 +14,8 @@
     },
     "include": [
       "src/**/*", 
-      "svelte.config.js"
+      "svelte.config.js",
+      ".svelte-kit/ambient.d.ts"
     ],
     "exclude": ["node_modules"]
   }
