@@ -1,10 +1,10 @@
 <script lang="ts">
     import { slide } from 'svelte/transition';
     interface Props {
-        errorState: string;
+        error: string;
     }
 
-    let { errorState }: Props = $props();
+    let { error }: Props = $props();
     const states = {
         "addressNotFound": {
             "descShort": "We couldn't find this address!",
@@ -39,13 +39,13 @@
     }
  </script>
  
- <article transition:slide={{duration:100, axis:'y'}} class="message is-{states[errorState].color}">
-    {#if states[errorState].descShort}
+ <article transition:slide={{duration:100, axis:'y'}} class="message is-{states[error].color}">
+    {#if states[error].descShort}
     <div class="message-header is-size-7 is-size-6-tablet">
-        {states[errorState].descShort}
+        {states[error].descShort}
     </div>
     {/if}
     <div class="message-body is-size-7 is-size-6-tablet">
-        {states[errorState].descLong}
+        {states[error].descLong}
     </div>
 </article>
