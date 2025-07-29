@@ -7,6 +7,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
     const metacorp = await getFromApi(fetch, '/api', API_TOKEN, 'metacorps', id);
     return { 
         metacorp,
+        geojson: metacorp.sites,
         seo: {
 			title: metacorp.name,
 			description: `We found up to ${metacorp.unit_count} units and ${metacorp.prop_count} properties owned by ${metacorp.name}`

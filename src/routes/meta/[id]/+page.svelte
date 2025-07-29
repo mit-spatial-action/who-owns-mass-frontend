@@ -8,6 +8,7 @@
 	import OwnerTags from "$lib/components/Panels/OwnerTags.svelte";
 	import { appState } from "$lib/state.svelte";
 	import { slide } from "svelte/transition";
+	import { addGeoJSONLayer } from "$lib/scripts/utils";
 
 	let modalOpen = $state(false);
 	let activeTab = $state("properties");
@@ -15,7 +16,10 @@
 	let { data }: PageProps = $props();
 
 	$effect(() => {
-		if (data.metacorp) appState.metacorp = data.metacorp;
+		if (data.metacorp) {
+			appState.metacorp = data.metacorp;
+			addGeoJSONLayer(data.geojson);
+		}
 	});
 
 	const openModal = (modalType) => {

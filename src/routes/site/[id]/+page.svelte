@@ -6,6 +6,7 @@
 	import landUseCodes from "$lib/config/landuse.json";
 	import OwnerTags from "$lib/components/Panels/OwnerTags.svelte";
 	import { appState } from "$lib/state.svelte";
+	import { addGeoJSONLayer } from "$lib/scripts/utils";
 	import { slide } from "svelte/transition";
 
 	import type { PageProps } from "./$types";
@@ -18,7 +19,10 @@
 	};
 
 	$effect(() => {
-		if (data.site) appState.site = data.site;
+		if (data.site) {
+			appState.site = data.site;
+			addGeoJSONLayer(data.geojson)
+		}
 	});
 </script>
 

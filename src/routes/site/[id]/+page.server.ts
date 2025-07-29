@@ -7,6 +7,7 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
     const site = await getFromApi(fetch, '/api', API_TOKEN, 'sites', id);
     return { 
         site: site.properties,
+        geojson: site,
         seo: {
 			title: site.properties.address.addr,
 			description: `${site.properties.address.addr} is owned by ${site.properties.owners[0].properties.name} (potentially among others).`

@@ -1,6 +1,6 @@
 <script lang="ts">
     let { org } = $props();
-    const imageMap = import.meta.glob('$lib/assets/logos/*.{png,jpg,jpeg}', { eager: true });
+    const imageMap = import.meta.glob<{ default: string }>('$lib/assets/logos/*.{png,jpg,jpeg}', { eager: true });
     const imageSrc = imageMap[`/src/lib/assets/logos/${org.logo}`]?.default || '';
 </script>
 

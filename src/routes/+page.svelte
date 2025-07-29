@@ -1,9 +1,9 @@
 <script lang="ts">
     import SearchPanel from "$lib/components/Search/SearchPanel.svelte";
-    import OrgLogo from "$lib/components/Panels/OrgLogo.svelte";
+    import LogoLink from "$lib/components/LogoLink.svelte";
     import siteConfig from "$lib/config/site.json";
 
-    const imageMap = import.meta.glob("$lib/assets/*.{png,jpg,jpeg}", {
+    const imageMap = import.meta.glob<{ default: string }>("$lib/assets/*.{png,jpg,jpeg}", {
         eager: true,
     });
     const imageSrc = imageMap["/src/lib/assets/homes_photo.png"]?.default || "";
@@ -30,17 +30,17 @@
     <div class="level is-mobile pt-3">
         {#each siteConfig.org as org}
             <div class="level-item">
-                <OrgLogo {org} />
+                <LogoLink {org} />
             </div>
         {/each}
         {#each siteConfig.partners as org}
             <div class="level-item">
-                <OrgLogo {org} />
+                <LogoLink {org} />
             </div>
         {/each}
         {#each siteConfig.funders as org}
             <div class="level-item">
-                <OrgLogo {org} />
+                <LogoLink {org} />
             </div>
         {/each}
     </div>
