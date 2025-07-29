@@ -22,7 +22,7 @@
         {#each modes as mode}
             <a 
                 role="button"
-                href="#"
+                href={"#"}
                 tabindex=0
                 class:is-active={mode.id === hover.id} 
                 onmouseenter={() => hover = mode}
