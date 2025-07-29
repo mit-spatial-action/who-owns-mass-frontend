@@ -1,13 +1,9 @@
 <script lang="ts">
-
-	import type { LayoutProps } from './$types';
+    import type { LayoutProps } from "./$types";
     import siteConfig from "$lib/config/site.json";
     import "$lib/styles/styles.scss";
-    import InfoPanel from "$lib/components/Panels/InfoPanel.svelte";
-    import RippleLoader from "$lib/components/RippleLoader.svelte";
-    import MapPanel from "$lib/components/Panels/MapPanel.svelte";
-
-    import { loadState } from "$lib/stores";
+    import InfoPanel from "$lib/components/InfoPanel.svelte";
+    import Map from "$lib/components/Map.svelte";
 
     import "@fontsource-variable/manrope";
 
@@ -16,7 +12,11 @@
 </script>
 
 <svelte:head>
-    <title>{page.data?.seo?.title ? [page.data.seo.title, siteConfig.title].join(" | ") : siteConfig.title}</title>
+    <title
+        >{page.data?.seo?.title
+            ? [page.data.seo.title, siteConfig.title].join(" | ")
+            : siteConfig.title}</title
+    >
     <meta
         name="description"
         content={page.data?.seo?.description || siteConfig.description}
@@ -25,14 +25,11 @@
 
 <section class="hero is-fullheight">
     <div class="hero-body p-0">
-        {#if $loadState}
-            <RippleLoader />
-        {/if}
         <div id="panels" class="columns">
             <InfoPanel>
                 {@render children()}
             </InfoPanel>
-            <MapPanel />
+            <Map />
         </div>
     </div>
 </section>
