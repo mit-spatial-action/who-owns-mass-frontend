@@ -28,20 +28,17 @@ let sortedData = $derived(activeTab === "properties"
         <div class="tabs is-boxed">
             <ul>
                 <li class:is-active={activeTab === "properties"}>
-                    <!-- svelte-ignore a11y_invalid_attribute -->
                     <span 
-                        role="button" 
-                        href="#" 
+                        role="button"
                         tabindex=0 onclick={() => activeTab = "properties"} 
                         onkeydown={() => activeTab = "properties"}>
                         Properties
                     </span>
                 </li>
                 <li class:is-active={activeTab === "owners"}>
-                    <!-- svelte-ignore a11y_invalid_attribute -->
                     <a 
                         role="button" 
-                        href="#" 
+                        href={"#"} 
                         tabindex=0 
                         onclick={() => activeTab = "owners"} 
                         onkeydown={() => activeTab = "owners"}>

@@ -8,7 +8,7 @@
 	import OwnerTags from "$lib/components/Panels/OwnerTags.svelte";
 	import { appState } from "$lib/state.svelte";
 	import { slide } from "svelte/transition";
-	
+
 	let modalOpen = $state(false);
 	let activeTab = $state("properties");
 
@@ -159,13 +159,11 @@
 			<div class="grid">
 				{#each data.metacorp.sites.features.slice(0, 4) as site}
 					<div class="cell">
-						<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-						<!-- svelte-ignore a11y_no_static_element_interactions -->
-						<div
+						<button
 							class="card border-primary is-shadowless"
 							aria-label="Select {site.properties.address}"
-							tabindex="0"
 							data-sveltekit-preload-data="off"
+							tabindex="0"
 						>
 							<!-- onmouseover={() => highlighted.set(site.id)}
 							onfocus={() => highlighted.set(site.id)}
@@ -182,7 +180,7 @@
 									</div>
 								</a>
 							</div>
-						</div>
+						</button>
 					</div>
 				{/each}
 			</div>
@@ -216,9 +214,7 @@
 				<div class="grid">
 					{#each data.metacorp.aliases.slice(0, 6) as alias, index}
 						<div class="cell">
-							<!-- svelte-ignore a11y_no_noninteractive_tabindex -->
-							<!-- svelte-ignore a11y_no_static_element_interactions -->
-							<div
+							<button
 								class="card border-primary is-shadowless"
 								aria-label="Select {alias}"
 								tabindex="0"
@@ -229,7 +225,7 @@
 										{alias}
 									</div>
 								</div>
-							</div>
+							</button>
 						</div>
 					{/each}
 				</div>
