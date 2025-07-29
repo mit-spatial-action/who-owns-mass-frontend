@@ -1,13 +1,17 @@
 <script lang="ts">
-    import IconText from "$lib/components/Panels/Cards/IconText.svelte"
-    let { title, icon, children } = $props();
+    import IconText from "$lib/components/Panels/Cards/IconText.svelte";
+    let { title, icon, blankText = "Unknown.", children = null } = $props();
 </script>
 
 <div class="box p-2 is-shadowless border-primary">
-    <IconText title={title} icon={icon}/>
-<div class="block">
-    {@render children?.()}
-</div>
+    <IconText {title} {icon} />
+    <div class="block">
+        {#if children}
+            {@render children()}
+        {:else}
+            {blankText}
+        {/if}
+    </div>
 </div>
 
 <style>

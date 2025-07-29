@@ -18,7 +18,7 @@
 </div>
 
 <style lang="scss">
-  @use "../../styles/variables";
+  @use "../styles/variables";
     #infopanel {
         z-index: 2;
         overflow: auto;

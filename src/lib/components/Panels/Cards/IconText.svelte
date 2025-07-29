@@ -1,5 +1,5 @@
 <script lang="ts">
-    let { title, icon, children } = $props();
+    let { title, icon, children = null } = $props();
 </script>
 
 <div class="icon-text">
