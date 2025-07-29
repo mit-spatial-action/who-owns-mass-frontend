@@ -3,7 +3,7 @@
     import { appState } from "$lib/state.svelte";
     import mapConfig from "$lib/config/map.json";
     import type { LngLat } from "mapbox-gl";
-    import ErrorMessage from "$lib/components/Panels/ErrorMessage.svelte";
+    import ErrorMessage from "$lib/components/ErrorMessage.svelte";
 
     import { slide } from 'svelte/transition';
     let { suggestions } = $props();
