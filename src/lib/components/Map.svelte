@@ -354,6 +354,7 @@
                         resultZoom,
                         0.7,
                     ],
+                    "circle-emissive-strength": 1
                 },
             });
 
@@ -392,8 +393,6 @@
                     popup.remove();
                 },
             });
-
-            // pointerEvents(map, "sites", false, "site_id");
 
             if (initZoom.length === 2) {
                 appState.map.flyTo({
