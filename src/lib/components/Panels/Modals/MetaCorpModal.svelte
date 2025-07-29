@@ -2,7 +2,6 @@
 
     import IconText from "$lib/components/Panels/Cards/IconText.svelte"
     import { slide } from "svelte/transition";
-    import { highlighted } from "$lib/stores";
     interface Props {
         townGroups: any;
         ownerGroups: any;
@@ -76,10 +75,10 @@ let sortedData = $derived(activeTab === "properties"
                         role="button"
                         tabindex=0
                         aria-label="Select {site.properties.address}"
-                        data-sveltekit-preload-data="off"
-                        onmouseover={() => highlighted.set(site.id)} 
+                        data-sveltekit-preload-data="off">
+                        <!-- onmouseover={() => highlighted.set(site.id)} 
                         onfocus={() => highlighted.set(site.id)}
-                        onmouseleave={() => highlighted.set(null)}>
+                        onmouseleave={() => highlighted.set(null)} -->
                         <div class="card-content">
                             <a href={`/site/${site.id}`} class="is-flex is-justify-content-space-between">
                                 <div>

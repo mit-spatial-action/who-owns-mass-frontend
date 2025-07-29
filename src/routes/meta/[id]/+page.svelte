@@ -8,9 +8,7 @@
 	import OwnerTags from "$lib/components/Panels/OwnerTags.svelte";
 	import { appState } from "$lib/state.svelte";
 	import { slide } from "svelte/transition";
-
-	import { highlighted } from "$lib/stores";
-
+	
 	let modalOpen = $state(false);
 	let activeTab = $state("properties");
 
@@ -168,10 +166,10 @@
 							aria-label="Select {site.properties.address}"
 							tabindex="0"
 							data-sveltekit-preload-data="off"
-							onmouseover={() => highlighted.set(site.id)}
-							onfocus={() => highlighted.set(site.id)}
-							onmouseleave={() => highlighted.set(null)}
 						>
+							<!-- onmouseover={() => highlighted.set(site.id)}
+							onfocus={() => highlighted.set(site.id)}
+							onmouseleave={() => highlighted.set(null)} -->
 							<div class="card-content">
 								<a href={`/site/${site.id}`}>
 									<div class="has-text-weight-bold">
