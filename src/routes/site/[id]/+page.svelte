@@ -1,20 +1,16 @@
 <script lang="ts">
 	import type { PageProps } from './$types';
 	import SitePanel from "$lib/components/Panels/SitePanel.svelte";
-	import { site, metacorp, homeState } from "$lib/stores";
+	import { appState } from '$lib/state.svelte';
     import { slide } from 'svelte/transition';
 
 	let { data }: PageProps = $props();
 	
 	$effect(() => {
-		if (data.siteData) {
-			site.set(data.siteData);
-			metacorp.set(null);
-			homeState.set(false);
-		}
+		if (data.site) appState.site = data.site;
 	});
 </script>
 
 <div transition:slide={{duration:250, axis:'y'}}>
-	<SitePanel site={data.siteData.properties} />
+	<SitePanel site={data.site.properties} />
 </div>

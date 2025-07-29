@@ -4,12 +4,12 @@ import { API_TOKEN } from '$env/static/private';
 
 export const load: PageServerLoad = async ({ params, fetch }) => {
     const { id } = params;
-    const siteData = await getFromApi(fetch, '/api', API_TOKEN, 'sites', id);
+    const site = await getFromApi(fetch, '/api', API_TOKEN, 'sites', id);
     return { 
-        siteData,
+        site,
         seo: {
-			title: siteData.properties.address.addr,
-			description: `${siteData.properties.address.addr} is owned by ${siteData.properties.owners[0].properties.name} (potentially among others).`
+			title: site.properties.address.addr,
+			description: `${site.properties.address.addr} is owned by ${site.properties.owners[0].properties.name} (potentially among others).`
 		}
     }
 };

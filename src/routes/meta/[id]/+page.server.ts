@@ -4,12 +4,12 @@ import { API_TOKEN } from '$env/static/private';
 
 export const load: PageServerLoad = async ({ params, fetch }) => {
     const { id } = params;
-    const metaCorpData = await getFromApi(fetch, '/api', API_TOKEN, 'metacorps', id);
+    const metaCorp = await getFromApi(fetch, '/api', API_TOKEN, 'metacorps', id);
     return { 
-        metaCorpData,
+        metaCorp,
         seo: {
-			title: metaCorpData.name,
-			description: `We found up to ${metaCorpData.unit_count} units and ${metaCorpData.prop_count} properties owned by ${metaCorpData.name}`
+			title: metaCorp.name,
+			description: `We found up to ${metaCorp.unit_count} units and ${metaCorp.prop_count} properties owned by ${metaCorp.name}`
 		}
     }
 };

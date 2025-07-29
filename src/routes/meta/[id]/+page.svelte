@@ -1,18 +1,16 @@
 <script lang="ts">
+	import type { PageProps } from './$types';
 	import MetaCorpPanel from "$lib/components/Panels/MetaCorpPanel.svelte";
-	import { site, metacorp, homeState } from "$lib/stores";
+	import { appState } from '$lib/state.svelte';
     import { slide } from 'svelte/transition';
-	/** @type {{ data: import('./$types').PageData }} */
-	let { data } = $props();
+
+	let { data }: PageProps = $props();
+
 	$effect(() => {
-		if (data.metaCorpData) {
-			metacorp.set(data.metaCorpData);
-			site.set(null);
-			homeState.set(false);
-		}
+		if (data.metaCorp) appState.metacorp = data.metaCorp;
 	});	
 </script>
 
 <div transition:slide={{duration:250, axis:'y'}}>
-	<MetaCorpPanel metacorp={data.metaCorpData}/>
+	<MetaCorpPanel metacorp={data.metaCorp}/>
 </div>
