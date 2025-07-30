@@ -22,6 +22,7 @@
 		if (data.site) {
 			appState.site = data.site;
 			addGeoJSONLayer(data.geojson)
+				.then(() => appState.loading = false);
 		}
 	});
 </script>

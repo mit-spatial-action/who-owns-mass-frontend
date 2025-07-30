@@ -1,5 +1,4 @@
 <script lang="ts">
-    import { navigating } from "$app/state";
     import { onDestroy, onMount } from "svelte";
     import mapbox from "mapbox-gl";
     import { goto } from "$app/navigation";
@@ -11,14 +10,11 @@
     import mapConfig from "$lib/config/map.json";
     import "mapbox-gl/dist/mapbox-gl.css";
 
-    import SpinnerModal from "$lib/components/SpinnerModal.svelte";
-
     let initLngLat = new mapbox.LngLat(
         mapConfig.init.lngLat[0],
         mapConfig.init.lngLat[1],
     )
 
-    let loaded = $state(false);
     mapbox.accessToken = PUBLIC_MAPBOX_TOKEN;
 
     let container;
@@ -66,7 +62,7 @@
         });
 
         appState.map.once("idle", () => {
-            loaded = true;
+            appState.loading = false;
             appState.map.setMinZoom(mapConfig.init.zoom);
         });
 
@@ -183,10 +179,6 @@
         // if (intervals.circles) clearIntervals(intervals.circles);
     });
 </script>
-
-{#if navigating.from || !loaded}
-    <SpinnerModal />
-{/if}
 
 <div id="map" class="column" bind:this={container}></div>
 

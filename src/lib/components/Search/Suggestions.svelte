@@ -48,10 +48,12 @@
         (document.getElementById('searchbar') as HTMLInputElement).value = suggestion.text
         suggestions = [];
         if(suggestion.lngLat){
+            appState.loading = true;
             mapMatch(suggestion.address);
-            flyToLngLat(suggestion.lngLat)
+            flyToLngLat(suggestion.lngLat);
             
         } else if (suggestion.metacorp){
+            appState.loading = true;
             goto(`/meta/${suggestion.metacorp}`);
         }
     }

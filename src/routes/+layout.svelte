@@ -5,6 +5,11 @@
     import InfoPanel from "$lib/components/InfoPanel.svelte";
     import Map from "$lib/components/Map.svelte";
 
+
+    import { navigating } from "$app/state";
+    import SpinnerModal from "$lib/components/SpinnerModal.svelte";
+    import { appState } from "$lib/state.svelte";
+
     import "@fontsource-variable/manrope";
 
     import { page } from "$app/state";
@@ -30,6 +35,9 @@
                 {@render children()}
             </InfoPanel>
             <Map />
+            {#if navigating.from || appState.loading}
+                <SpinnerModal />
+            {/if}
         </div>
     </div>
 </section>
