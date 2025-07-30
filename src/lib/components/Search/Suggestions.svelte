@@ -22,8 +22,8 @@
                 if (selected.length > 0) {
                     goto('site/' + selected[0].properties.site_id);
                 } else {
+                    appState.loading = false;
                     error = "addressNotFound";
-                    // resultSiteId = null;
                 }
             }
             return resultSiteId
