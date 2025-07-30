@@ -19,7 +19,7 @@ export const geocoder = new MapboxGeocoder({
         -69.92871308883089,
         42.88675909238091
     ],
-    filter: function (item) {
+    filter: (item) => {
         return item.context.some((i) => {
             return (
                 i.id.split('.').shift() === 'region' &&

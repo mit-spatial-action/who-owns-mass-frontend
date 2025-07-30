@@ -29,11 +29,11 @@
 		activeTab = modalType;
 	};
 
-	function handleModalClose() {
+	const handleModalClose = () => {
 		modalOpen = false;
 	}
 
-	function sortMetacorpProperties() {
+	const sortMetacorpProperties = () => {
 		const sortedProperties = [...data.metacorp.sites.features].sort(
 			(a, b) => {
 				// Check if all necessary fields are present
@@ -77,7 +77,7 @@
 		return groupedData;
 	}
 
-	function sortMetacorpOwners() {
+	const sortMetacorpOwners = () => {
 		const sortedProperties = [...data.metacorp.sites.features].sort(
 			(a, b) => {
 				// Check if all necessary fields are present

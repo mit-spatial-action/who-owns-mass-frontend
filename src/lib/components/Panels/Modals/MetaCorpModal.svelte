@@ -14,7 +14,7 @@
     }: Props = $props();
     let openPanels = $state([]); // Array to track open modal panels
 
-    function togglePanel(index) {
+    const togglePanel = (index) => {
         if (openPanels.includes(index)) {
             openPanels = openPanels.filter((i) => i !== index); // Close panel
         } else {
