@@ -54,7 +54,7 @@
             
         } else if (suggestion.metacorp){
             appState.loading = true;
-            goto(`/meta/${suggestion.metacorp}`);
+            goto(`/metacorp/${suggestion.metacorp}`);
         }
     }
 </script>

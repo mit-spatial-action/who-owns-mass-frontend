@@ -18,7 +18,8 @@
 	$effect(() => {
 		if (data.metacorp) {
 			appState.metacorp = data.metacorp;
-			addGeoJSONLayer(data.geojson);
+			addGeoJSONLayer(data.geojson)
+				.then(() => appState.loading = false);
 		}
 	});
 
