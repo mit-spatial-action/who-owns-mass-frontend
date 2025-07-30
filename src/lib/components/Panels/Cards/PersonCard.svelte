@@ -1,7 +1,7 @@
 <script lang="ts">
     import SocialIcon from "$lib/components/Panels/Cards/SocialIcon.svelte";
   let { person } = $props();
-    const imageMap = import.meta.glob('$lib/assets/*.{png,jpg,jpeg}', { eager: true });
+    const imageMap = import.meta.glob<{ default: string }>('$lib/assets/*.{png,jpg,jpeg}', { eager: true });
     const imageSrc = imageMap[`/src/lib/assets/${person.photo}`]?.default || '';
 </script>
 
@@ -36,14 +36,14 @@
         </div>
     </div>
     <footer class="card-footer">
-        {#each person.socials as socialUrl}
-        <div class="card-footer-item">
-        <SocialIcon {socialUrl}/>
+        {#each person.socials as url}
+            <div class="card-footer-item">
+            <SocialIcon {url}/>
         </div>
         {/each}
         {#if person.url}
-        <div class="card-footer-item">
-        <SocialIcon socialUrl={person.url}/>
+            <div class="card-footer-item">
+            <SocialIcon url={person.url}/>
         </div>
         {/if}
     </footer>

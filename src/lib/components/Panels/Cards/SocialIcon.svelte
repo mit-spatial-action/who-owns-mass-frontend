@@ -1,15 +1,15 @@
 <script lang="ts">
     let icon = $state();
     let name = $state();
-    let { socialUrl, color } = $props();
+    let { url, color = "success" } = $props();
     let set = $state("brands");
-    if (socialUrl.includes("github.com")) {
+    if (url.includes("github.com")) {
         icon = "github"
         name = "Github"
-    } else if (socialUrl.includes("linkedin")) {
+    } else if (url.includes("linkedin")) {
         icon = "linkedin"
         name = "LinkedIn"
-    } else if (socialUrl.includes("bsky.")) {
+    } else if (url.includes("bsky.")) {
         icon = "bluesky"
         name = "Bluesky"
     } else {
@@ -19,7 +19,7 @@
     }
 </script>
 
-<a href="{socialUrl}" class="{color}">
+<a href="{url}" class="{color}">
 <span class="icon-text">
     <span class="icon">
         <i class="fa-{set} fa-{icon}"></i>
@@ -27,5 +27,3 @@
     <span>{name}</span>
 </span>
 </a>
-
-<!-- <a href="{socialUrl}" class="card-footer-item">{social.name}</a> -->
