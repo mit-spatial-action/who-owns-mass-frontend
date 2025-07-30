@@ -3,35 +3,20 @@
     import { onDestroy, onMount } from "svelte";
     import mapbox from "mapbox-gl";
     import { goto } from "$app/navigation";
-    import type { FeatureCollection, Feature } from "geojson";
     import { primary } from "$lib/styles/_variables";
     import { PUBLIC_MAPBOX_TOKEN } from "$env/static/public";
     import { appState } from "$lib/state.svelte.ts";
 
-    import type { LngLat, LngLatBoundsLike, Map } from "mapbox-gl";
+    import type { LngLatLike, LngLatBoundsLike } from "mapbox-gl";
     import mapConfig from "$lib/config/map.json";
     import "mapbox-gl/dist/mapbox-gl.css";
 
     import SpinnerModal from "$lib/components/SpinnerModal.svelte";
 
-    let {
-        projection = mapConfig.projection,
-        initLngLat = new mapbox.LngLat(
-            mapConfig.init.lngLat[0],
-            mapConfig.init.lngLat[1],
-        ),
-        maxBounds = new mapbox.LngLatBounds(mapConfig.maxBounds),
-        initZoom = mapConfig.init.zoom,
-        initZoomDur = mapConfig.init.zoomDur,
-        resultZoom = mapConfig.resultZoom,
-    }: {
-        projection?: any;
-        initLngLat?: any;
-        maxBounds?: LngLatBoundsLike;
-        initZoom?: any;
-        initZoomDur?: any;
-        resultZoom?: any;
-    } = $props();
+    let initLngLat = new mapbox.LngLat(
+        mapConfig.init.lngLat[0],
+        mapConfig.init.lngLat[1],
+    )
 
     let loaded = $state(false);
     mapbox.accessToken = PUBLIC_MAPBOX_TOKEN;
@@ -72,17 +57,17 @@
             container: container,
             style: mapConfig.style,
             center: initLngLat,
-            zoom: initZoom.length === 2 ? initZoom[0] : initZoom,
+            zoom: mapConfig.init.zoomFrom ? mapConfig.init.zoomFrom : mapConfig.init.zoom,
             bearing: mapConfig.init.bearing,
             pitch: mapConfig.init.pitch,
-            projection: projection,
-            maxBounds: maxBounds,
-            maxZoom: resultZoom,
+            projection: mapConfig.projection,
+            maxBounds: mapConfig.maxBounds as LngLatBoundsLike,
+            maxZoom: mapConfig.resultZoom,
         });
 
         appState.map.once("idle", () => {
             loaded = true;
-            // map.setMinZoom(initZoom.length === 2 ? initZoom[1] : initZoom);
+            appState.map.setMinZoom(mapConfig.init.zoom);
         });
 
         appState.map.on("style.load", () => {
@@ -117,9 +102,9 @@
                         "interpolate",
                         ["linear"],
                         ["zoom"],
-                        resultZoom - 4,
+                        mapConfig.resultZoom - 4,
                         0,
-                        resultZoom,
+                        mapConfig.resultZoom,
                         8,
                     ],
                     "circle-color": primary,
@@ -128,18 +113,18 @@
                         "interpolate",
                         ["linear"],
                         ["zoom"],
-                        resultZoom - 4,
+                        mapConfig.resultZoom - 4,
                         0,
-                        resultZoom,
+                        mapConfig.resultZoom,
                         1.5,
                     ],
                     "circle-opacity": [
                         "interpolate",
                         ["linear"],
                         ["zoom"],
-                        resultZoom - 4,
+                        mapConfig.resultZoom - 4,
                         0,
-                        resultZoom,
+                        mapConfig.resultZoom,
                         0.7,
                     ],
                     "circle-emissive-strength": 1
@@ -182,11 +167,11 @@
                 },
             });
 
-            if (initZoom.length === 2) {
+            if (mapConfig.init.zoomFrom) {
                 appState.map.flyTo({
                     center: initLngLat,
-                    zoom: initZoom[1],
-                    duration: initZoomDur,
+                    zoom: mapConfig.init.zoom,
+                    duration: mapConfig.init.zoomDur,
                     essential: true,
                 });
             }
