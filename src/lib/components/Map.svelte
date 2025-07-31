@@ -2,11 +2,11 @@
     import { onDestroy, onMount } from "svelte";
     import mapbox from "mapbox-gl";
     import { goto } from "$app/navigation";
-    import { primary } from "$lib/styles/_variables";
+    import { primary, success } from "$lib/styles/_variables";
     import { PUBLIC_MAPBOX_TOKEN } from "$env/static/public";
     import { appState } from "$lib/state.svelte.ts";
 
-    import type { LngLatLike, LngLatBoundsLike } from "mapbox-gl";
+    import type { LngLatLike, LngLatBoundsLike, MapMouseEvent } from "mapbox-gl";
     import mapConfig from "$lib/config/map.json";
     import "mapbox-gl/dist/mapbox-gl.css";
 
@@ -23,30 +23,6 @@
     const nightLight = (dark: Boolean) => {
         return dark ? "night" : "day";
     };
-
-    
-
-    
-
-    // const highlightHovered = (
-    //     map:Map,
-    //     highlighted:string|number,
-    //     layerId:string) => {
-    //     if (!map) return undefined;
-    //     if (!highlighted) {
-    //         map.setPaintProperty(layerId, 'text-opacity', 1)
-    //     } else {
-    //         map.setPaintProperty(
-    //             layerId,
-    //             'text-opacity',
-    //             [
-    //                 'case',
-    //                 ['==', ['id'], highlighted], 1,
-    //                 0.4
-    //             ]
-    //         )
-    //     }
-    // }
 
     onMount(() => {
         appState.map = new mapbox.Map({
@@ -83,54 +59,47 @@
             });
            appState.map.addSource("sites", {
                 type: "vector",
-                url: "mapbox://mit-spatial-action.who-owns-mass-sites",
+                url: "mapbox://mit-spatial-action.who-owns-mass-sites"
             });
 
             appState.map.addLayer({
                 id: "sites",
                 source: "sites",
-                // maxzoom: resultZoom,
                 "source-layer": "geographies",
                 type: "circle",
                 paint: {
                     "circle-pitch-alignment": "map",
                     "circle-radius": [
-                        "interpolate",
-                        ["linear"],
-                        ["zoom"],
-                        mapConfig.resultZoom - 4,
-                        0,
-                        mapConfig.resultZoom,
-                        8,
+                        "case",
+                        ["boolean", ["feature-state", "selected"], false],
+                        30,
+                        8
                     ],
-                    "circle-color": primary,
+                    "circle-color": [
+                        'case',
+                        ['boolean', ['feature-state', 'selected'], false],
+                        primary,
+                        success
+                    ],
                     "circle-stroke-color": "white",
                     "circle-stroke-width": [
-                        "interpolate",
-                        ["linear"],
-                        ["zoom"],
-                        mapConfig.resultZoom - 4,
-                        0,
-                        mapConfig.resultZoom,
-                        1.5,
+                        'case',
+                        ['boolean', ['feature-state', 'hover'], false],
+                        2,
+                        0.5
                     ],
-                    "circle-opacity": [
-                        "interpolate",
-                        ["linear"],
-                        ["zoom"],
-                        mapConfig.resultZoom - 4,
-                        0,
-                        mapConfig.resultZoom,
-                        0.7,
-                    ],
+                    "circle-opacity": 0.7,
                     "circle-emissive-strength": 1
                 },
             });
-
+            let selected;
             appState.map.addInteraction("sites-click", {
                 type: "click",
                 target: { layerId: "sites" },
                 handler(e) {
+                    if (selected) appState.map.removeFeatureState(selected);
+                    selected = e.feature;
+                    appState.map.setFeatureState(selected, {selected: true});
                     goto(`/site/${e.feature.properties.site_id}`);
                 },
             });
@@ -139,27 +108,29 @@
                 type: "mouseenter",
                 target: { layerId: "sites" },
                 handler(e) {
-                    const feature = e.feature;
-                    popup = new mapbox.Popup({ 
-                            offset: [0, -15],
-                            className: 'sites-popup'
-                        })
-                        .setLngLat(feature.geometry.coordinates)
-                        .setHTML(
-                            `<p><strong>${feature.properties.addr}</strong></p>
-                            <p>${feature.properties.muni}, MA</p>`
-                        )
-                        .addTo(appState.map);
+                    appState.map.setFeatureState(e.feature, {hover: true});
                     appState.map.getCanvas().style.cursor = "pointer";
+                    // const feature = e.feature;
+                    // popup = new mapbox.Popup({ 
+                    //         offset: [0, -15],
+                    //         className: 'sites-popup'
+                    //     })
+                    //     .setLngLat(feature.geometry.coordinates)
+                    //     .setHTML(
+                    //         `<p><strong>${feature.properties.addr}</strong></p>
+                    //         <p>${feature.properties.muni}, MA</p>`
+                    //     )
+                    //     .addTo(appState.map);
                 },
             });
 
             appState.map.addInteraction("sites-mouseleave", {
                 type: "mouseleave",
                 target: { layerId: "sites" },
-                handler() {
+                handler(e) {
+                    appState.map.setFeatureState(e.feature, {hover: false});
                     appState.map.getCanvas().style.cursor = "";
-                    popup.remove();
+                    // popup.remove();
                 },
             });
 
@@ -180,10 +151,10 @@
     });
 </script>
 
-<div id="map" class="column" bind:this={container}></div>
+<div class="column" bind:this={container}></div>
 
 <style>
-    #map {
+    div {
         height: 100%;
         width: 100%;
     }
