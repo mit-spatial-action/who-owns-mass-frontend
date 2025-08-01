@@ -6,8 +6,8 @@
 
 <div class="mapboxgl-ctrl box"
   transition:fly={{ duration: 150, y: -300}}>
-    <p><strong>{#if address}{address}{/if}</strong></p>
-    <p>{#if muni}{muni}, MA{/if}</p>
+    {#if address}<p><strong>{address}</strong></p>{/if}
+    {#if muni} <p>{muni}, MA</p>{/if}
 </div>
 
 <style lang="scss">

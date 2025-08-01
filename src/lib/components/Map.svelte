@@ -6,7 +6,7 @@
     import { PUBLIC_MAPBOX_TOKEN } from "$env/static/public";
     import { appState } from "$lib/state.svelte.ts";
 
-    import type { LngLatLike, LngLatBoundsLike, MapMouseEvent } from "mapbox-gl";
+    import type { LngLatLike, LngLatBoundsLike, MapMouseEvent, Map } from "mapbox-gl";
     import mapConfig from "$lib/config/map.json";
     import MapHover from "$lib/components/MapHover.svelte";
     import "mapbox-gl/dist/mapbox-gl.css";
@@ -19,11 +19,16 @@
     mapbox.accessToken = PUBLIC_MAPBOX_TOKEN;
 
     class HoverControl {
-        constructor(address = "Hello, world", muni = "Unknown") {
+        address?: string;
+        muni?: string;
+        private _map?: any;
+        private _container?: HTMLElement;
+
+        constructor(address = null, muni = null) {
             this.address = address; 
             this.muni = muni;
         }
-        onAdd(map) {
+        onAdd(map: Map) {
             this._map = map;
             this._container = document.createElement('div');
             mount(MapHover, {
@@ -121,19 +126,13 @@
                     "circle-emissive-strength": 1
                 },
             });
-            let selected;
             appState.map.addInteraction("sites-click", {
                 type: "click",
                 target: { layerId: "sites" },
                 handler(e) {
-                    if (selected) appState.map.removeFeatureState(selected);
-                    selected = e.feature;
-                    appState.map.setFeatureState(selected, {selected: true});
                     goto(`/site/${e.feature.properties.site_id}`);
                 },
             });
-
-            let feature;
 
             appState.map.addInteraction("sites-mouseenter", {
                 type: "mouseenter",
@@ -181,7 +180,6 @@
 
     onDestroy(() => {
         if (appState.map) appState.map.remove();
-        // if (intervals.circles) clearIntervals(intervals.circles);
     });
 </script>
 
