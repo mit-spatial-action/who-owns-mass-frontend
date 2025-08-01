@@ -1,5 +1,5 @@
 <script lang="ts">
-    import { onDestroy, onMount } from "svelte";
+    import { mount, onDestroy, onMount } from "svelte";
     import mapbox from "mapbox-gl";
     import { goto } from "$app/navigation";
     import { primary, success } from "$lib/styles/_variables";
@@ -8,6 +8,7 @@
 
     import type { LngLatLike, LngLatBoundsLike, MapMouseEvent } from "mapbox-gl";
     import mapConfig from "$lib/config/map.json";
+    import MapHover from "$lib/components/MapHover.svelte";
     import "mapbox-gl/dist/mapbox-gl.css";
 
     let initLngLat = new mapbox.LngLat(
@@ -17,8 +18,31 @@
 
     mapbox.accessToken = PUBLIC_MAPBOX_TOKEN;
 
+    class HoverControl {
+        constructor(address = "Hello, world", muni = "Unknown") {
+            this.address = address; 
+            this.muni = muni;
+        }
+        onAdd(map) {
+            this._map = map;
+            this._container = document.createElement('div');
+            mount(MapHover, {
+                target: this._container,
+                props: {
+                    address: this.address,
+                    muni: this.muni
+                }
+            });
+            return this._container;
+        }
+
+        onRemove() {
+            this._container.parentNode.removeChild(this._container);
+            this._map = undefined;
+        }
+    }
+
     let container;
-    let popup;
 
     const nightLight = (dark: Boolean) => {
         return dark ? "night" : "day";
@@ -36,6 +60,13 @@
             maxBounds: mapConfig.maxBounds as LngLatBoundsLike,
             maxZoom: mapConfig.resultZoom,
         });
+
+        const nav = new mapbox.NavigationControl({
+            visualizePitch: true
+        });
+        appState.map.addControl(nav, 'bottom-right');
+
+        let hoverControls= [];
 
         appState.map.once("idle", () => {
             appState.loading = false;
@@ -70,17 +101,15 @@
                 paint: {
                     "circle-pitch-alignment": "map",
                     "circle-radius": [
-                        "case",
-                        ["boolean", ["feature-state", "selected"], false],
-                        30,
+                        'interpolate',
+                        ['linear'],
+                        ['zoom'],
+                        mapConfig.resultZoom - 4,
+                        0,
+                        mapConfig.resultZoom,
                         8
                     ],
-                    "circle-color": [
-                        'case',
-                        ['boolean', ['feature-state', 'selected'], false],
-                        primary,
-                        success
-                    ],
+                    "circle-color": success,
                     "circle-stroke-color": "white",
                     "circle-stroke-width": [
                         'case',
@@ -104,23 +133,30 @@
                 },
             });
 
+            let feature;
+
             appState.map.addInteraction("sites-mouseenter", {
                 type: "mouseenter",
                 target: { layerId: "sites" },
                 handler(e) {
-                    appState.map.setFeatureState(e.feature, {hover: true});
                     appState.map.getCanvas().style.cursor = "pointer";
-                    // const feature = e.feature;
-                    // popup = new mapbox.Popup({ 
-                    //         offset: [0, -15],
-                    //         className: 'sites-popup'
-                    //     })
-                    //     .setLngLat(feature.geometry.coordinates)
-                    //     .setHTML(
-                    //         `<p><strong>${feature.properties.addr}</strong></p>
-                    //         <p>${feature.properties.muni}, MA</p>`
-                    //     )
-                    //     .addTo(appState.map);
+                    if (hoverControls.length > 0) { 
+                        hoverControls.forEach(c => {
+                            appState.map.setFeatureState(c.feature, {hover: false});
+                            appState.map.removeControl(c.control)
+                            hoverControls = [];
+                        })
+                    };
+                    appState.map.setFeatureState(e.feature, {hover: true});
+                    let hover = new HoverControl(
+                        e.feature.properties.addr,
+                        e.feature.properties.muni
+                    );
+                    appState.map.addControl(hover);
+                    hoverControls.push({
+                        feature: e.feature,
+                        control: hover
+                    });
                 },
             });
 
@@ -128,9 +164,7 @@
                 type: "mouseleave",
                 target: { layerId: "sites" },
                 handler(e) {
-                    appState.map.setFeatureState(e.feature, {hover: false});
                     appState.map.getCanvas().style.cursor = "";
-                    // popup.remove();
                 },
             });
 
