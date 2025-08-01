@@ -12,8 +12,9 @@
 
 <style lang="scss">
     @use "../styles/variables";
-    .mapboxgl-ctrl {
+    .mapboxgl-ctrl.box {
         border-radius: 0;
         border: 0.4rem solid variables.$success;
+        margin: 0;
     }
 </style>
