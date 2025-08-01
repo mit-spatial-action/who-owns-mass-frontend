@@ -2,19 +2,25 @@
     import { mount, onDestroy, onMount } from "svelte";
     import mapbox from "mapbox-gl";
     import { goto } from "$app/navigation";
-    import { primary, success } from "$lib/styles/_variables";
+    import { success } from "$lib/styles/_variables";
     import { PUBLIC_MAPBOX_TOKEN } from "$env/static/public";
     import { appState } from "$lib/state.svelte.ts";
 
-    import type { LngLatLike, LngLatBoundsLike, MapMouseEvent, Map } from "mapbox-gl";
+    import type { LngLatBoundsLike, Map } from "mapbox-gl";
     import mapConfig from "$lib/config/map.json";
     import MapHover from "$lib/components/MapHover.svelte";
     import "mapbox-gl/dist/mapbox-gl.css";
 
+    let isDark: MediaQueryList;
+    let container: HTMLElement;
+    let hoverControls:{
+        feature: any;
+        control: HoverControl;
+    }[] = [];
     let initLngLat = new mapbox.LngLat(
         mapConfig.init.lngLat[0],
         mapConfig.init.lngLat[1],
-    )
+    );
 
     mapbox.accessToken = PUBLIC_MAPBOX_TOKEN;
 
@@ -47,8 +53,6 @@
         }
     }
 
-    let container;
-
     const nightLight = (dark: Boolean) => {
         return dark ? "night" : "day";
     };
@@ -66,12 +70,12 @@
             maxZoom: mapConfig.resultZoom,
         });
 
-        const nav = new mapbox.NavigationControl({
-            visualizePitch: true
-        });
-        appState.map.addControl(nav, 'bottom-right');
-
-        let hoverControls= [];
+        appState.map.addControl(
+            new mapbox.NavigationControl({
+                visualizePitch: true
+            }), 
+            'bottom-right'
+        );
 
         appState.map.once("idle", () => {
             appState.loading = false;
@@ -79,7 +83,7 @@
         });
 
         appState.map.on("style.load", () => {
-            let isDark = window.matchMedia("(prefers-color-scheme: dark)");
+            isDark = window.matchMedia("(prefers-color-scheme: dark)");
 
             appState.map.setConfigProperty(
                 "basemap",
