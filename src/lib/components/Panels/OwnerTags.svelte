@@ -1,6 +1,5 @@
-<script>
-    export let company_name; 
-    export let trust;
+<script lang="ts">
+    let { company_name, trust } = $props();
 </script>
 
 {#if trust}

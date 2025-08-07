@@ -1,7 +1,7 @@
-<script>
-    export let children;
+<script lang="ts">
+    let { children } = $props();
 </script>
 
 <div class="card-content">
-    <slot>{ children }</slot>
+    {#if children}{@render children()}{:else}{ children }{/if}
 </div>

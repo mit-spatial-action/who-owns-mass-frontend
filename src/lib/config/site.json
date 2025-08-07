@@ -92,7 +92,8 @@
     ],
     "pages": [
         {"Home": "/"},
-        {"Who We Are": "/who-we-are"}
+        {"Who We Are": "/who-we-are"},
+        {"Documentation": "https://mit-spatial-action.github.io/who-owns-mass/"}
     ],
     "keywords": [
         "evictions",

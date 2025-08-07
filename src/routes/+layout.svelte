@@ -1,19 +1,27 @@
 <script lang="ts">
+    import type { LayoutProps } from "./$types";
     import siteConfig from "$lib/config/site.json";
     import "$lib/styles/styles.scss";
-    import InfoPanel from "$lib/components/Panels/InfoPanel.svelte";
-    import RippleLoader from "$lib/components/RippleLoader.svelte";
-    import MapPanel from "$lib/components/Panels/MapPanel.svelte";
+    import InfoPanel from "$lib/components/InfoPanel.svelte";
+    import Map from "$lib/components/Map.svelte";
 
-    import { loadState, site } from "$lib/stores";
+
+    import { navigating } from "$app/state";
+    import SpinnerModal from "$lib/components/SpinnerModal.svelte";
+    import { appState } from "$lib/state.svelte";
 
     import "@fontsource-variable/manrope";
 
     import { page } from "$app/state";
+    let { children }: LayoutProps = $props();
 </script>
 
 <svelte:head>
-    <title>{page.data?.seo?.title ? [page.data.seo.title, siteConfig.title].join(" | ") : siteConfig.title}</title>
+    <title
+        >{page.data?.seo?.title
+            ? [page.data.seo.title, siteConfig.title].join(" | ")
+            : siteConfig.title}</title
+    >
     <meta
         name="description"
         content={page.data?.seo?.description || siteConfig.description}
@@ -22,14 +30,14 @@
 
 <section class="hero is-fullheight">
     <div class="hero-body p-0">
-        {#if $loadState}
-            <RippleLoader />
-        {/if}
         <div id="panels" class="columns">
             <InfoPanel>
-                <slot />
+                {@render children()}
             </InfoPanel>
-            <MapPanel />
+            <Map />
+            {#if navigating.from || appState.loading}
+                <SpinnerModal />
+            {/if}
         </div>
     </div>
 </section>
