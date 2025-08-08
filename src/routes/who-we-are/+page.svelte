@@ -1,8 +1,8 @@
 <script>
-    import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
-    import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
-    import PersonCard from "$lib/components/Panels/Cards/PersonCard.svelte";
-    import OrgCard from "$lib/components/Panels/Cards/OrgCard.svelte";
+    import CardHeader from "$lib/components/Cards/CardHeader.svelte";
+    import CardContent from "$lib/components/Cards/CardContent.svelte";
+    import PersonCard from "$lib/components/Cards/PersonCard.svelte";
+    import OrgCard from "$lib/components/Cards/OrgCard.svelte";
     import siteConfig from "$lib/config/site.json";
     import { slide } from 'svelte/transition';
 </script>

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import IconText from "$lib/components/Panels/Cards/IconText.svelte";
+    import IconText from "$lib/components/Cards/IconText.svelte";
     import { slide } from "svelte/transition";
     interface Props {
         townGroups: any;

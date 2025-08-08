@@ -1,10 +1,10 @@
 <script lang="ts">
-	import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
-	import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
-	import IconCard from "$lib/components/Panels/Cards/IconCard.svelte";
+	import CardHeader from "$lib/components/Cards/CardHeader.svelte";
+	import CardContent from "$lib/components/Cards/CardContent.svelte";
+	import IconCard from "$lib/components/Cards/IconCard.svelte";
 	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
 	import landUseCodes from "$lib/config/landuse.json";
-	import OwnerTags from "$lib/components/Panels/OwnerTags.svelte";
+	import OwnerTags from "$lib/components/OwnerTags.svelte";
 	import { appState } from "$lib/state.svelte";
 	import { addGeoJSONLayer } from "$lib/scripts/utils";
 	import { slide } from "svelte/transition";

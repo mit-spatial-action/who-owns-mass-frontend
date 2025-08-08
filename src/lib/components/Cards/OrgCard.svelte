@@ -1,5 +1,5 @@
 <script lang="ts">
-    import SocialIcon from "$lib/components/Panels/Cards/SocialIcon.svelte";
+    import SocialIcon from "$lib/components/Cards/SocialIcon.svelte";
   let { org } = $props();
     const imageMap = import.meta.glob<{ default: string }>('$lib/assets/logos/*.{png,jpg,jpeg}', { eager: true });
     const imageSrc = imageMap[`/src/lib/assets/logos/${org.logo}`]?.default || '';

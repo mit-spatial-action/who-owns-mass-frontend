@@ -1,11 +1,11 @@
 <script lang="ts">
 	import type { PageProps } from "./$types";
-	import Modal from "$lib/components/Panels/Modals/Modal.svelte";
-	import IconCard from "$lib/components/Panels/Cards/IconCard.svelte";
-	import CardHeader from "$lib/components/Panels/Cards/CardHeader.svelte";
-	import CardContent from "$lib/components/Panels/Cards/CardContent.svelte";
-	import MetaCorpModal from "$lib/components/Panels/Modals/MetaCorpModal.svelte";
-	import OwnerTags from "$lib/components/Panels/OwnerTags.svelte";
+	import Modal from "$lib/components/Modals/Modal.svelte";
+	import IconCard from "$lib/components/Cards/IconCard.svelte";
+	import CardHeader from "$lib/components/Cards/CardHeader.svelte";
+	import CardContent from "$lib/components/Cards/CardContent.svelte";
+	import MetaCorpModal from "$lib/components/Modals/MetaCorpModal.svelte";
+	import OwnerTags from "$lib/components/OwnerTags.svelte";
 	import { appState } from "$lib/state.svelte";
 	import { slide } from "svelte/transition";
 	import { addGeoJSONLayer } from "$lib/scripts/utils";
