@@ -21,7 +21,7 @@
 		"bulma": "^1.0.4",
 		"mapbox-gl": "^3.14.0",
 		"mdsvex": "^0.12.6",
-		"sass": "^1.89.2",
+		"sass": "^1.90.0",
 		"svelte": "^5.36.13",
 		"svelte-loading-spinners": "^0.3.6",
 		"svelte-routing": "^2.13.0",
