@@ -10,7 +10,7 @@
 {#if appState.sidebar}
   <div
     id="sidebar"
-    class="has-background p-3"
+    class="box p-3"
     transition:fly={{ x: -350, duration: 300 }}
   >
     <aside class="menu">
@@ -50,12 +50,13 @@
 <style lang="scss">
   @use "../styles/variables";
   #sidebar {
+    border-radius: 0;
     height: 100%;
     position: fixed;
     z-index: 100;
     top: 0;
     left: 0px;
-    border: 0.4rem solid variables.$success;
+    border-right: 0.4rem solid variables.$success;
     box-shadow: var(--bulma-shadow);
   }
 </style>

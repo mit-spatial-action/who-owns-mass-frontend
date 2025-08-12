@@ -5,6 +5,7 @@
     import { success } from "$lib/styles/_variables";
     import { PUBLIC_MAPBOX_TOKEN } from "$env/static/public";
     import { appState } from "$lib/state.svelte.ts";
+    import Device from "svelte-device-info";
 
     import type { LngLatBoundsLike, Map } from "mapbox-gl";
     import mapConfig from "$lib/config/map.json";
@@ -193,5 +194,12 @@
     div {
         height: 100%;
         width: 100%;
+    }
+    @media (max-width: 768px) {
+        div {
+            z-index: -1;
+            position: absolute;
+            top:0;
+        }
     }
 </style>

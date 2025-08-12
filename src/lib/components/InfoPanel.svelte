@@ -2,17 +2,26 @@
     import Sidebar from "$lib/components/Sidebar.svelte";
     import Navbar from "$lib/components/Navbar.svelte";
     import { slide } from "svelte/transition";
+    import { draggable } from '@neodrag/svelte';
+    import type { DragOptions } from '@neodrag/svelte';
+
     interface Props {
         children?: import("svelte").Snippet;
     }
+
+    let options: DragOptions = {
+        axis: 'y',
+        transform: ({ offsetX, offsetY }) => `scaleY(0.7)`,
+    };
 
     let { children }: Props = $props();
 </script>
 
 <div
     id="infopanel"
+    use:draggable={options}
     transition:slide={{ duration: 250, axis: "y" }}
-    class="site-panel column p-3 is-half is-two-fifths-desktop is-fullheight is-flex is-flex-direction-column"
+    class="site-panel box column p-3 is-half is-two-fifths-desktop is-fullheight is-flex is-flex-direction-column"
 >
     <Sidebar />
     <Navbar />
@@ -32,5 +41,8 @@
         height: 100vh !important;
         scrollbar-color: variables.$success var(--bulma-background);
         scrollbar-width: thin;
+    }
+    .box {
+        border-radius: 0;
     }
 </style>
