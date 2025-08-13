@@ -1,6 +1,6 @@
 <script lang="ts">
-	import CardHeader from "$lib/components/Cards/CardHeader.svelte";
-	import CardContent from "$lib/components/Cards/CardContent.svelte";
+	import Header from "$lib/components/Cards/Header.svelte";
+	import Content from "$lib/components/Cards/Content.svelte";
 	import IconCard from "$lib/components/Cards/IconCard.svelte";
 	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
 	import landUseCodes from "$lib/config/landuse.json";
@@ -10,6 +10,7 @@
 	import { slide } from "svelte/transition";
 
 	import type { PageProps } from "./$types";
+    import Box from "$lib/components/Box.svelte";
 	let { data }: PageProps = $props();
 
 	let priceInfoActive = $state(true);
@@ -28,20 +29,19 @@
 </script>
 
 <div transition:slide={{ duration: 250, axis: "y" }}>
-	<CardHeader>{data.site.address.addr}</CardHeader>
-	<CardContent>
-		<div class="box p-0 is-shadowless">
-			<div class="tag is-medium">
-				{data.site.address.muni}
-			</div>
-			<div class="tag is-medium">
-				{data.site.address.postal}
-			</div>
-			<OwnerTags
-				company_name={data.site.owners[0].properties.name}
-				trust={data.site.owners[0].properties.trust}
-			/>
+	<Box>
+		<Header>{data.site.address.addr}</Header>
+		<div class="tag is-medium">
+			{data.site.address.muni}
 		</div>
+		<div class="tag is-medium">
+			{data.site.address.postal}
+		</div>
+		<OwnerTags
+			company_name={data.site.owners[0].properties.name}
+			trust={data.site.owners[0].properties.trust}
+		/>
+	</Box>
 		<div class="fixed-grid has-2-cols">
 			<div class="grid">
 				<div class="cell">
@@ -116,12 +116,13 @@
 		{#if data.site.fy < 2024}
 			<ErrorMessage error="outdatedInfo" />
 		{/if}
+		<Box>
 		<div class="title">Owners</div>
 		<div class="fixed-grid has-2-cols">
 			<div class="grid">
 				{#each data.site.owners as owner, index}
 					<div class="cell">
-						<div class="card is-shadowless">
+						<div class="card">
 							<div class="card-content">
 								<span class="icon-text">
 									<span class="icon">
@@ -148,7 +149,7 @@
 					>.
 				</p>
 				<a
-					class="button mt-5 border-primary is-shadowless"
+					class="button mt-5 border-primary"
 					data-sveltekit-preload-data="off"
 					href={`/metacorp/${data.site.metacorp.id}`}
 				>
@@ -158,7 +159,7 @@
 				<ErrorMessage error="noProperties" />
 			{/if}
 		</div>
-	</CardContent>
+		</Box>
 </div>
 
 <style>

@@ -5,79 +5,84 @@
     import { onMount } from "svelte";
     import mapbox from "mapbox-gl";
 
-    let suggestions = $state([])
+    let suggestions = $state([]);
+    let loading = $state(false);
 
     const buildResults = (results) => {
         results = results.map((r) => {
             return {
-                text: `${r.address} ${r.text}`, 
-                location: `${r.context.filter(c => c.id.split('.').shift() === 'place')[0].text}, MA`,
+                text: `${r.address} ${r.text}`,
+                location: `${r.context.filter((c) => c.id.split(".").shift() === "place")[0].text}, MA`,
                 lngLat: new mapbox.LngLat(r.center[0], r.center[1]),
-                address: `${r.address} ${r.text}`
-            }
-        })
-        return results
-    }
+                address: `${r.address} ${r.text}`,
+            };
+        });
+        return results;
+    };
 
     const buildOwnerResults = (results) => {
         results = results.map((r) => {
             return {
-                text: `${r.name}`, 
+                text: `${r.name}`,
                 metacorp: `${r.metacorp}`,
-            }
-        })
-        return results
-    }
-
+            };
+        });
+        return results;
+    };
 
     onMount(() => {
         const searchInput = document.getElementById(
             "search-input",
         ) as HTMLInputElement;
-        
+
         let timeout: ReturnType<typeof setTimeout>;
-        
-        if (mode=="address") geocoder.addTo(searchInput);
-        
+
+        if (mode == "address") geocoder.addTo(searchInput);
+
         searchInput.addEventListener("input", (e) => {
             clearTimeout(timeout);
+            loading = true;
             timeout = setTimeout(async () => {
-                
                 const query = searchInput.value.trim();
 
                 if (query.length > 1) {
-                    if (mode=="address") {
+                    if (mode == "address") {
                         geocoder.query(query);
-                    } else if (mode=="owner") {
+                    } else if (mode == "owner") {
                         try {
-                            suggestions = await fetch(`/queries/suggestions?query=${encodeURIComponent(query)}`)
-                                .then(response => response.json())
-                                .then(json => buildOwnerResults(json.suggestions.results))
+                            suggestions = await fetch(
+                                `/queries/suggestions?query=${encodeURIComponent(query)}`,
+                            )
+                                .then((response) => response.json())
+                                .then((json) =>
+                                    buildOwnerResults(json.suggestions.results),
+                                );
                         } catch (error) {
                             console.error("API Error:", error);
                         }
                     }
+                    loading = false;
                 }
             }, 350);
         });
 
-        geocoder.on('results', (e) => {
+        geocoder.on("results", (e) => {
             suggestions = buildResults(e.features);
         });
     });
 </script>
 
-<div class="panel-block">
-    <p id="searchbar" class="control has-icons-left">
-        <input
-            id="search-input"
-            class="input is-{color}"
-            type="text"
-            placeholder="Search by {mode}"
-        />
-        <span class="icon is-left has-text-{color}">
-            <i class="fas fa-search" aria-hidden="true"></i>
+<div class="field has-addons is-fullwidth">
+    <p class="control">
+        <span class="select">
+            <select>
+                <option>Address</option>
+                <option>Owner</option>
+            </select>
         </span>
+    </p>
+    <p id="searchbar" class={`control is-expanded ${loading ? "is-loading" : ""}`}>
+        <input id="search-input" class="input" type="text" placeholder="Search by {mode}" />
     </p>
 </div>
 <Suggestions {suggestions} />

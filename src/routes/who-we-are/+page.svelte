@@ -1,6 +1,6 @@
 <script>
-    import CardHeader from "$lib/components/Cards/CardHeader.svelte";
-    import CardContent from "$lib/components/Cards/CardContent.svelte";
+    import Header from "$lib/components/Cards/Header.svelte";
+    import Content from "$lib/components/Cards/Content.svelte";
     import PersonCard from "$lib/components/Cards/PersonCard.svelte";
     import OrgCard from "$lib/components/Cards/OrgCard.svelte";
     import siteConfig from "$lib/config/site.json";
@@ -8,10 +8,8 @@
 </script>
 
 <div transition:slide={{duration:250, axis:'y'}}>
-    <CardHeader>
-        Who We Are
-    </CardHeader>
-    <CardContent>
+    <Header>Who We Are</Header>
+    <Content>
         <div class="fixed-grid has-1-cols has-2-cols-tablet">
             <div class="grid">
             {#each siteConfig.org as org}
@@ -46,5 +44,5 @@
             {/each}
             </div>
         </div>
-    </CardContent>
+    </Content>
 </div>

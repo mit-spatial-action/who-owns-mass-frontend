@@ -3,7 +3,7 @@
     let { title, icon, blankText = "Unknown.", children = null } = $props();
 </script>
 
-<div class="box p-2 is-shadowless border-primary">
+<div class="box">
     <IconText {title} {icon} />
     <div class="block">
         {#if children}

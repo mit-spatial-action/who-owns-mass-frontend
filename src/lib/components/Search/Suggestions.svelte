@@ -59,6 +59,7 @@
     }
 </script>
 
+{#if suggestions.length > 0 }
 <div class="panel-block">
     <div class="menu">
         <ul class="menu-list">
@@ -82,6 +83,7 @@
         </ul>
     </div>
 </div>
+{/if}
 
 {#if error}
     <div class="panel-block">

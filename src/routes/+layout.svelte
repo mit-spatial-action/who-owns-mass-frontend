@@ -4,11 +4,13 @@
     import "$lib/styles/styles.scss";
     import InfoPanel from "$lib/components/InfoPanel.svelte";
     import Map from "$lib/components/Map.svelte";
-
+    import Dashboard from "$lib/components/Dashboard.svelte";
 
     import { navigating } from "$app/state";
     import SpinnerModal from "$lib/components/SpinnerModal.svelte";
     import { appState } from "$lib/state.svelte";
+    import Sidebar from "$lib/components/Sidebar.svelte";
+    import Navbar from "$lib/components/Navbar.svelte";
 
     import "@fontsource-variable/manrope";
 
@@ -28,23 +30,14 @@
     />
 </svelte:head>
 
-<section class="hero is-fullheight">
-    <div class="hero-body p-0">
-        <div id="panels" class="columns">
-            <InfoPanel>
-                {@render children()}
-            </InfoPanel>
-            <Map />
-            {#if navigating.from || appState.loading}
-                <SpinnerModal />
-            {/if}
-        </div>
-    </div>
-</section>
-
-<style>
-    #panels {
-        height: 100vh;
-        width: 100%;
-    }
-</style>
+{#if navigating.from || appState.loading}
+    <SpinnerModal />
+{/if}
+<Dashboard>
+    <!-- <Sidebar /> -->
+    <!-- <Navbar /> -->
+    <InfoPanel>
+        {@render children()}
+    </InfoPanel>
+    <Map />
+</Dashboard>

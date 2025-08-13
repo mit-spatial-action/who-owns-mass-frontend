@@ -2,6 +2,6 @@
     let { children } = $props();
 </script>
 
-<div class="card-content">
+<div class="box">
     {#if children}{@render children()}{:else}{ children }{/if}
 </div>
