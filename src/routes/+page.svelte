@@ -15,20 +15,18 @@
 </script>
 
 <div class="container is-flex is-flex-direction-column">
-    <div class="box">
-        <div class="hero is-medium mb-5">
-            <div
-                class="hero-body hero-image"
-                style="background-image: url({imageSrc})"
-            >
-                <div class="title is-size-4-touch is-2 has-text-centered">
-                    <div class="hero-title">{title}</div>
-                </div>
+    <div class="box hero hero-image"
+            style="background-image: url({imageSrc})">
+        <div
+            class="hero-body"
+        >
+            <div class="title is-size-4-touch is-3 has-text-centered">
+                {title}
             </div>
         </div>
     </div>
     <SearchPanel />
-    <div class="box mt-auto">
+    <!-- <div class="box mt-auto">
         <div class="level pt-3">
             {#each siteConfig.org as org}
                 <div class="level-item">
@@ -46,7 +44,7 @@
                 </div>
             {/each}
         </div>
-    </div>
+    </div> -->
 </div>
 
 <style lang="scss">

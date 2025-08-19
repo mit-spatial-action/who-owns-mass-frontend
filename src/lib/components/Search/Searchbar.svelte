@@ -73,6 +73,9 @@
 </script>
 
 <div class="field has-addons is-fullwidth">
+    <p id="searchbar" class={`control is-expanded ${loading ? "is-loading" : ""}`}>
+        <input id="search-input" class="input" type="text" placeholder="Search by {mode}" />
+    </p>
     <p class="control">
         <span class="select">
             <select>
@@ -80,9 +83,6 @@
                 <option>Owner</option>
             </select>
         </span>
-    </p>
-    <p id="searchbar" class={`control is-expanded ${loading ? "is-loading" : ""}`}>
-        <input id="search-input" class="input" type="text" placeholder="Search by {mode}" />
     </p>
 </div>
 <Suggestions {suggestions} />
