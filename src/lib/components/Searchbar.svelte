@@ -1,26 +1,24 @@
 <script lang="ts">
-    import { geocoder } from "$lib/scripts/utils";
+    import { geocoder, toTitleCase } from "$lib/scripts/utils";
     import { goto } from "$app/navigation";
     import { onMount } from "svelte";
     import mapbox from "mapbox-gl";
-    import mapConfig from "$lib/config/map.json";
     import type { LngLat } from "mapbox-gl";
-    import { toTitleCase } from "$lib/scripts/utils";
-    import { slide } from 'svelte/transition';
     import ErrorMessage from "$lib/components/ErrorMessage.svelte";
-
     import { appState } from "$lib/state.svelte.ts";
+
+    import mapConfig from "$lib/config/map.json";
 
     const modes = [
         {
             id: "address",
-            color: "primary"
+            color: "primary",
         },
         {
-            id: "owner", 
-            color: "success"
-        }
-    ]
+            id: "owner",
+            color: "success",
+        },
+    ];
 
     let suggestions = $state([]);
     let loading = $state(false);
@@ -30,23 +28,26 @@
 
     const mapMatch = async (address) => {
         let resultSiteId: string | number;
-        appState.map.once('idle', async () => {
+        appState.map.once("idle", async () => {
             let features = appState.map.queryRenderedFeatures({
                 layers: ["sites"],
             });
             if (features.length > 0) {
                 let selected = features.filter(
-                    feature => feature.properties.addr.toUpperCase() === address.toUpperCase())
+                    (feature) =>
+                        feature.properties.addr.toUpperCase() ===
+                        address.toUpperCase(),
+                );
                 if (selected.length > 0) {
-                    goto('/site/' + selected[0].properties.site_id);
+                    goto("/site/" + selected[0].properties.site_id);
                 } else {
                     appState.loading = false;
                     error = "addressNotFound";
                 }
             }
-            return resultSiteId
-        })
-    }
+            return resultSiteId;
+        });
+    };
 
     const flyToLngLat = (
         lngLat: LngLat,
@@ -63,19 +64,18 @@
     };
 
     const onclick = (suggestion) => {
-        (document.getElementById('searchbar') as HTMLInputElement).value = suggestion.text
+        (document.getElementById("searchbar") as HTMLInputElement).value =
+            suggestion.text;
         suggestions = [];
-        if(suggestion.lngLat){
+        if (suggestion.lngLat) {
             appState.loading = true;
             mapMatch(suggestion.address);
             flyToLngLat(suggestion.lngLat);
-            
-        } else if (suggestion.metacorp){
+        } else if (suggestion.metacorp) {
             appState.loading = true;
             goto(`/metacorp/${suggestion.metacorp}`);
         }
-    }
-
+    };
 
     const buildResults = (results) => {
         results = results.map((r) => {
@@ -141,26 +141,31 @@
     });
 </script>
 
-
 <div class="panel is-{mode.color} border-{mode.color}">
     <div class="panel-heading is-size-6">Search for an Address or Owner</div>
     <div class="field has-addons is-fullwidth">
         <p class="control">
-            <button class="button" onclick={() => appState.sidebar = true}>
+            <button aria-label="Open sidebar." class="button" onclick={() => (appState.sidebar = true)}>
                 <span class="icon">
                     <i class="fas fa-bars"></i>
                 </span>
             </button>
         </p>
-        <p id="searchbar" class={`control is-expanded ${loading ? "is-loading" : ""}`}>
-            <input id="search-input" class="input" type="text" bind:value={input} placeholder="Search by {toTitleCase(mode.id)}" />
+        <p
+            id="searchbar"
+            class={`control is-expanded ${loading ? "is-loading" : ""}`}
+        >
+            <input
+                id="search-input"
+                class="input"
+                type="text"
+                bind:value={input}
+                placeholder="Search by {toTitleCase(mode.id)}"
+            />
         </p>
         <p class="control">
             <span class="select">
-                <select 
-                    bind:value={mode}
-		            onchange={() => (input = '')}
-                >
+                <select bind:value={mode} onchange={() => (input = "")}>
                     {#each modes as m}
                         <option value={m}>{toTitleCase(m.id)}</option>
                     {/each}
@@ -168,41 +173,27 @@
             </span>
         </p>
     </div>
-    {#if suggestions.length > 0 }
-    <div class="panel-block">
-        <div class="menu">
-            <ul class="menu-list">
-            {#each suggestions as suggestion }
-                <li>
-                <button transition:slide={{duration:250, axis:'y'}} class="button px-2 py-1 is-small is-responsive"
-                onclick={()=>onclick(suggestion)}>
-                    <span class="icon">
-                        <i class="fa-solid fa-address-book"></i>
-                    </span>
-                    <span>
-                        {#if suggestion.location}
-                            {suggestion.text}, {suggestion.location}
-                        {:else}
-                            {suggestion.text}
-                        {/if}
-                    </span>
-                </button>
-                </li>
-            {/each}
-            </ul>
-        </div>
-    </div>
-    {/if}
-    {#if error}
-        <div class="panel-block">
-            <ErrorMessage {error} />
-        </div>
+    {#if suggestions.length > 0}
+        {#each suggestions as suggestion}
+            <a role="button" tabindex=0 href={"#"} class="panel-block" onclick={() => onclick(suggestion)}>
+                <span class="panel-icon">
+                    <i class="fas fa-address-book" aria-hidden="true"></i>
+                </span>
+                {#if suggestion.location}
+                    {suggestion.text}, {suggestion.location}
+                {:else}
+                    {suggestion.text}
+                {/if}
+            </a>
+        {/each}
     {/if}
 </div>
+{#if error}
+    <ErrorMessage {error} />
+{/if}
 
 <style>
     .menu {
         width: 100%;
-        overflow: hidden;
     }
 </style>

@@ -13,37 +13,35 @@
     let title = siteConfig.title;
 </script>
 
-<div class="container is-flex is-flex-direction-column">
-    <div class="box hero hero-image"
-            style="background-image: url({imageSrc})">
-        <div
-            class="hero-body"
-        >
-            <div class="title is-size-4-touch is-3 has-text-centered">
-                {title}
-            </div>
+<div class="box hero hero-image"
+        style="background-image: url({imageSrc})">
+    <div
+        class="hero-body"
+    >
+        <div class="title is-size-4-touch is-3 has-text-centered">
+            {title}
         </div>
     </div>
-    <!-- <div class="box mt-auto">
-        <div class="level pt-3">
-            {#each siteConfig.org as org}
-                <div class="level-item">
-                    <LogoLink {org} />
-                </div>
-            {/each}
-            {#each siteConfig.partners as org}
-                <div class="level-item">
-                    <LogoLink {org} />
-                </div>
-            {/each}
-            {#each siteConfig.funders as org}
-                <div class="level-item">
-                    <LogoLink {org} />
-                </div>
-            {/each}
-        </div>
-    </div> -->
 </div>
+<!-- <div class="box mt-auto">
+    <div class="level pt-3">
+        {#each siteConfig.org as org}
+            <div class="level-item">
+                <LogoLink {org} />
+            </div>
+        {/each}
+        {#each siteConfig.partners as org}
+            <div class="level-item">
+                <LogoLink {org} />
+            </div>
+        {/each}
+        {#each siteConfig.funders as org}
+            <div class="level-item">
+                <LogoLink {org} />
+            </div>
+        {/each}
+    </div>
+</div> -->
 
 <style lang="scss">
     .level {

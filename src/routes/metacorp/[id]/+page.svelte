@@ -3,7 +3,6 @@
 	import Modal from "$lib/components/Modals/Modal.svelte";
 	import IconCard from "$lib/components/Cards/IconCard.svelte";
 	import Header from "$lib/components/Cards/Header.svelte";
-	import Content from "$lib/components/Cards/Content.svelte";
 	import MetaCorpModal from "$lib/components/Modals/MetaCorpModal.svelte";
 	import OwnerTags from "$lib/components/OwnerTags.svelte";
 	import { appState } from "$lib/state.svelte";

@@ -38,8 +38,10 @@
     <Sidebar />
     <!-- <Navbar /> -->
     <InfoPanel>
-        <Searchbar />
-        {@render children()}
+        <div class="container is-flex is-flex-direction-column">
+            <Searchbar />
+            {@render children()}
+        </div>
     </InfoPanel>
     <Map />
 </Dashboard>

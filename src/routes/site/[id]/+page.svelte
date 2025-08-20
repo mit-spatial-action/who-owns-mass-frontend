@@ -1,6 +1,5 @@
 <script lang="ts">
 	import Header from "$lib/components/Cards/Header.svelte";
-	import Content from "$lib/components/Cards/Content.svelte";
 	import IconCard from "$lib/components/Cards/IconCard.svelte";
 	import ErrorMessage from "$lib/components/ErrorMessage.svelte";
 	import landUseCodes from "$lib/config/landuse.json";
