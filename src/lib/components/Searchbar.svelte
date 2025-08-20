@@ -114,7 +114,7 @@
             timeout = setTimeout(async () => {
                 const query = searchInput.value.trim();
 
-                if (query.length > 1) {
+                if (query.length >= 1) {
                     if (mode.id == "address") {
                         geocoder.query(query);
                     } else if (mode.id == "owner") {
