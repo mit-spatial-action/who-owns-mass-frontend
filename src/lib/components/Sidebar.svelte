@@ -11,7 +11,7 @@
   <div
     id="sidebar"
     class="box p-3"
-    transition:fly={{ x: -350, duration: 300 }}
+    transition:fly={{ x: -100, duration: 200 }}
   >
     <aside class="menu">
       <div class="buttons is-small">
@@ -56,7 +56,7 @@
     z-index: 100;
     top: 0;
     left: 0px;
-    border-right: 0.4rem solid variables.$success;
-    box-shadow: var(--bulma-shadow);
+    border: 0.4rem solid variables.$success;
+    // box-shadow: var(--bulma-shadow);
   }
 </style>

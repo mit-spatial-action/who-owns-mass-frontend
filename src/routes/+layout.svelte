@@ -7,6 +7,7 @@
     import Dashboard from "$lib/components/Dashboard.svelte";
 
     import { navigating } from "$app/state";
+    import Searchbar from "$lib/components/Searchbar.svelte";
     import SpinnerModal from "$lib/components/SpinnerModal.svelte";
     import { appState } from "$lib/state.svelte";
     import Sidebar from "$lib/components/Sidebar.svelte";
@@ -34,9 +35,10 @@
     <SpinnerModal />
 {/if}
 <Dashboard>
-    <!-- <Sidebar /> -->
+    <Sidebar />
     <!-- <Navbar /> -->
     <InfoPanel>
+        <Searchbar />
         {@render children()}
     </InfoPanel>
     <Map />

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import SearchPanel from "$lib/components/Search/SearchPanel.svelte";
     import LogoLink from "$lib/components/LogoLink.svelte";
     import siteConfig from "$lib/config/site.json";
 
@@ -25,7 +24,6 @@
             </div>
         </div>
     </div>
-    <SearchPanel />
     <!-- <div class="box mt-auto">
         <div class="level pt-3">
             {#each siteConfig.org as org}
