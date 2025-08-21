@@ -11,12 +11,18 @@
     import SpinnerModal from "$lib/components/SpinnerModal.svelte";
     import { appState } from "$lib/state.svelte";
     import Sidebar from "$lib/components/Sidebar.svelte";
-    import Navbar from "$lib/components/Navbar.svelte";
 
+    import { draggable } from '@neodrag/svelte';
+    import type { DragOptions } from '@neodrag/svelte';
     import "@fontsource-variable/manrope";
 
     import { page } from "$app/state";
+    
     let { children }: LayoutProps = $props();
+
+    let options: DragOptions = {
+        axis: 'y'
+    };
 </script>
 
 <svelte:head>
@@ -36,10 +42,9 @@
 {/if}
 <Dashboard>
     <Sidebar />
-    <!-- <Navbar /> -->
     <InfoPanel>
-        <div class="container">
-            <Searchbar />
+        <Searchbar />
+        <div use:draggable={options}>
             {@render children()}
         </div>
     </InfoPanel>

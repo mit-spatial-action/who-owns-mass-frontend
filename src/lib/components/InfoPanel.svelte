@@ -1,30 +1,18 @@
 <script lang="ts">
     import { slide } from "svelte/transition";
-    import { draggable } from '@neodrag/svelte';
-    import type { DragOptions } from '@neodrag/svelte';
 
     interface Props {
         children?: import("svelte").Snippet;
     }
 
-    let options: DragOptions = {
-        axis: 'y',
-        bounds: {
-            top: 0
-
-        }
-        // transform: ({ offsetX, offsetY }) => `scaleY(0.7)`,
-    };
-
     let { children }: Props = $props();
 </script>
 
 <div
-    use:draggable={options}
     transition:slide={{ duration: 250, axis: "y" }}
-    class="info column is-two-fifths-tablet is-one-third-desktop"
+    class="container info column is-two-fifths-tablet is-one-third-desktop"
 >
-    <div class="box is-shadowless">
+    <div class="box is-transparent">
         {@render children()}
     </div>
 </div>
@@ -41,6 +29,6 @@
         border-radius: 0;
     }
     .box {
-        height: 100%;
+        background-color: transparent;
     }
 </style>

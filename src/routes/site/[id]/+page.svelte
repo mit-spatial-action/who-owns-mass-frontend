@@ -160,9 +160,3 @@
 		</div>
 		</Box>
 </div>
-
-<style>
-	.box {
-		border-radius: 0;
-	}
-</style>

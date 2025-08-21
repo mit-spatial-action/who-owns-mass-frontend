@@ -142,7 +142,7 @@
 </script>
 
 <div class="panel is-{mode.color} border-{mode.color}">
-    <div class="panel-heading is-size-6">Search for an Address or Owner</div>
+    <!-- <div class="panel-heading is-size-6">Search for an Address or Owner</div> -->
     <div class="field has-addons is-fullwidth">
         <p class="control">
             <button
