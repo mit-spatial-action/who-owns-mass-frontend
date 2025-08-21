@@ -145,7 +145,6 @@
     <div class="panel-heading is-size-6">Search for an Address or Owner</div>
     <div class="field has-addons is-fullwidth">
         <p class="control">
-            <button aria-label="Open sidebar." class="button" onclick={() => (appState.sidebar = true)}>
             <button
                 aria-label="Open sidebar."
                 class="button"
