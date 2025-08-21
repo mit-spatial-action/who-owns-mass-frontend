@@ -44,12 +44,6 @@
 </div> -->
 
 <style lang="scss">
-    .level {
-        width: 100%;
-    }
-    .container {
-        height: 100%
-    }
     .hero-image {
         background-size: cover;
         filter: grayscale(1);

@@ -38,7 +38,7 @@
     <Sidebar />
     <!-- <Navbar /> -->
     <InfoPanel>
-        <div class="container is-flex is-flex-direction-column">
+        <div class="container">
             <Searchbar />
             {@render children()}
         </div>

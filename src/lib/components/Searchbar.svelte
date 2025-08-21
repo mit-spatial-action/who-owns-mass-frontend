@@ -146,6 +146,11 @@
     <div class="field has-addons is-fullwidth">
         <p class="control">
             <button aria-label="Open sidebar." class="button" onclick={() => (appState.sidebar = true)}>
+            <button
+                aria-label="Open sidebar."
+                class="button"
+                onclick={() => (appState.sidebar = true)}
+            >
                 <span class="icon">
                     <i class="fas fa-bars"></i>
                 </span>
@@ -175,7 +180,13 @@
     </div>
     {#if suggestions.length > 0}
         {#each suggestions as suggestion}
-            <a role="button" tabindex=0 href={"#"} class="panel-block" onclick={() => onclick(suggestion)}>
+            <a
+                role="button"
+                tabindex="0"
+                href={"#"}
+                class="panel-block"
+                onclick={() => onclick(suggestion)}
+            >
                 <span class="panel-icon">
                     <i class="fas fa-address-book" aria-hidden="true"></i>
                 </span>
@@ -193,6 +204,10 @@
 {/if}
 
 <style>
+    .panel {
+        position: sticky;
+        top: 1.5rem;
+    }
     .menu {
         width: 100%;
     }
