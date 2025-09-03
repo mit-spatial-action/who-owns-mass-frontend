@@ -44,9 +44,19 @@
     <Sidebar />
     <InfoPanel>
         <Searchbar />
-        <div use:draggable={options}>
+        <div class="draggable" use:draggable={options}>
             {@render children()}
         </div>
     </InfoPanel>
     <Map />
 </Dashboard>
+
+<style>
+    .draggable {
+        /* height: 50vh; */
+        overflow: auto;
+        margin-top: 50vh;
+        position: sticky;
+        top: 50vh;
+    }
+</style>
