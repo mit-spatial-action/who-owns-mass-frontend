@@ -9,7 +9,7 @@
 	},
 	"type": "module",
 	"dependencies": {
-		"@fontsource-variable/manrope": "^5.2.7",
+		"@fontsource-variable/manrope": "^5.2.8",
 		"@fortawesome/fontawesome-free": "^7.0.1",
 		"@mapbox/mapbox-gl-geocoder": "^5.1.2",
 		"@rollup/plugin-json": "^6.1.0",
