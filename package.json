@@ -10,7 +10,7 @@
 	"type": "module",
 	"dependencies": {
 		"@fontsource-variable/manrope": "^5.2.8",
-		"@fortawesome/fontawesome-free": "^7.0.1",
+		"@fortawesome/fontawesome-free": "^7.1.0",
 		"@mapbox/mapbox-gl-geocoder": "^5.1.2",
 		"@rollup/plugin-json": "^6.1.0",
 		"@sveltejs/adapter-netlify": "^5.2.4",
