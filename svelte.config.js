@@ -9,7 +9,9 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		csrf: {
-			checkOrigin: false
+			// Replace with origin list before launch.
+			// trustedOrigins: ['http://localhost:5173']
+			trustedOrigins: ['*']
 		},
 		alias: {
 			$lib: path.resolve('src/lib'),
