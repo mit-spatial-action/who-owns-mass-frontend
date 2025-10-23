@@ -5,7 +5,6 @@
     import { success } from "$lib/styles/_variables";
     import { PUBLIC_MAPBOX_TOKEN } from "$env/static/public";
     import { appState } from "$lib/state.svelte.ts";
-    import Device from "svelte-device-info";
 
     import type { LngLatBoundsLike, Map } from "mapbox-gl";
     import mapConfig from "$lib/config/map.json";

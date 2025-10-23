@@ -12,6 +12,7 @@
 		"@fontsource-variable/manrope": "^5.2.8",
 		"@fortawesome/fontawesome-free": "^7.1.0",
 		"@mapbox/mapbox-gl-geocoder": "^5.1.2",
+		"@neodrag/svelte": "^2.3.3",
 		"@rollup/plugin-json": "^6.1.0",
 		"@sveltejs/adapter-netlify": "^5.2.4",
 		"@sveltejs/kit": "^2.47.2",
