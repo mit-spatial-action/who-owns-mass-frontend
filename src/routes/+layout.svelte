@@ -23,6 +23,7 @@
     let options: DragOptions = {
         axis: 'y'
     };
+
 </script>
 
 <svelte:head>
@@ -45,6 +46,33 @@
     <InfoPanel>
         <Searchbar />
         <div class="draggable" use:draggable={options}>
+            <nav class="navbar">
+                <div class="navbar-menu">
+                    <div class="navbar-start">
+                        <div class="navbar-item">
+                            <button class="button">
+                                <span class="icon">
+                                    <i class="fa-solid fa-angle-down"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="navbar-item">
+                            <button class="button">
+                                <span class="icon">
+                                    <i class="fa-solid fa-magnifying-glass"></i>
+                                </span>
+                            </button>
+                        </div>
+                    </div>
+                    <div class="navbar-end">
+                    </div>
+                </div>
+            </nav>
+            <!-- <button class="button dragger is-fullwidth">
+                <span class="icon is-large">
+                    <i class="fa-solid fa-minus"></i>
+                </span>
+            </button> -->
             {@render children()}
         </div>
     </InfoPanel>
