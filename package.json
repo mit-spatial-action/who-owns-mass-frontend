@@ -24,6 +24,7 @@
 		"mdsvex": "^0.12.6",
 		"sass": "^1.93.3",
 		"svelte": "^5.43.2",
+		"svelte-device-info": "^1.0.6",
 		"svelte-loading-spinners": "^0.3.6",
 		"svelte-routing": "^2.13.0",
 		"typescript": "^5.9.3",
