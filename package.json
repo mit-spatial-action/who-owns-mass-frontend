@@ -26,6 +26,6 @@
 		"svelte-loading-spinners": "^0.3.6",
 		"svelte-routing": "^2.13.0",
 		"typescript": "^5.9.3",
-		"vite": "^6.4.1"
+		"vite": "^7.3.0"
 	}
 }
