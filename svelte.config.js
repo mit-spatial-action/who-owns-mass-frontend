@@ -9,7 +9,7 @@ const config = {
 	kit: {
 		adapter: adapter(),
 		csrf: {
-			checkOrigin: false
+			trustedOrigins: []
 		},
 		alias: {
 			$lib: path.resolve('src/lib'),
