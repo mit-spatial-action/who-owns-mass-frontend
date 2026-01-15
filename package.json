@@ -14,7 +14,7 @@
 		"@mapbox/mapbox-gl-geocoder": "^5.1.2",
 		"@rollup/plugin-json": "^6.1.0",
 		"@sveltejs/adapter-netlify": "^5.2.4",
-		"@sveltejs/kit": "^2.49.4",
+		"@sveltejs/kit": "^2.49.5",
 		"@tsconfig/svelte": "^5.0.6",
 		"@turf/bbox": "^7.3.1",
 		"@types/geojson": "^7946.0.16",
