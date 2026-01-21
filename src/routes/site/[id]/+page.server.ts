@@ -1,16 +1,26 @@
-import { getFromApi } from "$lib/scripts/utils";
 import type { PageServerLoad } from './$types';
 import { API_TOKEN } from '$env/static/private';
 
 export const load: PageServerLoad = async ({ params, fetch }) => {
     const { id } = params;
-    const site = await getFromApi(fetch, '/api', API_TOKEN, 'sites', id);
-    return { 
-        site: site.properties,
-        geojson: site,
-        seo: {
-			title: site.properties.address.addr,
-			description: `${site.properties.address.addr} is owned by ${site.properties.owners[0].properties.name} (potentially among others).`
-		}
+    const response = await fetch(`/api/sites/${id}/`, {
+        headers: {
+            'Authorization': `Token ${API_TOKEN}`
+        }
+    })
+    if (response.ok) {
+        const data = await response.json();
+        return { 
+            site: data.properties,
+            geojson: data,
+            seo: {
+                title: data.properties.address.addr,
+                description: `${data.properties.address.addr} is owned by ${data.properties.owners[0].properties.name} (potentially among others).`
+            }
+        }
     }
+    return { 
+        site: {}, 
+        seo: { title: "Not Found", description: "Property could not be found." } 
+     };
 };
