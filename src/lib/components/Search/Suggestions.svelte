@@ -20,7 +20,7 @@
                 let selected = features.filter(
                     feature => feature.properties.addr.toUpperCase() === address.toUpperCase())
                 if (selected.length > 0) {
-                    goto('site/' + selected[0].properties.site_id);
+                    goto('sites/' + selected[0].properties.site_id);
                 } else {
                     appState.loading = false;
                     error = "addressNotFound";
@@ -54,7 +54,7 @@
             
         } else if (suggestion.metacorp){
             appState.loading = true;
-            goto(`/metacorp/${suggestion.metacorp}`);
+            goto(`/metacorps/${suggestion.metacorp}`);
         }
     }
 </script>

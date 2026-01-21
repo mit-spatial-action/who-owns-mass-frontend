@@ -174,7 +174,7 @@
 							onfocus={() => highlighted.set(site.id)}
 							onmouseleave={() => highlighted.set(null)} -->
 							<div class="card-content">
-								<a href={`/site/${site.id}`}>
+								<a href={`/sites/${site.id}`}>
 									<div class="has-text-weight-bold">
 										{site.properties.address.addr}
 									</div>

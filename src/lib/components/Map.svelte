@@ -134,7 +134,7 @@
                 type: "click",
                 target: { layerId: "sites" },
                 handler(e) {
-                    goto(`/site/${e.feature.properties.site_id}`);
+                    goto(`/sites/${e.feature.properties.site_id}`);
                 },
             });
 

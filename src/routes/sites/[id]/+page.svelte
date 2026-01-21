@@ -150,7 +150,7 @@
 				<a
 					class="button mt-5 border-primary is-shadowless"
 					data-sveltekit-preload-data="off"
-					href={`/metacorp/${data.site.metacorp.id}`}
+					href={`/metacorps/${data.site.metacorp.id}`}
 				>
 					See Details &#8594
 				</a>

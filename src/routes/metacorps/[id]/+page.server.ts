@@ -10,7 +10,6 @@ export const load: PageServerLoad = async ({ params, fetch }) => {
     })
     if (response.ok) {
         const data = await response.json();
-        console.log(data);
         return { 
             metacorp: data,
             geojson: data.sites,

@@ -45,7 +45,6 @@ const animateProperty = (
         appState.map.setPaintProperty(layerId, property, val);
         val += step
         progress += step
-        // console.log(val)
         if (Math.abs(progress) >= Math.abs(delta)) {
             val = start;
             progress = 0;
@@ -156,39 +155,3 @@ export const toTitleCase = (str) => {
   if (!str) return ""
   return str.toLowerCase().replace(/\b\w/g, s => s.toUpperCase());
 }
-
-export const getFromApi = async (
-    loadFetch: Function, 
-    apiUrl: string, 
-    apiToken: string,
-    endpoint: string, 
-    id: string | number, 
-    format="json"
-    ) => {
-    let queryUrl: string = "";
-
-    if(endpoint=="owners"){
-        queryUrl= `https://api.who-owns-mass.org/${endpoint}?search=${id}`; // only works when hardcoded - not recognizing the /api redirect. 
-    } else {
-        queryUrl = `${apiUrl}/${endpoint}/${id}`;
-    }
-
-    return await loadFetch(queryUrl, {
-            method: "GET",
-            headers: {
-                "Content-Type": "application/json",
-                "Authorization": `Token ${apiToken}`
-            },
-        })
-        .then((response: Response) => {
-            let json = response.json();
-            return json
-        })
-        .then((data: object) => {
-            return data
-        })
-        .catch(() => {
-            return {}
-        });
-        
-};

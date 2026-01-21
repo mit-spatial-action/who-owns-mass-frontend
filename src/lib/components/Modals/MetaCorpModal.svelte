@@ -91,7 +91,7 @@
                         onmouseleave={() => highlighted.set(null)} -->
                                         <div class="card-content">
                                             <a
-                                                href={`/site/${site.id}`}
+                                                href={`/sites/${site.id}`}
                                                 class="is-flex is-justify-content-space-between"
                                             >
                                                 <div>
