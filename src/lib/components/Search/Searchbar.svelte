@@ -50,9 +50,9 @@
                         geocoder.query(query);
                     } else if (mode=="owner") {
                         try {
-                            suggestions = await fetch(`/queries/suggestions?query=${encodeURIComponent(query)}`)
-                                .then(response => response.json())
-                                .then(json => buildOwnerResults(json.suggestions.results))
+                            const response = await fetch(`/api/owners?query=${encodeURIComponent(query)}`);
+                            const data = await response.json();
+                            suggestions = buildOwnerResults(data.suggestions.results);
                         } catch (error) {
                             console.error("API Error:", error);
                         }

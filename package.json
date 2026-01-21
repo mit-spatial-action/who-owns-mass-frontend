@@ -3,9 +3,8 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build && node generate-redirects.mjs",
-		"preview": "vite preview"
+		"dev": "netlify dev",
+		"build": "vite build"
 	},
 	"type": "module",
 	"dependencies": {
@@ -27,5 +26,8 @@
 		"svelte-routing": "^2.13.0",
 		"typescript": "^5.9.3",
 		"vite": "^6.4.1"
+	},
+	"devDependencies": {
+		"netlify-cli": "^23.13.5"
 	}
 }

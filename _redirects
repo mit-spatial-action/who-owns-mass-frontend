@@ -1,2 +1,3 @@
+/api/* https://api.whoownsmass.org/:splat 200!
 https://who-owns-mass.org* https://whoownsmass.org 301!
 http://who-owns-mass.org* https://whoownsmass.org 301!

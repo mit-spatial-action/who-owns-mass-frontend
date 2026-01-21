@@ -170,7 +170,7 @@ export const getFromApi = async (
     if(endpoint=="owners"){
         queryUrl= `https://api.who-owns-mass.org/${endpoint}?search=${id}`; // only works when hardcoded - not recognizing the /api redirect. 
     } else {
-        queryUrl = `${apiUrl}/${endpoint}/${id}/?format=${format}`;
+        queryUrl = `${apiUrl}/${endpoint}/${id}`;
     }
 
     return await loadFetch(queryUrl, {
