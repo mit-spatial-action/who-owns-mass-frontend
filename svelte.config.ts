@@ -2,8 +2,8 @@ import adapter from '@sveltejs/adapter-netlify';
 import { vitePreprocess } from '@sveltejs/vite-plugin-svelte';
 import { mdsvex } from 'mdsvex';
 import path from 'path';
+import type { Config } from '@sveltejs/kit';
 
-/** @type {import('@sveltejs/kit').Config} */
 const config = {
 	extensions: ['.svelte', '.svx'],
 	kit: {
@@ -20,5 +20,6 @@ const config = {
 		mdsvex(),
 		vitePreprocess()
 	]
-};
+} satisfies Config;
+
 export default config;

@@ -14,7 +14,7 @@
     },
     "include": [
       "src/**/*", 
-      "svelte.config.js",
+      "svelte.config.ts",
       ".svelte-kit/ambient.d.ts"
     ],
     "exclude": ["node_modules"]
