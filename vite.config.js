@@ -8,16 +8,6 @@ export default ({ mode }) => {
 		optimizeDeps: {
 		  include: ['mapbox-gl'],
 		},
-		server: {
-			proxy: {
-				'/api': { 
-					target: process.env.VITE_PUBLIC_API_URL,
-					changeOrigin: true,
-					rewrite: (path) => path.replace(/^\/api/, ''),
-				},
-			},
-			cors:false
-		},
 	});
 
 }

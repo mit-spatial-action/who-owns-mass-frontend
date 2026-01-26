@@ -3,9 +3,8 @@
 	"version": "0.0.1",
 	"private": true,
 	"scripts": {
-		"dev": "vite dev",
-		"build": "vite build && node generate-redirects.mjs",
-		"preview": "vite preview"
+		"dev": "netlify dev",
+		"build": "vite build"
 	},
 	"type": "module",
 	"dependencies": {
@@ -15,19 +14,21 @@
 		"@neodrag/svelte": "^2.3.3",
 		"@rollup/plugin-json": "^6.1.0",
 		"@sveltejs/adapter-netlify": "^5.2.4",
-		"@sveltejs/kit": "^2.49.3",
+		"@sveltejs/kit": "^2.50.1",
 		"@tsconfig/svelte": "^5.0.6",
-		"@turf/bbox": "^7.3.1",
+		"@turf/bbox": "^7.3.2",
 		"@types/geojson": "^7946.0.16",
 		"bulma": "^1.0.4",
-		"mapbox-gl": "^3.17.0",
+		"mapbox-gl": "^3.18.1",
 		"mdsvex": "^0.12.6",
-		"sass": "^1.97.1",
-		"svelte": "^5.46.1",
-		"svelte-device-info": "^1.0.6",
+		"sass": "^1.97.3",
+		"svelte": "^5.48.2",
 		"svelte-loading-spinners": "^0.3.6",
 		"svelte-routing": "^2.13.0",
 		"typescript": "^5.9.3",
 		"vite": "^6.4.1"
+	},
+	"devDependencies": {
+		"netlify-cli": "^23.13.5"
 	}
 }

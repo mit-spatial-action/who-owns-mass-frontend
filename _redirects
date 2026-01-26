@@ -1,0 +1,6 @@
+/static/* https://api.whoownsmass.org/static/:splat 200!
+/api/* https://api.whoownsmass.org/:splat 200!
+https://who-owns-mass.org* https://whoownsmass.org/:splat 301!
+https://www.who-owns-mass.org/* https://whoownsmass.org/:splat 301!
+http://who-owns-mass.org/* https://whoownsmass.org/:splat 301!
+http://www.who-owns-mass.org/* https://whoownsmass.org/:splat 301!
